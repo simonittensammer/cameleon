@@ -8,14 +8,14 @@ let channelSelectionVisible = false;
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
     if (!channelSelectionVisible) {
-        channelSelection.style.left = "99vw";
-        channelSelectionIndicator.style.right = "-1vw";
+        channelSelection.style.right = "-19.5vw";
+        channelSelectionIndicator.style.right = "-1.5vw";
     }
 })
 
 channelSelectionIndicator.addEventListener("mouseout", function () {
     if (!channelSelectionVisible) {
-        channelSelection.style.left = "100vw";
+        channelSelection.style.right = "-20vw";
         channelSelectionIndicator.style.right = "-2.5vw";
     }
 })
@@ -24,13 +24,13 @@ channelSelectionIndicator.addEventListener("mouseout", function () {
 channelSelectionIndicator.addEventListener("click", function () {
     if (channelSelectionVisible) {
         channelSelectionVisible = false;
-        channelSelection.style.left = "100vw";
+        channelSelection.style.right = "-20vw";
         channelSelectionIndicator.style.right = "-2.5vw";
         browserVideo.style.width = "100vw";
         openArrow.style.transform = "rotate(0)";
     } else {
         channelSelectionVisible = true;
-        channelSelection.style.left = "80vw";
+        channelSelection.style.right = "0";
         channelSelectionIndicator.style.right = "17.5vw";
         browserVideo.style.width = "80vw";
         openArrow.style.transform = "rotate(180deg)";

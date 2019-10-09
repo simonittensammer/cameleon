@@ -48,7 +48,7 @@ body {
     background: #333333;
     position: absolute;
     top: 0;
-    left: 100vw;
+    right: -20vw;
     z-index: 600;
 
     transition: all .3s ease;
