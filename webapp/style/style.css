@@ -19,18 +19,20 @@ body {
     top: 50vh;
     right: 0;
     transform: translate(0, -50%);
+    background: #333333;
 
-    width: 0;
-	height: 0;
-	border-top: 2.5vw solid transparent;
-	border-right: 2.5vw solid #333333;
-	border-bottom: 2.5vw solid transparent;
+    height: 10vh;
+    width: 5vh;
+    border-bottom-left-radius: 10vh;
+    border-top-left-radius: 10vh;
 }
 
 #openArrow {
     height: 6vh;
+    margin: 2vh;
+    position: relative;
+    right: .75vw;
     width: auto;
-    transform: translate(1vh, -50%);
 }
 
 #channelSelection {
