@@ -12,24 +12,29 @@ body {
     height: 100vh;
     object-fit: cover;
     position: absolute;
+    
+    transition: all .2s ease;
 }
 
 #channelSelectionIndicator {
     position: absolute;
     top: 50vh;
-    right: 0;
+    right: -2.5vw;
     transform: translate(0, -50%);
     background: #333333;
+    z-index: 750;
 
-    height: 10vh;
-    width: 5vh;
-    border-bottom-left-radius: 10vh;
-    border-top-left-radius: 10vh;
+    height: 5vw;
+    width: 5vw;
+    border-bottom-left-radius: 5vw;
+    border-top-left-radius: 5vw;
+    
+    transition: all .2s ease;
 }
 
 #openArrow {
-    height: 6vh;
-    margin: 2vh;
+    height: 3vw;
+    margin: 1vw;
     position: relative;
     right: .75vw;
     width: auto;
@@ -41,5 +46,8 @@ body {
     background: #333333;
     position: absolute;
     top: 0;
-    right: -20vw;
+    left: 100vw;
+    z-index: 600;
+
+    transition: all .2s ease;
 }
