@@ -56,12 +56,15 @@ function selectChannel(newUrl) {
     stream.src = newUrl;
 }
 
+// hide controlls and cursor when mouse is inactive
 browserVideo.addEventListener("mousemove", function() {
-    clearTimeout(timeOut);
-    channelSelectionIndicator.style.opacity = 1;
-    browserVideo.style.cursor = "inherit";
-    timeOut = setTimeout(function() {
-        channelSelectionIndicator.style.opacity = 0;
-        browserVideo.style.cursor = "none";
-    }, 3000)
+        clearTimeout(timeOut);
+        channelSelectionIndicator.style.opacity = 1;
+        browserVideo.style.cursor = "inherit";
+    if(!channelSelectionVisible){    
+        timeOut = setTimeout(function() {
+            channelSelectionIndicator.style.opacity = 0;
+            browserVideo.style.cursor = "none";
+        }, 3000)
+    }
 })
