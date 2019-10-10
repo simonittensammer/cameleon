@@ -7,6 +7,8 @@ let openArrow = document.getElementById("openArrow");
 
 let channelSelectionVisible = false;
 
+let timeOut;
+
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
     if (!channelSelectionVisible) {
@@ -53,3 +55,13 @@ function selectChannel(newUrl) {
     
     stream.src = newUrl;
 }
+
+browserVideo.addEventListener("mousemove", function() {
+    clearTimeout(timeOut);
+    channelSelectionIndicator.style.opacity = 1;
+    browserVideo.style.cursor = "inherit";
+    timeOut = setTimeout(function() {
+        channelSelectionIndicator.style.opacity = 0;
+        browserVideo.style.cursor = "none";
+    }, 3000)
+})
