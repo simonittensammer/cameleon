@@ -1,3 +1,5 @@
+let stream = document.getElementById("browserVideo");
+
 let channelSelectionIndicator = document.getElementById("channelSelectionIndicator");
 let channelSelection = document.getElementById("channelSelection");
 let browserVideo = document.getElementById("browserVideo");
@@ -9,30 +11,45 @@ let channelSelectionVisible = false;
 channelSelectionIndicator.addEventListener("mouseover", function () {
     if (!channelSelectionVisible) {
         channelSelection.style.right = "-19.5vw";
-        channelSelectionIndicator.style.right = "-1.5vw";
+        channelSelectionIndicator.style.right = "-0.5vw";
     }
 })
 
 channelSelectionIndicator.addEventListener("mouseout", function () {
     if (!channelSelectionVisible) {
         channelSelection.style.right = "-20vw";
-        channelSelectionIndicator.style.right = "-2.5vw";
+        channelSelectionIndicator.style.right = "-1.5vw";
     }
 })
 
 // CLICK
 channelSelectionIndicator.addEventListener("click", function () {
     if (channelSelectionVisible) {
-        channelSelectionVisible = false;
-        channelSelection.style.right = "-20vw";
-        channelSelectionIndicator.style.right = "-2.5vw";
-        browserVideo.style.width = "100vw";
-        openArrow.style.transform = "rotate(0)";
+        closeChannelSelection();
     } else {
-        channelSelectionVisible = true;
-        channelSelection.style.right = "0";
-        channelSelectionIndicator.style.right = "17.5vw";
-        browserVideo.style.width = "80vw";
-        openArrow.style.transform = "rotate(180deg)";
+        openChannelSelection();
     }
 })
+
+function openChannelSelection() {
+    channelSelectionVisible = true;
+    channelSelection.style.right = "0";
+    channelSelectionIndicator.style.right = "18.5vw";
+    browserVideo.style.width = "80vw";
+    openArrow.style.transform = "rotate(180deg)";
+}
+
+function closeChannelSelection() {
+    channelSelectionVisible = false;
+    channelSelection.style.right = "-20vw";
+    channelSelectionIndicator.style.right = "-1.5vw";
+    browserVideo.style.width = "100vw";
+    openArrow.style.transform = "rotate(0)";
+}
+
+// Select Channel
+function selectChannel(newUrl) {
+    closeChannelSelection();
+    
+    stream.src = newUrl;
+}

@@ -5,6 +5,7 @@
             Web-Video viewer
         </title>
         <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="style/style.css">
     </head>
 
@@ -19,7 +20,24 @@
         </div>
 
         <div id="channelSelection">
-            asdlöfkjaslödfjlöasjkdfölasjdflösjkdalöasjkf
+            <div id="ChannelSelectionWrapper">
+                    <h1 id="selectHeadline">Select Channel</h1>
+
+                    <div id="channelWrapper">
+                        <div id="sampleChannel1" class="channel" onclick="selectChannel('img/placeholder.jpg');">
+                            <h2>Image 1</h2>
+                        </div>
+
+                        <div id="sampleChannel1" class="channel" onclick="selectChannel('img/placeholder.png');">
+                            <h2>Image 2</h2>
+                        </div>
+
+                        <div id="sampleChannel3" class="channel" onclick="selectChannel('http:\/\/172.17.209.28:8080/video');">
+                            <h2>IP Camera</h2>
+                        </div>
+                        
+                    </div>
+            </div>
         </div>
 
         <!--

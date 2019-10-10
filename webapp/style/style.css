@@ -7,6 +7,19 @@ body {
     overflow: hidden;
 }
 
+h1, h2 {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 1.75em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
 #browserVideo {
     width: 100vw;
     height: 100vh;
@@ -19,13 +32,13 @@ body {
 #channelSelectionIndicator {
     position: absolute;
     top: 50vh;
-    right: -2.5vw;
+    right: -1.5vw;
     transform: translate(0, -50%);
     background: #333333;
     z-index: 750;
 
     height: 5vw;
-    width: 5vw;
+    width: 4vw;
     border-bottom-left-radius: 5vw;
     border-top-left-radius: 5vw;
     
@@ -34,10 +47,10 @@ body {
 
 #openArrow {
     height: 3vw;
+    width: auto;
     margin: 1vw;
     position: relative;
     right: .75vw;
-    width: auto;
     
     transition: all .3s ease;
 }
@@ -52,4 +65,30 @@ body {
     z-index: 600;
 
     transition: all .3s ease;
+}
+
+#ChannelSelectionWrapper {
+    height: 90vh;
+    width: 80%;
+    margin: 5vh 10%;
+}
+
+#channelWrapper {
+    max-height: 90%;
+    width: 100%;
+    margin-top: 5vh;
+
+    overflow-y: auto;
+}
+
+.channel {
+    padding: 5%;
+    margin: 2vh 0;
+    width: 90%;
+    height: auto;
+    background: #444444;
+}
+
+.channel:hover {
+    cursor: pointer;
 }
