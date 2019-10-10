@@ -36,7 +36,6 @@ h2 {
     transform: translate(0, -50%);
     background: #333333;
     z-index: 750;
-    cursor: pointer;
 
     height: 5vw;
     width: 4vw;
