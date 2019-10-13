@@ -1,23 +1,23 @@
-#Technologies
+# Technologies
 ---
 
-##Stream
+## Stream
 
-- ####HTTP
+- #### HTTP
 
 - RTSP
 
-##Server
+## Server
 
-- ####Node (Javascript)
+- #### Node (Javascript)
 	- Consistency with the client part (both Javascript)
 	- We already have some experience with it
 
 - Quarkus (Java EE)
 
-##Browser framework
+## Browser framework
 
-- ####pure js
+- #### pure js
 	- We are very excperienced with it
 	- It is easy to personalize
 	- takes up very little space
@@ -26,4 +26,4 @@
 	- New syntax
 	- Harder to personalize
 
-##Temporary IP-Camera: "IP Webcam" App
+## Temporary IP-Camera: "IP Webcam" App
