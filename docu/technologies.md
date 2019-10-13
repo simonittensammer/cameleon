@@ -20,7 +20,7 @@
 - #### pure js
 	- We are very excperienced with it
 	- It is easy to personalize
-	- takes up very little space
+	- Takes up very little space
 
 - GOHUGO
 	- New syntax
