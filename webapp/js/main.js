@@ -13,8 +13,6 @@ let channels = [
     "http://172.17.209.115:8080/video"
 ];
 
-let timeOut;
-
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
     if (!channelSelectionVisible) {
@@ -65,25 +63,5 @@ function closeChannelSelection() {
 function selectChannel(streamId) {
     closeChannelSelection();
     
-<<<<<<< HEAD
     stream.src = channels[streamId];
 }
-=======
-    stream.src = newUrl;
-}
-
-// hide controlls and cursor when mouse is inactive
-window.addEventListener("mousemove", function() {
-        clearTimeout(timeOut);
-        channelSelectionIndicator.style.opacity = 1;
-        channelSelection.style.opacity = 1;
-        browserVideo.style.cursor = "inherit";
-    if(!channelSelectionVisible){    
-        timeOut = setTimeout(function() {
-            channelSelectionIndicator.style.opacity = 0;
-            channelSelection.style.opacity = 0;
-            browserVideo.style.cursor = "none";
-        }, 3000)
-    }
-})
->>>>>>> 672b6df6390681e1d91e9a468e44415c7100971f
