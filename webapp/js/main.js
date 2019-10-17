@@ -6,6 +6,7 @@ let browserVideo = document.getElementById("browserVideo");
 let openArrow = document.getElementById("openArrow");
 let channelElements = document.getElementsByClassName("channel");
 let channelSelectionVisible = false;
+let activeChannelId = 0;
 let channels = [
     "img/placeholder.jpg", 
     "img/placeholder.png", 
@@ -62,6 +63,10 @@ function closeChannelSelection() {
 // Select Channel
 function selectChannel(streamId) {
     closeChannelSelection();
-    
+
+    document.getElementById(activeChannelId).classList.remove("activeChannel");
+    activeChannelId = streamId;
+    document.getElementById(activeChannelId).classList.add("activeChannel");
+
     stream.src = channels[streamId];
 }

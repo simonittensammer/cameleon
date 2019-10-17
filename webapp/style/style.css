@@ -91,4 +91,10 @@ h2 {
     height: auto;
     background: #444444;
     cursor: pointer;
+
+    transition: all .3s ease;
+}
+
+.activeChannel {
+    background: #222222;
 }
