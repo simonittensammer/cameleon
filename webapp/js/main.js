@@ -8,6 +8,7 @@ let channelElements = document.getElementsByClassName("channel");
 let channelSelectionVisible = false;
 let activeChannelId = 0;
 let timeOut;
+let fullscreenOpen = false;
 let channels = [
     "img/placeholder.jpg", 
     "img/placeholder.png", 
@@ -88,3 +89,40 @@ browserVideo.addEventListener("mousemove", function() {
         }
     })
 });
+
+// Press F to enter Full screen
+window.addEventListener("keydown", function(event){
+    if(event.keyCode === 70){
+        if (fullscreenOpen) {
+            closeFullscreen();
+            fullscreenOpen = false;
+        } else {
+            openFullscreen(document.body);
+            fullscreenOpen = true;
+        }
+    }
+})
+
+function openFullscreen(elem) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  }
+
+  function closeFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE/Edge */
+      document.msExitFullscreen();
+    }
+  }
