@@ -1,15 +1,13 @@
 * {
     padding: 0;
     margin: 0;
+
+    color: #eeeeee;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
     overflow: hidden;
-}
-
-h1, h2 {
-    color: white;
-    font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -20,12 +18,17 @@ h2 {
     font-size: 1.5em;
 }
 
+p {
+    font-size: .75em;
+    color: #cccccc;
+}
+
 #browserVideo {
     width: 100vw;
     height: 100vh;
     object-fit: cover;
     position: absolute;
-    
+
     transition: all .3s ease;
 }
 
@@ -34,7 +37,7 @@ h2 {
     top: 50vh;
     right: -1.5vw;
     transform: translate(0, -50%);
-    background: #333333;
+    background: #19171C;
     z-index: 750;
     cursor: pointer;
     box-shadow: -15px 0 20px -10px rgba(0, 0, 0, 0.3);
@@ -43,7 +46,7 @@ h2 {
     width: 4vw;
     border-bottom-left-radius: 5vw;
     border-top-left-radius: 5vw;
-    
+
     transition: all .3s ease;
 }
 
@@ -53,19 +56,21 @@ h2 {
     margin: 1vw;
     position: relative;
     right: .75vw;
-    
+
     transition: all .3s ease;
 }
+
+
 
 #channelSelection {
     height: 100vh;
     width: 20vw;
-    background: #333333;
+    background: #19171C;
     position: absolute;
     top: 0;
     right: -20vw;
     z-index: 600;
-    box-shadow: -10px 0 20px rgba(0,0,0, 0.3);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.3);
 
     transition: all .3s ease;
 }
@@ -79,7 +84,7 @@ h2 {
 #channelWrapper {
     max-height: 90%;
     width: 100%;
-    margin-top: 5vh;
+    margin-top: 3vh;
 
     overflow-y: auto;
 }
@@ -89,12 +94,52 @@ h2 {
     margin: 2vh 0;
     width: 90%;
     height: auto;
-    background: #444444;
+    background: #2C2541;
     cursor: pointer;
+    border-radius: .2rem;
 
-    transition: all .3s ease;
+    transition: all .1s ease;
+}
+
+.channel:hover {
+    transform: translateY(-.5vh);
+    box-shadow: 0 1vh 0 0 rgba(0, 0, 0, .5);
+}
+
+.channel:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .activeChannel {
-    background: #222222;
+    background: #4B387A;
+}
+
+#addChannelButton {
+    background: #4B367C;
+    width: 8vh;
+    height: 8vh;
+    line-height: 8vh;
+    text-align: center;
+    font-size: 2em;
+    border-radius: 2rem;
+    cursor: pointer;
+    user-select: none;
+
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    box-shadow: 0 1vh 0 0 #2C2541;
+    transition: all .1s ease-in-out;
+}
+
+#addChannelButton:hover {
+    box-shadow: 0 .5vh 0 0 #2C2541;
+    transform: translate(-50%, .5vh);
+}
+
+#addChannelButton:active {
+    box-shadow: 0 0 0 0 #2C2541;
+    transform: translate(-50%, 1vh);
 }

@@ -9,7 +9,14 @@ let channelSelectionVisible = false;
 let activeChannelId = 0;
 let timeOut;
 let fullscreenOpen = false;
-let channels = [
+
+let channelNames = [
+    "Image 1", 
+    "Image 2", 
+    "IP Camera 1", 
+    "IP Camera 2"
+];
+let channelIds = [
     "img/placeholder.jpg", 
     "img/placeholder.png", 
     "http://172.17.209.28:8080/video", 
@@ -52,6 +59,7 @@ function openChannelSelection() {
     channelSelectionIndicator.style.right = "18.5vw";
     browserVideo.style.width = "80vw";
     openArrow.style.transform = "rotate(180deg)";
+    clearTimeout(timeOut);
 }
 
 function closeChannelSelection() {
@@ -70,7 +78,7 @@ function selectChannel(streamId) {
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
-    stream.src = channels[streamId];
+    stream.src = channelIds[streamId];
 }
 
 // hide controlls and cursor when mouse is inactive
