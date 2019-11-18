@@ -1,0 +1,23 @@
+= Documentary
+
+== 30.09.2019
+---
+
+* Which Streaming-Formats are available? (e.g. RTSP)
+** Are there other / newer Options
+** How about TV?
+
+* View on Website
+
+* Record a Stream
+
+* Text / Graphic Overlays
+** e.g. Logo, Date, Time, Notifications
+
+* Different Types of Cameras
+** with internal Server
+** USB
+
+* Monitoring RoboLab
+** PIR Sensor
+** Motion Detector
