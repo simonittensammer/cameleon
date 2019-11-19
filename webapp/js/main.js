@@ -20,7 +20,7 @@ let channelIds = [
     "img/placeholder.jpg", 
     "img/placeholder.png", 
     "http://172.17.209.28:8080/video", 
-    "http://172.17.209.115:8080/video"
+    "http://10.0.0.16:8080/video"
 ];
 
 // HOVER EFFECTS
