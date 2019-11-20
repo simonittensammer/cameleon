@@ -4,6 +4,7 @@
 
     color: #eeeeee;
     font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
 }
 
 body {
@@ -34,7 +35,7 @@ p {
 }
 
 #doneButton {
-    background: white;
+    background: #EBE3FF;
     width: 6vw;
     height: 5vh;
     margin-top: 1vh;
@@ -63,7 +64,7 @@ p {
 }
 
 #doneButtonText {
-    color: #4B367C;
+    color: #2C2541;
     text-decoration: none;
 }
 
@@ -80,8 +81,6 @@ a:hover, a:visited, a:link, a:active {
     background: #19171C;
     z-index: 600;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.3);
-
-    transition: all .3s ease;
 }
 
 #navWrapper {
@@ -126,4 +125,35 @@ a:hover, a:visited, a:link, a:active {
 
 .settingDescription {
     margin-top: .5vh;
+}
+
+.settingPage {
+    width: 80vw;
+    height: 92vh;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+#dashboard {
+    display: block;
+}
+
+.settingPageWrapper {
+    width: 94%;
+    height: 90%;
+    margin: 3%;
+}
+
+.pageHeadline {
+    color: #19171C;
+}
+
+#placeImagePreview {
+    background: #EBE3FF;
+    width: 50vw;
+    height: 50vh;
+
+    margin-top: 5vh;
 }
