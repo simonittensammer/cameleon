@@ -39,6 +39,23 @@ p {
     transition: all .3s ease;
 }
 
+#configLink {
+    position: absolute;
+    top: 2vh;
+    left: 2vh;
+}
+
+#configIcon {
+    height: 4vh;
+    width: auto;
+
+    transition: all .1s ease-in-out;
+}
+
+#configIcon:hover {
+    transform: rotate(60deg);
+}
+
 #channelSelectionIndicator {
     position: absolute;
     top: 50vh;
@@ -66,8 +83,6 @@ p {
 
     transition: all .3s ease;
 }
-
-
 
 #channelSelection {
     height: 100vh;
@@ -120,6 +135,10 @@ p {
 
 .activeChannel {
     background: #4B387A;
+}
+
+.channelDescription {
+    margin-top: .5vh;
 }
 
 #addChannelButton {

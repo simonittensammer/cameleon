@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="EN">
     <head>
         <title>
             Web-Video viewer
@@ -14,6 +14,11 @@
         <!-- for example http://192.168.43.1:8080/video -->
         <img id="browserVideo" alt="video" src="img/placeholder.jpg">
 
+        <!-- Config Icon -->
+        <a href="pages/config.html" id="configLink">
+            <img src="img/config.png" id="configIcon" alt="config">
+        </a>
+
         <!-- Channel-selector -->
         <div id="channelSelectionIndicator">
             <img id="openArrow" src="img/arrow.png" alt="arrow">
@@ -26,22 +31,22 @@
                     <div id="channelWrapper">
                         <div id="0" class="channel activeChannel">
                             <h2>Image 1</h2>
-                            <p>img/placeholder.jpg</p>
+                            <p class="channelDescription">img/placeholder.jpg</p>
                         </div>
 
                         <div id="1" class="channel">
                             <h2>Image 2</h2>
-                            <p>img/placeholder.png</p>
+                            <p class="channelDescription">img/placeholder.png</p>
                         </div>
 
                         <div id="2" class="channel">
                             <h2>IP Camera 1</h2>
-                            <p>http://172.17.209.28:8080/video</p>
+                            <p class="channelDescription">http://172.17.209.28:8080/video</p>
                         </div>
 
-                        <div id="3"" class="channel">
+                        <div id="3" class="channel">
                             <h2>IP Camera 2</h2>
-                            <p>http://172.17.209.115:8080/video</p>
+                            <p class="channelDescription">http://172.17.209.115:8080/video</p>
                         </div>
                         
                     </div>

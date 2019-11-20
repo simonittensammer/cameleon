@@ -4,6 +4,7 @@ let channelSelectionIndicator = document.getElementById("channelSelectionIndicat
 let channelSelection = document.getElementById("channelSelection");
 let browserVideo = document.getElementById("browserVideo");
 let openArrow = document.getElementById("openArrow");
+let configIcon = document.getElementById("configIcon");
 let channelElements = document.getElementsByClassName("channel");
 let channelSelectionVisible = false;
 let activeChannelId = 0;
@@ -29,14 +30,14 @@ channelSelectionIndicator.addEventListener("mouseover", function () {
         channelSelection.style.right = "-19.5vw";
         channelSelectionIndicator.style.right = "-0.5vw";
     }
-})
+});
 
 channelSelectionIndicator.addEventListener("mouseout", function () {
     if (!channelSelectionVisible) {
         channelSelection.style.right = "-20vw";
         channelSelectionIndicator.style.right = "-1.5vw";
     }
-})
+});
 
 // CLICK
 channelSelectionIndicator.addEventListener("click", function () {
@@ -45,7 +46,7 @@ channelSelectionIndicator.addEventListener("click", function () {
     } else {
         openChannelSelection();
     }
-})
+});
 
 for (let i = 0; i < channelElements.length; i++) {
     channelElements[i].addEventListener("click", function(){
@@ -81,18 +82,20 @@ function selectChannel(streamId) {
     stream.src = channelIds[streamId];
 }
 
-// hide controlls and cursor when mouse is inactive
+// hide Controls and cursor when mouse is inactive
 browserVideo.addEventListener("mousemove", function() {
     window.addEventListener("mousemove", function() {
             clearTimeout(timeOut);
             channelSelectionIndicator.style.opacity = 1;
             channelSelection.style.opacity = 1;
             browserVideo.style.cursor = "inherit";
+            configIcon.style.opacity = 1;
         if(!channelSelectionVisible){    
             timeOut = setTimeout(function() {
                 channelSelectionIndicator.style.opacity = 0;
                 channelSelection.style.opacity = 0;
                 browserVideo.style.cursor = "none";
+                configIcon.style.opacity = 0;
             }, 3000)
         }
     })
