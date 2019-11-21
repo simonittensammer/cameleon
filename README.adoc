@@ -1,1 +1,4 @@
 = video-analyser
+
+== Classdiagram for Entities
+image::images/entities_cld.jpg[cld entities]
