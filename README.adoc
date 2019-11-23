@@ -1,5 +1,13 @@
 = video-analyser
 
+=== Lorenz Gruber, Simon Ittensammer, Simon Zweimüller
+---
+
+== Project Description
+Stream the recordings from different cameras to the same interface. +
+Save images, which can be viewed on the interface, when the motion sensor triggers. +
+Give the user the possibility to add objects, like text, images or the current time to the stream.
+
 == System Architecture
 image::images/system_architecture.jpg[system architecture]
 
