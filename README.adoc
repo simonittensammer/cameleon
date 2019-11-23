@@ -1,4 +1,7 @@
 = video-analyser
 
+== System Architecture
+image::images/system_architecture.jpg[system architecture]
+
 == Classdiagram for Entities
 image::images/entities_cld.jpg[cld entities]
