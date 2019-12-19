@@ -1,0 +1,9 @@
+= Documentary
+
+== 22.11.2019
+---
+
+Requirement: +
+The Application has to work with every Camera.
+
+Create a system architecture diagram.
