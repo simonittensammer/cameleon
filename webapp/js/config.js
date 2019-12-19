@@ -1,15 +1,13 @@
+var activePage = document.getElementById("dashboard");
+var activePageButton = document.getElementById("dashboardButton");
+
 function changeSettingPage (page) {
-    var pages = document.querySelectorAll(".settingPage");
-    var pageButtons = document.querySelectorAll(".setting");
-    
-    for (var i = 0; i < pages.length; i++) {
-        pages[i].style.display = "none";
-    }
+    activePage.style.display = "none";
+    activePageButton.classList.remove("activeSetting");
 
-    for (var i = 0; i < pageButtons.length; i++) {
-        pageButtons[i].classList.remove("activeSetting");
-    }
+    activePage = document.getElementById(page);
+    activePageButton = document.getElementById(page + "Button");
 
-    document.getElementById(page).style.display = "block";
-    document.getElementById(page + "Button").classList.add("activeSetting");
+    activePage.style.display = "block";
+    activePageButton.classList.add("activeSetting");
 }
