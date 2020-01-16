@@ -5,7 +5,7 @@ let channelSelection = document.getElementById("channelSelection");
 let browserVideo = document.getElementById("browserVideo");
 let openArrow = document.getElementById("openArrow");
 let configIcon = document.getElementById("configIcon");
-let channelElements = document.getElementsByClassName("channel");
+let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
 let timeOut;
@@ -17,11 +17,17 @@ let channelNames = [
     "IP Camera 1", 
     "IP Camera 2"
 ];
-let channelIds = [
+let channelUrls = [
     "img/placeholder.jpg", 
     "img/placeholder.png", 
-    "http://172.17.209.28:8080/video", 
-    "http://10.0.0.16:8080/video"
+    "http://192.168.1.174:80/cgi-bin/hi3510/mjpegstream.cgi?-chn=11&-usr=cameleon&-pwd=videostream", 
+    "http://172.17.209.28:8080/video"
+];
+let channelDescription = [
+    "Image No. 1", 
+    "Image No. 2", 
+    "IP Camera No. 1", 
+    "IP Camera No. 2"
 ];
 
 // HOVER EFFECTS
@@ -48,6 +54,14 @@ channelSelectionIndicator.addEventListener("click", function () {
     }
 });
 
+for (let i = 0; i < channelUrls.length; i++) {
+    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
+                                                                "<h2>" + channelNames[i] + "</h2>" +
+                                                                "<p class='channelDescription'><nobr>" + channelDescription[i] + "</nobr></p>" +
+                                                            "</div>";
+}
+
+channelElements = document.getElementsByClassName("channel");
 for (let i = 0; i < channelElements.length; i++) {
     channelElements[i].addEventListener("click", function(){
         selectChannel(this.id);
@@ -79,7 +93,7 @@ function selectChannel(streamId) {
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
-    stream.src = channelIds[streamId];
+    stream.src = channelUrls[streamId];
 }
 
 // hide Controls and cursor when mouse is inactive

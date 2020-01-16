@@ -119,6 +119,7 @@ p {
     background: #2C2541;
     cursor: pointer;
     border-radius: .2rem;
+    overflow: hidden;
 
     transition: all .1s ease;
 }
