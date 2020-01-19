@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>Hello</h1>
+        <img id="image">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+        <script>
+            const socket = io.connect('http://localhost:3000');
+            socket.on('image', (image) => {
+                const imageElm = document.getElementById("image");
+                imageElm.src = `data:image/jpeg;base64,${image}`;
+            });
+        </script>
+    </body>
+</html>
