@@ -1,3 +1,9 @@
+/* Install with npm
+opencv4nodejs
+express
+socket.io
+*/
+
 const cv = require('opencv4nodejs');
 const path = require('path')
 const express = require('express');
