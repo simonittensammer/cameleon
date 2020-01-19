@@ -1,0 +1,35 @@
+= Specification Book
+
+==== Lorenz Gruber, Simon Ittensammer, Simon Zweimüller
+
+== Initial situation
+
+The higher technical college in Leonding is a school in Upper Austria.
+
+== Current Situation
+
+The school provides teachers and students with a Robolab. +
+The Robolab is a place where students can experiment and work on their projects.
+
+== Problems
+
+The Robolab contains valuable technical devices which could be damaged or stolen because many students have access to the lab. +
+Currently there is no possibility to keep track of who enters and leaves the Robolab.
+
+== Tasks
+
+Display the surveillance streams on a website. +
+Record whenever someone enters or leaves the Robolab. +
+Notify the owner whenever someone enters. +
+Let the user customize their surveillance streams. +
+Combine all of the above in one web application.
+
+== Goals
+
+Make it easier and less time consuming to supervise the Robolab.
+
+== Next steps
+
+Implement motion detection. +
+Let the user customize their streams by adding text, images and other special objects like timestamps. +
+Add a database to the server which persists streams and the users customization.
