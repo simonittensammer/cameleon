@@ -26,7 +26,7 @@ Combine all of the above in one web application.
 
 == Goals
 
-Make it easier and less time consuming to supervise the Robolab.
+Make it easier and less time consuming to observe the Robolab.
 
 == Next steps
 
