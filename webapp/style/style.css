@@ -6,8 +6,9 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-body {
+body, body:fullscreen {
     overflow: hidden;
+    background: white;
 }
 
 h1 {
@@ -37,6 +38,30 @@ p {
     -ms-user-select: none;
 
     transition: all .3s ease;
+}
+
+.tutorialImage {
+    position: absolute;
+    z-index: 500;
+    height: auto;
+    width: 15vw;
+    transition: all .3s ease;
+}
+
+#furtherConfigurations {
+    top: 8vh;
+    left: 0;
+    margin-left: 2vw;
+}
+
+#addOrSelectChannel {
+    top: 50vh;
+    left: 82vw;
+}
+
+#fForFullscreen {
+    top: 80vh;
+    left: 5vw;
 }
 
 #configLink {

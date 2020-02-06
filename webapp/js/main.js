@@ -5,11 +5,15 @@ let channelSelection = document.getElementById("channelSelection");
 let browserVideo = document.getElementById("browserVideo");
 let openArrow = document.getElementById("openArrow");
 let configIcon = document.getElementById("configIcon");
+let tutorialFurtherConfigurations = document.getElementById("furtherConfigurations");
+let tutorialAddOrSelectChannel = document.getElementById("addOrSelectChannel");
+let tutorialpressF = document.getElementById("fForFullscreen");
 let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
 let timeOut;
 let fullscreenOpen = false;
+let welcomePageIsOpen = true;
 
 let channelNames = [
     "Image 1", 
@@ -19,9 +23,9 @@ let channelNames = [
 ];
 let channelUrls = [
     "img/placeholder.jpg", 
-    "img/placeholder.png", 
+    "http://10.0.0.43:8080/video", 
     "http://192.168.1.174:80/cgi-bin/hi3510/mjpegstream.cgi?-chn=11&-usr=cameleon&-pwd=videostream", 
-    "http://172.17.209.28:8080/video"
+    "http://10.0.0.16:8080/video"
 ];
 let channelDescription = [
     "Image No. 1", 
@@ -44,6 +48,19 @@ channelSelectionIndicator.addEventListener("mouseout", function () {
         channelSelectionIndicator.style.right = "-1.5vw";
     }
 });
+
+// HIDE TUTORIAL
+function hideTutorial() {
+    tutorialAddOrSelectChannel.style.opacity = 0;
+    tutorialFurtherConfigurations.style.opacity = 0;
+    tutorialpressF.style.opacity = 0;
+}
+
+function showTutorial() {
+    tutorialAddOrSelectChannel.style.opacity = 1;
+    tutorialFurtherConfigurations.style.opacity = 1;
+    tutorialpressF.style.opacity = 1;
+}
 
 // CLICK
 channelSelectionIndicator.addEventListener("click", function () {
@@ -87,6 +104,8 @@ function closeChannelSelection() {
 
 // Select Channel
 function selectChannel(streamId) {
+    welcomePageIsOpen = false;
+    hideTutorial();
     closeChannelSelection();
 
     document.getElementById(activeChannelId).classList.remove("activeChannel");
@@ -104,12 +123,18 @@ browserVideo.addEventListener("mousemove", function() {
             channelSelection.style.opacity = 1;
             browserVideo.style.cursor = "inherit";
             configIcon.style.opacity = 1;
+            if (welcomePageIsOpen) {
+                showTutorial();
+            }
         if(!channelSelectionVisible){    
             timeOut = setTimeout(function() {
                 channelSelectionIndicator.style.opacity = 0;
                 channelSelection.style.opacity = 0;
                 browserVideo.style.cursor = "none";
                 configIcon.style.opacity = 0;
+                if (welcomePageIsOpen) {
+                    hideTutorial();
+                }
             }, 3000)
         }
     })
