@@ -6,9 +6,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-body, body:fullscreen {
+body {
     overflow: hidden;
-    background: white;
 }
 
 h1 {

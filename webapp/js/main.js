@@ -8,6 +8,8 @@ let configIcon = document.getElementById("configIcon");
 let tutorialFurtherConfigurations = document.getElementById("furtherConfigurations");
 let tutorialAddOrSelectChannel = document.getElementById("addOrSelectChannel");
 let tutorialpressF = document.getElementById("fForFullscreen");
+let addChannelButton = document.getElementById("addChannelButton");
+let addChannelBox = document.getElementById("addChannelBox");
 let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
@@ -22,10 +24,10 @@ let channelNames = [
     "IP Camera 2"
 ];
 let channelUrls = [
-    "img/placeholder.jpg", 
-    "http://10.0.0.43:8080/video", 
+    "http://192.168.1.174:80/mjpegstream.cgi?-chn=12&usr=cameleon&pwd=videostream", 
+    "http://192.168.1.121:8080/video", 
     "http://192.168.1.174:80/cgi-bin/hi3510/mjpegstream.cgi?-chn=11&-usr=cameleon&-pwd=videostream", 
-    "http://10.0.0.16:8080/video"
+    "http://192.168.1.137:8080/video"
 ];
 let channelDescription = [
     "Image No. 1", 
@@ -62,7 +64,7 @@ function showTutorial() {
     tutorialpressF.style.opacity = 1;
 }
 
-// CLICK
+// OPEN AND CLOSE CHANNEL SELECTION
 channelSelectionIndicator.addEventListener("click", function () {
     if (channelSelectionVisible) {
         closeChannelSelection();
@@ -70,20 +72,6 @@ channelSelectionIndicator.addEventListener("click", function () {
         openChannelSelection();
     }
 });
-
-for (let i = 0; i < channelUrls.length; i++) {
-    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
-                                                                "<h2>" + channelNames[i] + "</h2>" +
-                                                                "<p class='channelDescription'><nobr>" + channelDescription[i] + "</nobr></p>" +
-                                                            "</div>";
-}
-
-channelElements = document.getElementsByClassName("channel");
-for (let i = 0; i < channelElements.length; i++) {
-    channelElements[i].addEventListener("click", function(){
-        selectChannel(this.id);
-    });
-}
 
 function openChannelSelection() {
     channelSelectionVisible = true;
@@ -102,6 +90,21 @@ function closeChannelSelection() {
     openArrow.style.transform = "rotate(0)";
 }
 
+// GENERATE CHANNEL SELECTORS
+for (let i = 0; i < channelUrls.length; i++) {
+    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
+                                                                "<h2>" + channelNames[i] + "</h2>" +
+                                                                "<p class='channelDescription'><nobr>" + channelDescription[i] + "</nobr></p>" +
+                                                            "</div>";
+}
+
+channelElements = document.getElementsByClassName("channel");
+for (let i = 0; i < channelElements.length; i++) {
+    channelElements[i].addEventListener("click", function(){
+        selectChannel(this.id);
+    });
+}
+
 // Select Channel
 function selectChannel(streamId) {
     welcomePageIsOpen = false;
@@ -115,7 +118,7 @@ function selectChannel(streamId) {
     stream.src = channelUrls[streamId];
 }
 
-// hide Controls and cursor when mouse is inactive
+// HIDE CONTROLLS AND CURSOR
 browserVideo.addEventListener("mousemove", function() {
     window.addEventListener("mousemove", function() {
             clearTimeout(timeOut);
@@ -140,7 +143,7 @@ browserVideo.addEventListener("mousemove", function() {
     })
 });
 
-// Press F to enter Full screen
+// PRESS F TO ENTER FULL SCREEN
 window.addEventListener("keydown", function(event){
     if(event.keyCode === 70){
         if (fullscreenOpen) {
@@ -155,24 +158,24 @@ window.addEventListener("keydown", function(event){
 
 function openFullscreen(elem) {
     if (elem.requestFullscreen) {
-      elem.requestFullscreen();
+        elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) { /* Firefox */
-      elem.mozRequestFullScreen();
+        elem.mozRequestFullScreen();
     } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-      elem.webkitRequestFullscreen();
+        elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
-      elem.msRequestFullscreen();
+        elem.msRequestFullscreen();
     }
-  }
+}
 
-  function closeFullscreen() {
+function closeFullscreen() {
     if (document.exitFullscreen) {
-      document.exitFullscreen();
+        document.exitFullscreen();
     } else if (document.mozCancelFullScreen) { /* Firefox */
-      document.mozCancelFullScreen();
+        document.mozCancelFullScreen();
     } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-      document.webkitExitFullscreen();
+        document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) { /* IE/Edge */
-      document.msExitFullscreen();
+        document.msExitFullscreen();
     }
-  }
+}
