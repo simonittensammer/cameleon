@@ -14,5 +14,7 @@ image::images/use_case_diagram.PNG[use case diagram]
 == System Architecture
 image::images/system_architecture.png[system architecture]
 
+////
 == Classdiagram for Entities
 image::images/entities_cld.jpg[cld entities]
+////
