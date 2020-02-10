@@ -194,3 +194,64 @@ p {
     box-shadow: 0 0 0 0 #2C2541;
     transform: translate(-50%, 1vh);
 }
+
+#addChannelBox {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+
+    height: 60vh;
+    width: 27.5vw;
+    background: #19171C;
+    border-radius: 1rem;
+
+    padding: 5vh;
+    display: none;
+}
+
+#addChannelHeadline {
+    margin-bottom: 5%;
+}
+
+.channelInputLabel {
+    display: inline-block;
+    margin: 5% 0 2% 3%;
+}
+
+.addChannelInput {
+    width: 90%;
+    height: 10%;
+
+    border: none;
+    background: #2C2541;
+
+    border-radius: 2rem;
+
+    padding: 0 5%;
+    font-size: 100%;
+}
+
+.controllButton {
+    float: right;
+    height: 10%;
+    margin: 10% 0 0 5%;
+    padding: 0 2.5%;
+    min-width: 20%;
+    font-size: 125%;
+
+    border-radius: .5rem;
+    border: none;
+}
+
+.controllButton:hover {
+    cursor: pointer;
+}
+
+#cancel {
+    background: #2C2541;
+}
+
+#save {
+    background: #95CDA9;
+}

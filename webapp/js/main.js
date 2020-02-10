@@ -10,12 +10,18 @@ let tutorialAddOrSelectChannel = document.getElementById("addOrSelectChannel");
 let tutorialpressF = document.getElementById("fForFullscreen");
 let addChannelButton = document.getElementById("addChannelButton");
 let addChannelBox = document.getElementById("addChannelBox");
+let nameInput = document.getElementById("channelNameInput");
+let descriptionInput = document.getElementById("channelDescriptionInput");
+let ipInput = document.getElementById("channelIpInput");
+let cancelButton = document.getElementById("cancel");
+let saveButton = document.getElementById("save");
 let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
 let timeOut;
-let fullscreenOpen = false;
+let fullscreenOpen = true;
 let welcomePageIsOpen = true;
+let addChannelBoxIsOpen = false;
 
 let channelNames = [
     "Image 1", 
@@ -29,12 +35,14 @@ let channelUrls = [
     "http://192.168.1.174:80/cgi-bin/hi3510/mjpegstream.cgi?-chn=11&-usr=cameleon&-pwd=videostream", 
     "http://192.168.1.137:8080/video"
 ];
-let channelDescription = [
+let channelDescriptions = [
     "Image No. 1", 
     "Image No. 2", 
     "IP Camera No. 1", 
     "IP Camera No. 2"
 ];
+
+generateChannelSelectors();
 
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
@@ -91,18 +99,22 @@ function closeChannelSelection() {
 }
 
 // GENERATE CHANNEL SELECTORS
-for (let i = 0; i < channelUrls.length; i++) {
-    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
+function generateChannelSelectors() {
+    document.getElementById("channelWrapper").innerHTML = "";
+    for (let i = 0; i < channelUrls.length; i++) {
+        document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
                                                                 "<h2>" + channelNames[i] + "</h2>" +
-                                                                "<p class='channelDescription'><nobr>" + channelDescription[i] + "</nobr></p>" +
-                                                            "</div>";
-}
+                                                                "<p class='channelDescriptions'><nobr>" + channelDescriptions[i] + "</nobr></p>" +
+                                                                "</div>";
+    }
 
-channelElements = document.getElementsByClassName("channel");
-for (let i = 0; i < channelElements.length; i++) {
-    channelElements[i].addEventListener("click", function(){
-        selectChannel(this.id);
-    });
+    channelElements = document.getElementsByClassName("channel");
+    
+    for (let i = 0; i < channelElements.length; i++) {
+        channelElements[i].addEventListener("click", function(){
+            selectChannel(this.id);
+        });
+    }
 }
 
 // Select Channel
@@ -145,7 +157,7 @@ browserVideo.addEventListener("mousemove", function() {
 
 // PRESS F TO ENTER FULL SCREEN
 window.addEventListener("keydown", function(event){
-    if(event.keyCode === 70){
+    if(event.keyCode === 70 && !addChannelBoxIsOpen){
         if (fullscreenOpen) {
             closeFullscreen();
             fullscreenOpen = false;
@@ -177,5 +189,29 @@ function closeFullscreen() {
         document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) { /* IE/Edge */
         document.msExitFullscreen();
+    }
+}
+
+// ADD CHANNEL
+addChannelButton.addEventListener("click", toggleAddChannelBox);
+cancelButton.addEventListener("click", toggleAddChannelBox);
+saveButton.addEventListener("click", addChannel);
+
+function addChannel() {
+    channelNames[channelNames.length] = nameInput.value;
+    channelDescriptions[channelDescriptions.length] = descriptionInput.value;
+    channelUrls[channelUrls.length] = ipInput.value;
+
+    generateChannelSelectors();
+    toggleAddChannelBox();
+}
+
+function toggleAddChannelBox() {
+    if(addChannelBoxIsOpen) {
+        addChannelBox.style.display = "none";
+        addChannelBoxIsOpen = false;
+    } else {
+        addChannelBox.style.display = "block";
+        addChannelBoxIsOpen = true;
     }
 }
