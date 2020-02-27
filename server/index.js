@@ -7,10 +7,12 @@ socket.io
 const cv = require('opencv4nodejs');
 const path = require('path')
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
+const parse = require('node-html-parser').parse;
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -34,13 +36,24 @@ setInterval(() => {
 
 // POST - ADDCHANNEL
 app.post('/', urlencodedParser, function(req, res) {
-    /*
-    res.send("channel name: " + req.body.name + "<br>" +
-            "channel desc: " + req.body.desc + "<br>" + 
-            "url: " + req.body.url);
-            */
-           
-    console.log("name: " + req.body.name + "\n" + "description: " + req.body.desc + "\n" + "url: " + req.body.url);
+
+    // req.body.name
+    // req.body.desc
+    // req.body.url
+
+    fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err,html)=>{
+        if(err){
+           throw err;
+        }
+     
+        const root = parse(html);
+     
+        const box = root.querySelector('#testBox');
+        box.appendChild('<div>' + req.body.name + '</div>');
+     
+        //console.log(root.toString()); // This you can write back to file!
+        res.send(root.toString());
+    });
 });
 
 server.listen(3000)
