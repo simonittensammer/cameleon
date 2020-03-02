@@ -14,6 +14,10 @@ const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const parse = require('node-html-parser').parse;
 
+//DB
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static(path.join(__dirname, '../webapp')));
@@ -43,7 +47,23 @@ app.post('/', urlencodedParser, function(req, res) {
     // req.body.desc
     // req.body.url
 
-    console.log(req.body.name);
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("cameleonDB");
+        
+        var newCam = { name: req.body.name, desc: req.body.desc ,ip: req.body.url };
+        dbo.collection("cams").insertOne(newCam, function(err, res) {
+          if (err) throw err;
+          console.log("inserted: " + newCam.name);
+          db.close();
+        });
+        
+        dbo.collection("cams").find().toArray(function(err, result) {
+          if (err) throw err;
+          console.log(result);
+          db.close();
+        });
+    });
 
     /*
     fs.readFile(path.join(__dirname, '/index.html'), 'utf8', (err,html)=>{
