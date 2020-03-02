@@ -210,6 +210,10 @@ p {
     display: none;
 }
 
+form {
+    height: 100%;
+}
+
 #addChannelHeadline {
     margin-bottom: 5%;
 }

@@ -16,6 +16,8 @@ const parse = require('node-html-parser').parse;
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+app.use(express.static(path.join(__dirname, '../webapp')));
+
 const FPS = 10;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
@@ -25,7 +27,7 @@ wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
 wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 setInterval(() => {
@@ -41,7 +43,10 @@ app.post('/', urlencodedParser, function(req, res) {
     // req.body.desc
     // req.body.url
 
-    fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err,html)=>{
+    console.log(req.body.name);
+
+    /*
+    fs.readFile(path.join(__dirname, '/index.html'), 'utf8', (err,html)=>{
         if(err){
            throw err;
         }
@@ -54,6 +59,7 @@ app.post('/', urlencodedParser, function(req, res) {
         //console.log(root.toString()); // This you can write back to file!
         res.send(root.toString());
     });
+    */
 });
 
 server.listen(3000)
