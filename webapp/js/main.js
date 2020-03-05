@@ -23,6 +23,7 @@ let fullscreenOpen = true;
 let welcomePageIsOpen = true;
 let addChannelBoxIsOpen = false;
 
+/*
 let channelNames = [
     "Image 1", 
     "Image 2", 
@@ -41,15 +42,19 @@ let channelDescriptions = [
     "IP Camera No. 1", 
     "IP Camera No. 2"
 ];
+*/
+
+let channels;
 
 const socket = io();
 
 socket.on('join', data => {
     console.log(data);
+    channels = data;
+    generateChannelSelectors();
     socket.emit('joined');
 })
 
-generateChannelSelectors();
 
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
@@ -108,10 +113,10 @@ function closeChannelSelection() {
 // GENERATE CHANNEL SELECTORS
 function generateChannelSelectors() {
     document.getElementById("channelWrapper").innerHTML = "";
-    for (let i = 0; i < channelUrls.length; i++) {
+    for (let i = 0; i < channels.length; i++) {
         document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
-                                                                "<h2>" + channelNames[i] + "</h2>" +
-                                                                "<p class='channelDescriptions'><nobr>" + channelDescriptions[i] + "</nobr></p>" +
+                                                                "<h2>" + channels[i].name + "</h2>" +
+                                                                "<p class='channelDescriptions'><nobr>" + channels[i].desc + "</nobr></p>" +
                                                                 "</div>";
     }
 
@@ -134,7 +139,7 @@ function selectChannel(streamId) {
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
-    stream.src = channelUrls[streamId];
+    stream.src = channels[streamId].ip;
 }
 
 // HIDE CONTROLLS AND CURSOR
