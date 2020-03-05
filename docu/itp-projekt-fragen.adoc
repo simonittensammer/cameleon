@@ -1,0 +1,14 @@
+### Video Stream Protokolle?
+- HTTP
+- RTSP
+
+
+### Text/Bilder im Stream?
+- *jimp:* Jimp ist ein Node Modul zur Bildbearbeitung. Damit ist es möglich Text und Grafiken in Bilder einzufügen. Der Lösungsansatz dabei ist es in jedem Frame des Videos Text/Grafiken einzubinden und diese Bilder anschließend in einen Base64-String zu codieren und diese mittels Web-Socket an den Client zu senden. + 
+*Nachteil:* sehr performance lastig. Je nach Videoqualität beinahe unbenutzbar niedrige Framerate.
+- *Overlay im Browser:* Text und Grafiken werden in einem HTML-Canvas geschrieben, welcher einfach über das Video gelegt wird. + 
+*Nachteil:* Text/Grafiken sind nicht direkt im Video sonder werden nur darübergelegt.
+
+### Static Website Generator sinvoll?
+Für größere Projekte sind Static Website Generators durchaus sehr sinnvoll, da man damit schnell Prototypen entwickeln kann und man sich nicht lange mit Designs und Benutzeroberflächen auseinandersetzen muss. +
+Nach unserem Empfinden wäre ein Static Website Generator für unser Projekt eher überflüssig, da die Benutzeroberfläche auf unserer Website sehr simpel gehalten ist und daher ohne viel Aufwand selbst geschrieben werden kann. Wir sind der Meinung, dass ein Static Website Generator das Entwickeln des Frontends nur unnötig kompliziert machen würde.
