@@ -42,6 +42,13 @@ let channelDescriptions = [
     "IP Camera No. 2"
 ];
 
+const socket = io();
+
+socket.on('join', data => {
+    console.log(data);
+    socket.emit('joined');
+})
+
 generateChannelSelectors();
 
 // HOVER EFFECTS
@@ -204,6 +211,13 @@ function addChannel() {
 
     generateChannelSelectors();
     toggleAddChannelBox();
+
+    const data = {
+        "name": nameInput.value,
+        "desc": descriptionInput.value,
+        "url":  ipInput.value
+    }
+    socket.emit('add-channel', data);
 }
 
 function toggleAddChannelBox() {

@@ -15,8 +15,10 @@ const bodyParser = require('body-parser');
 const parse = require('node-html-parser').parse;
 
 //DB
+
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
+
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -26,7 +28,8 @@ const FPS = 10;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
-const wCap = new cv.VideoCapture(0);
+//http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
+const wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
 wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
 
@@ -40,6 +43,8 @@ setInterval(() => {
     io.emit('image', image);
 }, 1000 / FPS);
 
+
+/*
 // POST - ADDCHANNEL
 app.post('/', urlencodedParser, function(req, res) {
 
@@ -47,6 +52,7 @@ app.post('/', urlencodedParser, function(req, res) {
     // req.body.desc
     // req.body.url
 
+    
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("cameleonDB");
@@ -64,8 +70,9 @@ app.post('/', urlencodedParser, function(req, res) {
           db.close();
         });
     });
+    
 
-    /*
+    
     fs.readFile(path.join(__dirname, '/index.html'), 'utf8', (err,html)=>{
         if(err){
            throw err;
@@ -79,7 +86,46 @@ app.post('/', urlencodedParser, function(req, res) {
         //console.log(root.toString()); // This you can write back to file!
         res.send(root.toString());
     });
-    */
+    
 });
+*/
+
+io.on('connection', socket => {
+
+    // sending cam-data from db to client when connecting
+    MongoClient.connect(url, (err, db) => {
+        if (err) throw err;
+
+        const dbo = db.db('cameleon')
+        dbo.collection("cams").find().toArray((err, res) => {
+            if (err) throw err;
+            socket.emit('join', res)
+            db.close();
+        });
+    });
+
+    // client successfully connected
+    socket.on('joined', () => {
+        console.log(socket.id + ' connected')
+    })
+
+    // getting cam-data from client and persisting it in the db
+    socket.on('add-channel', data => {
+        console.log(data.name + '\n' + data.desc + '\n' + data.url);
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            
+            var newCam = { name: data.name, desc: data.desc ,ip: data.url };
+            dbo.collection("cams").insertOne(newCam, (err, res) => {
+              if (err) throw err;
+              console.log("inserted: " + newCam.name);
+              db.close();
+            });
+            
+        });
+    })
+})
 
 server.listen(3000)
