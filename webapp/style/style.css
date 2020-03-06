@@ -39,6 +39,11 @@ p {
     transition: all .3s ease;
 }
 
+#browserVideo {
+    opacity: 0;
+    transition: 0.3s;
+}
+
 .tutorialImage {
     position: absolute;
     z-index: 500;

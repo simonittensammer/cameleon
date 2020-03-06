@@ -64,7 +64,7 @@ socket.on('image', (image) => {
 });
 
 socket.on('stream-change-error', () => {
-    browserVideo.style.display = 'none';
+    browserVideo.style.opacity = 0;
 })
 
 // HOVER EFFECTS
@@ -146,7 +146,7 @@ function selectChannel(streamId) {
     hideTutorial();
     closeChannelSelection();
 
-    browserVideo.style.display = "block";
+    browserVideo.style.opacity = 100;
     document.getElementById(activeChannelId).classList.remove("activeChannel");
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
