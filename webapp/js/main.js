@@ -65,7 +65,15 @@ socket.on('image', (image) => {
 
 socket.on('stream-change-error', () => {
     browserVideo.style.opacity = 0;
-})
+
+    let errorPopup = document.createElement('div');
+    errorPopup.classList.add('error-popup');
+    errorPopup.innerText = 'unable to reach this stream';
+    document.body.appendChild(errorPopup)
+    errorPopup.addEventListener('animationend', () => {
+        document.body.removeChild(errorPopup);
+    });
+});
 
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {

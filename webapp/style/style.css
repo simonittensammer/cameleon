@@ -264,3 +264,43 @@ form {
 #save {
     background: #95CDA9;
 }
+
+.error-popup {
+    position: absolute;
+    top: 2vw;
+    right: -50vw;
+
+    opacity: 0;
+    background-color: rgb(118, 97, 170);
+    padding: 1vw;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.5vw;
+    font-weight: bold;
+    z-index: 100;
+
+    animation: error-popup-animation 3s ease-in-out;
+}
+
+@keyframes error-popup-animation {
+    0%{
+        right: -20vw;
+        opacity: 0;
+    }
+    15%{
+        right: -20vw;
+        opacity: 0;
+    }
+    20%{
+        right: 2vw;
+        opacity: 1;
+    }
+    95%{
+        right: 2vw;
+        opacity: 1;
+    }
+    100%{
+        right: -20vw;
+        opacity: 0;
+    }
+}
