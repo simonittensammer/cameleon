@@ -136,8 +136,11 @@ io.on('connection', socket => {
             var query = {id: ''+data};         
             dbo.collection("cams").find(query).toArray((err, result) => {
                 if (err) throw err;
-                console.log('changed to ' + result[0].ip);
-                wCap = new cv.VideoCapture(result[0].ip);
+                try {
+                    wCap = new cv.VideoCapture(result[0].ip);
+                }catch(err) {
+                    console.log('unable to connect to this url: ' + result[0].ip);
+                }
                 db.close();
             });
 
