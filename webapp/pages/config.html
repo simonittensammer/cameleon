@@ -10,46 +10,51 @@
 </head>
 
 <body>
-    <div id="topBar">
+    <div id="top-bar">
         <a href="../index.html">
-            <div id="doneButton">
-                <h2 id="doneButtonText">done</h2>
+            <div id="done-button">
+                <h2 id="done-button-text">done</h2>
             </div>
         </a>
     </div>
 
     <div id="navigation">
-        <div id="navWrapper">
-            <h1 id="settingsHeadline">Configuration</h1>
+        <div id="nav-wrapper">
+            <h1 id="settings-headline">Configuration</h1>
 
             <div id="settingWrapper">
-                <div id="dashboardButton" class="setting activeSetting" onclick="changeSettingPage('dashboard');">
+                <div id="dashboard-button" class="setting active-setting" onclick="changeSettingPage('dashboard');">
                     <h2>Dashboard</h2>
                 </div>
 
-                <div id="addImageButton" class="setting" onclick="changeSettingPage('addImage');"">
+                <div id="channel-overlay-button" class="setting" onclick="changeSettingPage('channel-overlay');"">
                     <h2>Channel Overlay</h2>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="settingPages">
-        <div id="dashboard" class="settingPage">
-            <div class="settingPageWrapper">
-                <h1 class="pageHeadline">
+    <div id="setting-page">
+        <div id="dashboard" class="setting-page">
+            <div class="setting-page-wrapper">
+                <h1 class="page-headline">
                     Dashboard
                 </h1>
             </div>
         </div>
 
-        <div id="addImage" class="settingPage">
-            <div class="settingPageWrapper">
-                <h1 class="pageHeadline">
+        <div id="channel-overlay" class="setting-page">
+            <div class="setting-page-wrapper">
+                <h1 class="page-headline">
                     Channel Overlay
                 </h1>
 
-                <div id="placeImagePreview">
+                <div class="dropdown" id="channel-dropdown">
+                    <div class="dropdown-button">select channel</div>
+                    <div class="dropdown-content"></div>
+                </div>
+                <h2 id="selected-channel"></h2>
+                <div id="place-image-preview">
 
                 </div>
             </div>

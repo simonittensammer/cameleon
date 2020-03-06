@@ -24,7 +24,7 @@ p {
     color: #cccccc;
 }
 
-#topBar {
+#top-bar {
     width: 100vw;
     height: 8vh;
     position: absolute;
@@ -34,7 +34,7 @@ p {
     background: #4B367C;
 }
 
-#doneButton {
+#done-button {
     background: #2C2541;
     width: 6vw;
     height: 6vh;
@@ -51,7 +51,7 @@ p {
     transition: all .1s ease-in-out;
 }
 
-#doneButtonText {
+#done-button-text {
     color: #EBE3FF;
     font-weight: normal;
     text-decoration: none;
@@ -65,20 +65,20 @@ a:hover, a:visited, a:link, a:active {
     position: absolute;
     top: 0;
     left: 0;
-    width: 20vw;
+    width: 15vw;
     height: 100vh;
     background: #19171C;
     z-index: 600;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.3);
 }
 
-#navWrapper {
+#nav-wrapper {
     height: 90vh;
     width: 80%;
     margin: 5vh 10%;
 }
 
-#settingWrapper {
+#setting-wrapper {
     max-height: 90%;
     width: 100%;
     margin-top: 3vh;
@@ -99,12 +99,12 @@ a:hover, a:visited, a:link, a:active {
     transition: all .1s ease;
 }
 
-.activeSetting {
+.active-setting {
     background: #4B387A;
 }
 
-.settingPage {
-    width: 80vw;
+.setting-page {
+    width: 85vw;
     height: 92vh;
     position: absolute;
     bottom: 0;
@@ -116,20 +116,74 @@ a:hover, a:visited, a:link, a:active {
     display: block;
 }
 
-.settingPageWrapper {
+.setting-page-wrapper {
     width: 94%;
     height: 90%;
     margin: 3%;
 }
 
-.pageHeadline {
+.page-headline {
     color: #19171C;
 }
 
-#placeImagePreview {
+#place-image-preview {
     background: #EBE3FF;
     width: 50vw;
     height: 50vh;
 
     margin-top: 5vh;
+}
+
+#channel-overlay .page-headline {
+    display: inline-block;
+}
+
+.dropdown {
+    display: inline-block;
+    margin-left: 2vw;
+    position: absolute;
+}
+
+.dropdown-button {
+    background-color: #4B387A;
+    color: white;
+    padding: 1vw;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.dropdown-button-active {
+    border-radius: 10px 10px 0 0;
+}
+
+.dropdown-content {
+    position: relative;
+    width: 100%;
+    display: block;
+    background-color: white;
+    display: none;
+}
+
+.dropdown-content-active {
+    display: block;
+}
+
+.dropdown-channel {
+    line-height: 4vh;
+    cursor: pointer;
+    overflow-wrap: break-word;
+}
+
+.dropdown-channel span {
+    color: black;
+    margin-left: 0.75vw;
+}
+
+.dropdown-channel:hover {
+    background-color: rgb(230,230,230);
+}
+
+#selected-channel {
+    position: absolute;
+    color: black;
 }
