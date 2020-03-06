@@ -117,7 +117,7 @@ io.on('connection', socket => {
             if (err) throw err;
             var dbo = db.db("cameleon");
             
-            var newCam = { name: data.name, desc: data.desc ,ip: data.url };
+            var newCam = { id: ''+data.id, name: data.name, desc: data.desc ,ip: data.url };
             dbo.collection("cams").insertOne(newCam, (err, res) => {
               if (err) throw err;
               console.log("inserted: " + newCam.name);
@@ -128,16 +128,15 @@ io.on('connection', socket => {
     });
 
     socket.on('change-stream', data => {
-        console.log(data);
 
         MongoClient.connect(url, (err, db) => {
             if (err) throw err;
             var dbo = db.db("cameleon");
-
-            var query = { name: data };
+            
+            var query = {id: ''+data};         
             dbo.collection("cams").find(query).toArray((err, result) => {
                 if (err) throw err;
-                console.log(result[0].ip);
+                console.log('changed to ' + result[0].ip);
                 wCap = new cv.VideoCapture(result[0].ip);
                 db.close();
             });

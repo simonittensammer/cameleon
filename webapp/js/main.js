@@ -148,7 +148,7 @@ function selectChannel(streamId) {
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
-    socket.emit('change-stream', channels[streamId].name);
+    socket.emit('change-stream', streamId);
 
     stream.src = channels[streamId].ip;
 }
@@ -230,6 +230,7 @@ function addChannel() {
     channels[channels.length].ip = ipInput.value;*/
 
     const data = {
+        "id": channels.length,
         "name": nameInput.value,
         "desc": descriptionInput.value,
         "url":  ipInput.value
