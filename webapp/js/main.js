@@ -23,6 +23,9 @@ let fullscreenOpen = true;
 let welcomePageIsOpen = true;
 let addChannelBoxIsOpen = false;
 
+var channelNames = [];
+var channelUrls = [];
+var channelDescriptions = [];
 /*
 let channelNames = [
     "Image 1", 
