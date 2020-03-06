@@ -24,12 +24,12 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
-const FPS = 10;
+const FPS = 15;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
 //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
-const wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
+let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
 wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
 
@@ -125,7 +125,25 @@ io.on('connection', socket => {
             });
             
         });
-    })
+    });
+
+    socket.on('change-stream', data => {
+        console.log(data);
+
+        MongoClient.connect(url, (err, db) => {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+
+            var query = { name: data };
+            dbo.collection("cams").find(query).toArray((err, result) => {
+                if (err) throw err;
+                console.log(result[0].ip);
+                wCap = new cv.VideoCapture(result[0].ip);
+                db.close();
+            });
+
+        });
+    });
 })
 
 server.listen(3000)

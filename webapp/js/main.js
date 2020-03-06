@@ -47,7 +47,7 @@ let channelDescriptions = [
 ];
 */
 
-let channels;
+let channels = [];
 
 const socket = io();
 
@@ -57,6 +57,11 @@ socket.on('join', data => {
     generateChannelSelectors();
     socket.emit('joined');
 })
+
+socket.on('image', (image) => {
+    const imageElm = document.getElementById("browserVideo");
+    imageElm.src = `data:image/jpeg;base64,${image}`;
+});
 
 
 // HOVER EFFECTS
@@ -138,9 +143,12 @@ function selectChannel(streamId) {
     hideTutorial();
     closeChannelSelection();
 
+    browserVideo.style.display = "block";
     document.getElementById(activeChannelId).classList.remove("activeChannel");
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
+
+    socket.emit('change-stream', channels[streamId].name);
 
     stream.src = channels[streamId].ip;
 }
@@ -213,19 +221,28 @@ cancelButton.addEventListener("click", toggleAddChannelBox);
 saveButton.addEventListener("click", addChannel);
 
 function addChannel() {
-    channelNames[channelNames.length] = nameInput.value;
+   /* channelNames[channelNames.length] = nameInput.value;
     channelDescriptions[channelDescriptions.length] = descriptionInput.value;
-    channelUrls[channelUrls.length] = ipInput.value;
+    channelUrls[channelUrls.length] = ipInput.value;*/
 
-    generateChannelSelectors();
-    toggleAddChannelBox();
+   /* channels[channels.length].name = nameInput.value;
+    channels[channels.length].desc = descriptionInput.value;
+    channels[channels.length].ip = ipInput.value;*/
 
     const data = {
         "name": nameInput.value,
         "desc": descriptionInput.value,
         "url":  ipInput.value
     }
+
+    channels.push(data);
+
+    generateChannelSelectors();
+    toggleAddChannelBox();
+
     socket.emit('add-channel', data);
+
+    //location.reload();
 }
 
 function toggleAddChannelBox() {
