@@ -140,6 +140,7 @@ io.on('connection', socket => {
                     wCap = new cv.VideoCapture(result[0].ip);
                 }catch(err) {
                     console.log('unable to connect to this url: ' + result[0].ip);
+                    socket.emit('stream-change-error');
                 }
                 db.close();
             });

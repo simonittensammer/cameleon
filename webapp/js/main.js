@@ -63,6 +63,9 @@ socket.on('image', (image) => {
     imageElm.src = `data:image/jpeg;base64,${image}`;
 });
 
+socket.on('stream-change-error', () => {
+    browserVideo.style.display = 'none';
+})
 
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
@@ -149,8 +152,10 @@ function selectChannel(streamId) {
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
     socket.emit('change-stream', streamId);
+}
 
-    stream.src = channels[streamId].ip;
+function selectChannelCallback() {
+
 }
 
 // HIDE CONTROLLS AND CURSOR
