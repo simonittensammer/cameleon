@@ -21,6 +21,6 @@
 * Let the user create personalized messages, which are displayed in the video
 * Let the user schedule a personalized message, which is going to be shown on TV
 
-== Usefulnes
+== Usefulness
 * Users need less time to configure their surveillance systems
 * People are reminded about important things, if it is taking medidicine it could even be     life saving
