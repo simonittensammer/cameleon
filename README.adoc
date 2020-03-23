@@ -3,6 +3,9 @@
 === Lorenz Gruber, Simon Ittensammer, Simon Zweimüller
 ---
 
+== Github Pages
+https://simonittensammer.github.io/video-analyser/[Pflichtenheft]
+
 == Project Description
 Stream the recordings from different cameras to the same interface. +
 Save images, which can be viewed on the interface, when the motion sensor triggers. +
