@@ -1,3 +1,6 @@
+
+// # ELEMENTS #
+
 let activePage = document.getElementById('dashboard');
 let activePageButton = document.getElementById('dashboard-button');
 let imagePreview = document.getElementById('place-image-preview');
@@ -7,11 +10,59 @@ let objectSelect = document.getElementById('object-select');
 let xInput = document.getElementById('x-input');
 let yInput = document.getElementById('y-input');
 let scaleInput = document.getElementById('scale-input');
+let textInput = document.getElementById('text-input');
+let textLabel = document.getElementById('text-label');
 
-const socket = io();
+
+
+// # VARIABLES #
 
 let channels;
 let currentChannel;
+
+let overlayObjects = [];
+
+let objects = document.querySelectorAll('.overlay-object');
+let selectedObject = null;
+let grabbedObject = null;
+
+
+
+// # CODE #
+
+// simulated data from db
+overlayObjects.push(
+    {
+        'id': 0,
+        'type': 'txt',
+        'x': 100,
+        'y': 100,
+        'scale': 1,
+        'text': 'Hello World'
+    },
+    {
+        'id': 1,
+        'type': 'txt',
+        'x': 200,
+        'y': 200,
+        'scale': 2,
+        'text': 'Hello Cameleon'
+    },
+    {
+        'id': 3,
+        'type': 'img',
+        'x': 300,
+        'y': 300,
+        'scale': 0.5,
+        'text': 'Hello World'
+    }
+)
+
+
+
+// # SOCKET #
+
+const socket = io();
 
 socket.on('join', data => {
     console.log(data);
@@ -29,11 +80,17 @@ socket.on('join', data => {
 });
 
 
-// EVENT LISTENERS
+
+// # EVENT LISTENERS #
+
+// CHANNEL SELECTOR ON CHANGE
 
 channelSelect.addEventListener('change', (event) => {
     selectedChannelHeadline.innerText = event.target.value;
 });
+
+
+// OBJECT SELECTOR ON CHANGE 
 
 objectSelect.addEventListener('change', (event) => {
     addObject(event.target.value, 0, 0, 1, false);
@@ -41,9 +98,7 @@ objectSelect.addEventListener('change', (event) => {
 });
 
 
-let objects = document.querySelectorAll('.overlay-object');
-let selectedObject = null;
-let grabbedObject = null;
+// IMAGE PREVIEW ON MOUSE MOVE
 
 imagePreview.addEventListener('mousemove', (event) => {  
     if(grabbedObject != null) {
@@ -68,24 +123,48 @@ imagePreview.addEventListener('mousemove', (event) => {
     }
 });
 
+
+// IMAGE PREVIEW ON MOUSE UP
+
 imagePreview.addEventListener('mouseup', (event) => {  
     if(grabbedObject != null) {
         grabbedObject = null;
     }
 });
 
+
+// X-INPUT ON CHANGE
+
 xInput.addEventListener('change', (event) => {
     selectedObject.style.left = event.target.value + 'px';
 });
+
+
+// Y-INPUT ON CHANGE
 
 yInput.addEventListener('change', (event) => {
     selectedObject.style.top = event.target.value + 'px';
 });
 
+
+// SCALE-INPUT ON CHANGE
+
 scaleInput.addEventListener('change', (event) => {
     selectedObject.style.transform = 'scale(' + event.target.value + ')';
 });
 
+
+// TEXT-INPUT ON CHANGE
+
+textInput.addEventListener('change', (event) => {
+    selectedObject.innerText = event.target.value;
+});
+
+
+
+// # FUNCTIONS #
+
+// CHANGE SETTING PAGE
 
 function changeSettingPage(page) {
     activePage.style.display = 'none';
@@ -97,6 +176,9 @@ function changeSettingPage(page) {
     activePage.style.display = 'block';
     activePageButton.classList.add('active-setting');
 }
+
+
+// SET SELECTED
 
 function setSelected(element) {
 
@@ -124,16 +206,25 @@ function setSelected(element) {
     }
 }
 
+
+// SET INPUT VALUES
+
 function setInputValues(x, y) {
     xInput.value = x;
     yInput.value = y;
 }
+
+
+// TOGGLE VALUE INPUTS
 
 function toggleValueInputs(disabled) {
     xInput.disabled = disabled;
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
 }
+
+
+// ADD OBJECT
 
 function addObject(type, x, y, scale, persist) {
     let object;
