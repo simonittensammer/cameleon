@@ -10,11 +10,17 @@ let tutorialAddOrSelectChannel = document.getElementById("addOrSelectChannel");
 let tutorialpressF = document.getElementById("fForFullscreen");
 let addChannelButton = document.getElementById("addChannelButton");
 let addChannelBox = document.getElementById("addChannelBox");
+let editChannelBox = document.getElementById("editChannelBox");
 let nameInput = document.getElementById("channelNameInput");
 let descriptionInput = document.getElementById("channelDescriptionInput");
 let ipInput = document.getElementById("channelIpInput");
+let nameInputEdit = document.getElementById("channelNameInputEdit");
+let descriptionInputEdit = document.getElementById("channelDescriptionInputEdit");
+let ipInputEdit = document.getElementById("channelIpInputEdit");
 let cancelButton = document.getElementById("cancel");
 let saveButton = document.getElementById("save");
+let cancelEditButton = document.getElementById("cancelEdit");
+let saveEditButton = document.getElementById("saveEdit");
 let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
@@ -22,6 +28,7 @@ let timeOut;
 let fullscreenOpen = true;
 let welcomePageIsOpen = true;
 let addChannelBoxIsOpen = false;
+let editChannelBoxIsOpen = false;
 
 var channelNames = [];
 var channelUrls = [];
@@ -147,13 +154,15 @@ function generateChannelSelectors() {
             selectChannel(this.id);
         });
         channelElements[i].addEventListener("mouseover", function(){
-            channelElements[i].querySelector(".channelControlIcon").style.opacity = .9;
+            if(!editChannelBoxIsOpen) {
+                channelElements[i].querySelector(".channelControlIcon").style.opacity = .9;
+            }
         });
         channelElements[i].addEventListener("mouseout", function(){
             channelElements[i].querySelector(".channelControlIcon").style.opacity = 0;
         });
         channelElements[i].querySelector(".channelControlIcon").addEventListener("click", (event) => {
-            console.log('channel edit');
+            toggleEditChannelBox(i)
             event.stopPropagation();
         });
     }
@@ -242,6 +251,7 @@ function closeFullscreen() {
 // ADD CHANNEL
 addChannelButton.addEventListener("click", toggleAddChannelBox);
 cancelButton.addEventListener("click", toggleAddChannelBox);
+cancelEditButton.addEventListener("click", toggleEditChannelBox);
 saveButton.addEventListener("click", addChannel);
 
 function addChannel() {
@@ -277,5 +287,19 @@ function toggleAddChannelBox() {
     } else {
         addChannelBox.style.display = "block";
         addChannelBoxIsOpen = true;
+    }
+}
+
+function toggleEditChannelBox(id) {
+    if(editChannelBoxIsOpen) {
+        editChannelBox.style.display = "none";
+        editChannelBoxIsOpen = false;
+    } else {
+        editChannelBox.style.display = "block";
+        editChannelBoxIsOpen = true;
+
+        nameInputEdit.value = channels[id].name;
+        descriptionInputEdit.value = channels[id].desc;
+        ipInputEdit.value = channels[id].ip;
     }
 }

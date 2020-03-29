@@ -202,7 +202,7 @@ p {
     transform: translate(-50%, 1vh);
 }
 
-#addChannelBox {
+#addChannelBox, #editChannelBox {
     position: absolute;
     left: 50vw;
     top: 50vh;
@@ -243,6 +243,10 @@ form {
     font-size: 100%;
 }
 
+.addChannelInput:focus {
+    outline: 0;
+}
+
 .controllButton {
     float: right;
     height: 10%;
@@ -259,11 +263,11 @@ form {
     cursor: pointer;
 }
 
-#cancel {
+#cancel, #cancelEdit {
     background: #2C2541;
 }
 
-#save {
+#save, #saveEdit {
     background: #95CDA9;
 }
 
