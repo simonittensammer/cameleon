@@ -4,7 +4,7 @@
 ---
 
 == Github Pages
-https://simonittensammer.github.io/video-analyser/[Pflichtenheft]
+https://simonittensammer.github.io/video-analyser/[Github Page]
 
 == Project Description
 Stream the recordings from different cameras to the same interface. +
