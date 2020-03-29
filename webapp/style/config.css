@@ -135,8 +135,9 @@ a:hover, a:visited, a:link, a:active {
     background: #EBE3FF;
     width: 50vw;
     height: 28.125vw;
-
     margin-top: 5vh;
+    user-select: none;
+    position: relative;
 }
 
 #channel-overlay .page-headline {
@@ -163,7 +164,7 @@ option {
 
 .overlay-object {
     cursor: move;
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 0px;
     display: inline;
@@ -177,4 +178,12 @@ option {
 
 .selected {
     outline: lightseagreen solid 1px;
+}
+
+input {
+    color: black;
+}
+
+label {
+    color: black;
 }
