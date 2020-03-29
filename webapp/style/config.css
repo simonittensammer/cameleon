@@ -160,3 +160,21 @@ option {
     width: 30vw;
     margin-top: 5vh;
 }
+
+.overlay-object {
+    cursor: move;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: inline;
+    padding: 2px;
+}
+
+.text-object {
+    color: black;
+    user-select: none;
+}
+
+.selected {
+    outline: lightseagreen solid 1px;
+}
