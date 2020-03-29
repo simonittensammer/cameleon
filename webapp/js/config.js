@@ -121,6 +121,7 @@ imagePreview.addEventListener('mousemove', (event) => {
         grabbedObject.style.left = left + "px";
         grabbedObject.style.top = top + "px";          
     }
+    event.stopPropagation();
 });
 
 
@@ -130,6 +131,15 @@ imagePreview.addEventListener('mouseup', (event) => {
     if(grabbedObject != null) {
         grabbedObject = null;
     }
+    event.stopPropagation();
+});
+
+
+// IMAGE PREVIEW ON CLICK
+
+imagePreview.addEventListener('click', (event) => {
+    setSelected(null);
+    event.stopPropagation();
 });
 
 
@@ -243,11 +253,13 @@ function addObject(type, x, y, scale, persist) {
 
     object.addEventListener('click', (event) => {
         setSelected(event.target);
+        event.stopPropagation();
     });
 
     object.addEventListener('mousedown', (event) => {
         grabbedObject = event.target;
         setSelected(event.target);
+        event.stopPropagation();
     });
 
     imagePreview.appendChild(object);
