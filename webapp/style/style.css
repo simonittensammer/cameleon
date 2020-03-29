@@ -149,6 +149,8 @@ p {
     cursor: pointer;
     border-radius: .2rem;
     overflow: hidden;
+    position: relative;
+    z-index: 5;
 
     transition: all .1s ease;
 }
@@ -303,4 +305,20 @@ form {
         right: -20vw;
         opacity: 0;
     }
+}
+
+.channelControlIcon {
+    position: absolute;
+    width: 7.5%;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.3s;
+    opacity: 0;
+    z-index: 100;
+}
+
+.channelControlIcon:hover {
+    transform: translateY(-50%) scale(1.2);
+    opacity: 1;
 }

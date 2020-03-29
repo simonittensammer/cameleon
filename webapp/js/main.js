@@ -135,7 +135,8 @@ function generateChannelSelectors() {
     for (let i = 0; i < channels.length; i++) {
         document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
                                                                 "<h2>" + channels[i].name + "</h2>" +
-                                                                "<p class='channelDescriptions'><nobr>" + channels[i].desc + "</nobr></p>" +
+                                                                "<p class='channelDescriptions'>" + channels[i].desc + "</p>" +
+                                                                "<img src='img/edit.png' class='channelControlIcon'>" +
                                                                 "</div>";
     }
 
@@ -144,6 +145,16 @@ function generateChannelSelectors() {
     for (let i = 0; i < channelElements.length; i++) {
         channelElements[i].addEventListener("click", function(){
             selectChannel(this.id);
+        });
+        channelElements[i].addEventListener("mouseover", function(){
+            channelElements[i].querySelector(".channelControlIcon").style.opacity = .9;
+        });
+        channelElements[i].addEventListener("mouseout", function(){
+            channelElements[i].querySelector(".channelControlIcon").style.opacity = 0;
+        });
+        channelElements[i].querySelector(".channelControlIcon").addEventListener("click", (event) => {
+            console.log('channel edit');
+            event.stopPropagation();
         });
     }
 }
