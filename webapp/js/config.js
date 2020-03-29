@@ -1,9 +1,8 @@
 let activePage = document.getElementById('dashboard');
 let activePageButton = document.getElementById('dashboard-button');
-let dropdown = document.getElementById('channel-dropdown');
-let dropdownButton = dropdown.querySelector('.dropdown-button');
-let dropdownContent = dropdown.querySelector('.dropdown-content');
+let channelSelect = document.getElementById('channel-select');
 let selectedChannelHeadline = document.getElementById('selected-channel');
+let objectSelect = document.getElementById('object-select');
 
 const socket = io();
 
@@ -15,32 +14,23 @@ socket.on('join', data => {
     channels = data;
 
     for(let i = 0; i < channels.length; i++) {
-        let channel = document.createElement('div');
+        let channel = document.createElement('option');
+        channel.value = channels[i].name;
+        channel.innerText = channels[i].name;
         channel.id = channels[i].id;
-        channel.classList.add('dropdown-channel');
-        channel.innerHTML = '<span>' + channels[i].name + '</span>';
-        dropdownContent.appendChild(channel);
-
-        channel.addEventListener('click', () => {
-            currentChannel = channels[i];
-            selectedChannelHeadline.innerHTML = currentChannel.name;
-            toggleDropdown();
-        });
+        channelSelect.appendChild(channel);
     }
 
     socket.emit('joined');
 });
 
-dropdownButton.addEventListener('click', () => {
-    toggleDropdown(); 
+
+// EVENT LISTENERS
+
+channelSelect.addEventListener('change', (event) => {
+    selectedChannelHeadline.innerText = event.target.value;
+    
 });
-
-
-function toggleDropdown() {
-    dropdownContent.classList.toggle('dropdown-content-active');
-    dropdownButton.classList.toggle('dropdown-button-active');
-}
-
 
 
 function changeSettingPage(page) {

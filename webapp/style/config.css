@@ -126,10 +126,15 @@ a:hover, a:visited, a:link, a:active {
     color: #19171C;
 }
 
+#overlay-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 #place-image-preview {
     background: #EBE3FF;
     width: 50vw;
-    height: 50vh;
+    height: 28.125vw;
 
     margin-top: 5vh;
 }
@@ -138,52 +143,20 @@ a:hover, a:visited, a:link, a:active {
     display: inline-block;
 }
 
-.dropdown {
-    display: inline-block;
-    margin-left: 2vw;
-    position: absolute;
-}
-
-.dropdown-button {
-    background-color: #4B387A;
-    color: white;
-    padding: 1vw;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.dropdown-button-active {
-    border-radius: 10px 10px 0 0;
-}
-
-.dropdown-content {
-    position: relative;
-    width: 100%;
-    display: block;
-    background-color: white;
-    display: none;
-}
-
-.dropdown-content-active {
-    display: block;
-}
-
-.dropdown-channel {
-    line-height: 4vh;
-    cursor: pointer;
-    overflow-wrap: break-word;
-}
-
-.dropdown-channel span {
+select {
     color: black;
-    margin-left: 0.75vw;
 }
 
-.dropdown-channel:hover {
-    background-color: rgb(230,230,230);
+option {
+    color: black;
 }
 
 #selected-channel {
     position: absolute;
     color: black;
+}
+
+#overlay-properties {
+    width: 30vw;
+    margin-top: 5vh;
 }

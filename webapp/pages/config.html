@@ -22,7 +22,7 @@
         <div id="nav-wrapper">
             <h1 id="settings-headline">Configuration</h1>
 
-            <div id="settingWrapper">
+            <div id="setting-wrapper">
                 <div id="dashboard-button" class="setting active-setting" onclick="changeSettingPage('dashboard');">
                     <h2>Dashboard</h2>
                 </div>
@@ -49,14 +49,18 @@
                     Channel Overlay
                 </h1>
 
-                <div class="dropdown" id="channel-dropdown">
-                    <div class="dropdown-button">select channel</div>
-                    <div class="dropdown-content"></div>
-                </div>
+                <select id="channel-select">
+                    <option selected disabled hidden>select channel</option>
+                </select>
+
                 <h2 id="selected-channel"></h2>
-                <div id="place-image-preview">
+
+                <div id="overlay-wrapper">
+                    
+                    <div id="place-image-preview"></div>
 
                 </div>
+
             </div>
         </div>
     </div>
