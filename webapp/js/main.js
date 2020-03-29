@@ -21,6 +21,7 @@ let cancelButton = document.getElementById("cancel");
 let saveButton = document.getElementById("save");
 let cancelEditButton = document.getElementById("cancelEdit");
 let saveEditButton = document.getElementById("saveEdit");
+let editChannelId = -1;
 let channelElements;
 let channelSelectionVisible = false;
 let activeChannelId = 0;
@@ -253,6 +254,7 @@ addChannelButton.addEventListener("click", toggleAddChannelBox);
 cancelButton.addEventListener("click", toggleAddChannelBox);
 cancelEditButton.addEventListener("click", toggleEditChannelBox);
 saveButton.addEventListener("click", addChannel);
+saveEditButton.addEventListener("click", editChannel);
 
 function addChannel() {
    /* channelNames[channelNames.length] = nameInput.value;
@@ -280,6 +282,27 @@ function addChannel() {
     //location.reload();
 }
 
+function editChannel() {
+
+    channels[editChannelId].name = nameInputEdit.value;
+    channels[editChannelId].desc = descriptionInputEdit.value;
+    channels[editChannelId].ip = ipInputEdit.value;
+
+    const data = {
+        "id": editChannelId,
+        "name": nameInputEdit.value,
+        "desc": descriptionInputEdit.value,
+        "url":  ipInputEdit.value
+    }
+
+    toggleEditChannelBox(editChannelId);
+
+    socket.emit('edit-channel', data);
+
+    document.getElementById(editChannelId).querySelector("h2").innerText = nameInputEdit.value;
+    document.getElementById(editChannelId).querySelector(".channelDescriptions").innerText = descriptionInputEdit.value;
+}
+
 function toggleAddChannelBox() {
     if(addChannelBoxIsOpen) {
         addChannelBox.style.display = "none";
@@ -297,6 +320,8 @@ function toggleEditChannelBox(id) {
     } else {
         editChannelBox.style.display = "block";
         editChannelBoxIsOpen = true;
+
+        editChannelId = id;
 
         nameInputEdit.value = channels[id].name;
         descriptionInputEdit.value = channels[id].desc;

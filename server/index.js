@@ -127,6 +127,24 @@ io.on('connection', socket => {
         });
     });
 
+    socket.on('edit-channel', data => {
+
+        console.log(data);
+        
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            var myquery = { id: data.id + "" };
+            var newvalues = { $set: {name: data.name, desc: data.desc, ip: data.url } };
+            dbo.collection("cams").updateOne(myquery, newvalues, function(err, res) {
+              if (err) throw err;
+              console.log("cam " + data.id + " edited");
+              db.close();
+            });
+          });
+    });
+
     socket.on('change-stream', data => {
 
         MongoClient.connect(url, (err, db) => {
