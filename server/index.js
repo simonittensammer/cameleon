@@ -131,7 +131,6 @@ io.on('connection', socket => {
 
         console.log(data);
         
-
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db("cameleon");
@@ -140,6 +139,22 @@ io.on('connection', socket => {
             dbo.collection("cams").updateOne(myquery, newvalues, function(err, res) {
               if (err) throw err;
               console.log("cam " + data.id + " edited");
+              db.close();
+            });
+          });
+    });
+
+    socket.on('delete-channel', data => {
+
+        console.log(data);
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            var myquery = { id: data.id + "" };
+            dbo.collection("cams").deleteOne(myquery, function(err, obj) {
+              if (err) throw err;
+              console.log("cam " + data.id + " deleted");
               db.close();
             });
           });

@@ -21,6 +21,10 @@ let cancelButton = document.getElementById("cancel");
 let saveButton = document.getElementById("save");
 let cancelEditButton = document.getElementById("cancelEdit");
 let saveEditButton = document.getElementById("saveEdit");
+let saveDeleteButton = document.getElementById("saveDelete");
+let cancelDeleteButton = document.getElementById("cancelDelete");
+let deleteChannelButton = document.getElementById("deleteChannelButton");
+let deleteChannelBox = document.getElementById("deleteChannelVerifyBox");
 let editChannelId = -1;
 let channelElements;
 let channelSelectionVisible = false;
@@ -30,6 +34,7 @@ let fullscreenOpen = true;
 let welcomePageIsOpen = true;
 let addChannelBoxIsOpen = false;
 let editChannelBoxIsOpen = false;
+let deleteChannelBoxIsOpen = false;
 
 var channelNames = [];
 var channelUrls = [];
@@ -61,7 +66,10 @@ const socket = io();
 
 socket.on('join', data => {
     console.log(data);
-    channels = data;
+    data.forEach(channel => {
+        channels[channel.id] = channel;
+    });
+    
     generateChannelSelectors();
     socket.emit('joined');
 })
@@ -140,33 +148,34 @@ function closeChannelSelection() {
 // GENERATE CHANNEL SELECTORS
 function generateChannelSelectors() {
     document.getElementById("channelWrapper").innerHTML = "";
-    for (let i = 0; i < channels.length; i++) {
-        document.getElementById("channelWrapper").innerHTML +=  "<div id='" + i + "' class='channel'>" +
-                                                                "<h2>" + channels[i].name + "</h2>" +
-                                                                "<p class='channelDescriptions'>" + channels[i].desc + "</p>" +
+    channels.forEach(channel => {
+        document.getElementById("channelWrapper").innerHTML +=  "<div id='" + channel.id + "' class='channel'>" +
+                                                                "<h2>" + channel.name + "</h2>" +
+                                                                "<p class='channelDescriptions'>" + channel.desc + "</p>" +
                                                                 "<img src='img/edit.png' class='channelControlIcon'>" +
                                                                 "</div>";
-    }
+    });
 
     channelElements = document.getElementsByClassName("channel");
     
-    for (let i = 0; i < channelElements.length; i++) {
-        channelElements[i].addEventListener("click", function(){
+    channels.forEach(channel => {
+        let channelElement = document.getElementById(channel.id);
+        channelElement.addEventListener("click", function(){
             selectChannel(this.id);
         });
-        channelElements[i].addEventListener("mouseover", function(){
+        channelElement.addEventListener("mouseover", function(){
             if(!editChannelBoxIsOpen) {
-                channelElements[i].querySelector(".channelControlIcon").style.opacity = .9;
+                channelElement.querySelector(".channelControlIcon").style.opacity = .9;
             }
         });
-        channelElements[i].addEventListener("mouseout", function(){
-            channelElements[i].querySelector(".channelControlIcon").style.opacity = 0;
+        channelElement.addEventListener("mouseout", function(){
+            channelElement.querySelector(".channelControlIcon").style.opacity = 0;
         });
-        channelElements[i].querySelector(".channelControlIcon").addEventListener("click", (event) => {
-            toggleEditChannelBox(i)
+        channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
+            toggleEditChannelBox(event.target.parentNode.id);
             event.stopPropagation();
         });
-    }
+    });
 }
 
 // Select Channel
@@ -253,8 +262,12 @@ function closeFullscreen() {
 addChannelButton.addEventListener("click", toggleAddChannelBox);
 cancelButton.addEventListener("click", toggleAddChannelBox);
 cancelEditButton.addEventListener("click", toggleEditChannelBox);
+cancelDeleteButton.addEventListener("click", toggleDeleteChannelBox);
 saveButton.addEventListener("click", addChannel);
 saveEditButton.addEventListener("click", editChannel);
+saveDeleteButton.addEventListener("click", deleteChannel);
+deleteChannelButton.addEventListener("click", toggleDeleteChannelBox);
+
 
 function addChannel() {
    /* channelNames[channelNames.length] = nameInput.value;
@@ -266,7 +279,7 @@ function addChannel() {
     channels[channels.length].ip = ipInput.value;*/
 
     const data = {
-        "id": channels.length,
+        "id": parseInt(channels[channels.length-1].id) + 1,
         "name": nameInput.value,
         "desc": descriptionInput.value,
         "url":  ipInput.value
@@ -303,6 +316,20 @@ function editChannel() {
     document.getElementById(editChannelId).querySelector(".channelDescriptions").innerText = descriptionInputEdit.value;
 }
 
+function deleteChannel() {
+
+    const data = {
+        "id": editChannelId
+    }
+
+    socket.emit("delete-channel", data)
+
+    deleteChannelBox.style.display = "none";
+    deleteChannelBoxIsOpen = false;
+
+    document.getElementById(editChannelId).parentNode.removeChild(document.getElementById(editChannelId));
+}
+
 function toggleAddChannelBox() {
     if(addChannelBoxIsOpen) {
         addChannelBox.style.display = "none";
@@ -326,5 +353,20 @@ function toggleEditChannelBox(id) {
         nameInputEdit.value = channels[id].name;
         descriptionInputEdit.value = channels[id].desc;
         ipInputEdit.value = channels[id].ip;
+    }
+}
+
+function toggleDeleteChannelBox() {
+    if(deleteChannelBoxIsOpen) {     
+        deleteChannelBox.style.display = "none";
+        deleteChannelBoxIsOpen = false;
+        toggleEditChannelBox(editChannelId);
+    } else {
+        deleteChannelBox.style.display = "block";
+        deleteChannelBoxIsOpen = true;
+
+        toggleEditChannelBox(editChannelId);
+
+        deleteChannelBox.querySelector("h2").innerHTML = "Delete Channel " + channels[editChannelId].name + "?";
     }
 }
