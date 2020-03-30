@@ -28,6 +28,6 @@ We assume that this feature will be finshed by april 15th.
 
 === Next Steps
 
-Starting in the week of april 6th, we will work on motion detection. +
+Starting with april 16th, we will work on motion detection. +
 This feature will the user allow to receive notifications if movement is detected by the current camera. +
 In this case the application will also be recording short videoclips.
