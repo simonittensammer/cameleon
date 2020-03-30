@@ -24,7 +24,7 @@ After the streams where added to the database, the user is still able to change 
 === In Progress
 
 We are currently working on a feature, which allows the user to lay texts, images and other objects over his streams. +
-We assume that this feature will be finshed by april 6th.
+We assume that this feature will be finshed by april 15th.
 
 === Next Steps
 
