@@ -69,6 +69,12 @@ socket.on('join', data => {
     data.forEach(channel => {
         channels[channel.id] = channel;
     });
+
+    let id = 0;
+    while(channels[id] === undefined){
+        id ++;     
+    }
+    activeChannelId = channels[id].id;
     
     generateChannelSelectors();
     socket.emit('joined');
@@ -180,6 +186,8 @@ function generateChannelSelectors() {
 
 // Select Channel
 function selectChannel(streamId) {
+    console.log(streamId);
+    
     welcomePageIsOpen = false;
     hideTutorial();
     closeChannelSelection();
