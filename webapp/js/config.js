@@ -66,7 +66,6 @@ const socket = io();
 
 socket.on('join', data => {
     console.log(data);
-    channels = data;
 
     for(let i = 0; i < channels.length; i++) {
         let channel = document.createElement('option');
@@ -161,6 +160,7 @@ yInput.addEventListener('change', (event) => {
 
 scaleInput.addEventListener('change', (event) => {
     selectedObject.style.transform = 'scale(' + event.target.value + ')';
+    selectedObject.querySelector('.selection-box').style.outline = 'lightseagreen solid ' + 2/event.target.value + 'px';
 });
 
 
@@ -194,7 +194,7 @@ function setSelected(element) {
 
     if(element === null) {
         if(selectedObject != null) {
-            selectedObject.classList.remove('selected');
+            selectedObject.querySelector('.selection-box').classList.remove('selected');
         }
         selectedObject = null;
         setInputValues('', '');
@@ -203,10 +203,10 @@ function setSelected(element) {
 
     } else {
         if(selectedObject != null) {
-            selectedObject.classList.remove('selected');
+            selectedObject.querySelector('.selection-box').classList.remove('selected');
         }
         selectedObject = element;
-        selectedObject.classList.add('selected');
+        selectedObject.querySelector('.selection-box').classList.add('selected');
         setInputValues(
             selectedObject.style.left.replace('px', ''),
             selectedObject.style.top.replace('px', ''));
@@ -237,6 +237,7 @@ function toggleValueInputs(disabled) {
 // ADD OBJECT
 
 function addObject(type, x, y, scale, persist) {
+
     let object;
     
     if(type === 'txt') {
@@ -262,6 +263,10 @@ function addObject(type, x, y, scale, persist) {
         event.stopPropagation();
     });
 
+    let selectionBox = document.createElement('div');
+    selectionBox.classList.add('selection-box');
+
+    object.appendChild(selectionBox);
     imagePreview.appendChild(object);
 
     console.log(object);

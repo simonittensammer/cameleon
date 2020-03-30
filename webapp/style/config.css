@@ -168,7 +168,7 @@ option {
     top: 0px;
     left: 0px;
     display: inline;
-    padding: 2px;
+    overflow: visible;
 }
 
 .text-object {
@@ -176,8 +176,21 @@ option {
     user-select: none;
 }
 
+.selection-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    outline: lightseagreen solid 2px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1) !important;
+
+    transition: 0.2s;
+}
+
 .selected {
-    outline: lightseagreen solid 1px;
+    opacity: 1;
 }
 
 input {
