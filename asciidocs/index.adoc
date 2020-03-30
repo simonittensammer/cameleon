@@ -5,6 +5,9 @@ Simon Ittensammer
 :icons: font
 :toc: left
 
+Github:
+https://github.com/simonittensammer/video-analyser
+
 == Pflichtenheft
 
 === Ausgangssituation
@@ -71,12 +74,21 @@ image:design.png[]
 [plantuml,use-case,png]
 ----
 @startuml
-User --> (view surveillance stream)
-User --> (personalize the streams)
-User --> (view past surveillance footage)
-User --> (get notified when movement is detected)
+left to right direction
+actor User
+rectangle cameleon {
+    User -- (view video stream)
+    User -- (add overlay)
+    User -- (motion detection)
+    User -- (notification)
+    User -- (view recordings)
+}
 @enduml
 ----
+
+=== Sprints
+
+image:sprints.png[]
 
 === GANTT-Diagramm
 
