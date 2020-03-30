@@ -332,28 +332,31 @@ function deleteChannel() {
 
     socket.emit("delete-channel", data)
 
-    deleteChannelBox.style.display = "none";
+    deleteChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
     deleteChannelBoxIsOpen = false;
 
     document.getElementById(editChannelId).parentNode.removeChild(document.getElementById(editChannelId));
 }
 
 function toggleAddChannelBox() {
+    console.log('add channel toggle');
+    
     if(addChannelBoxIsOpen) {
-        addChannelBox.style.display = "none";
+        addChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
         addChannelBoxIsOpen = false;
     } else {
-        addChannelBox.style.display = "block";
+        addChannelBox.style.transform = "translate(-50%, -50%) scale(1)";
         addChannelBoxIsOpen = true;
     }
 }
 
 function toggleEditChannelBox(id) {
+    console.log('edit channel toggle');
     if(editChannelBoxIsOpen) {
-        editChannelBox.style.display = "none";
+        editChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
         editChannelBoxIsOpen = false;
     } else {
-        editChannelBox.style.display = "block";
+        editChannelBox.style.transform = "translate(-50%, -50%) scale(1)";
         editChannelBoxIsOpen = true;
 
         editChannelId = id;
@@ -366,11 +369,11 @@ function toggleEditChannelBox(id) {
 
 function toggleDeleteChannelBox() {
     if(deleteChannelBoxIsOpen) {     
-        deleteChannelBox.style.display = "none";
+        deleteChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
         deleteChannelBoxIsOpen = false;
         toggleEditChannelBox(editChannelId);
     } else {
-        deleteChannelBox.style.display = "block";
+        deleteChannelBox.style.transform = "translate(-50%, -50%) scale(1)";
         deleteChannelBoxIsOpen = true;
 
         toggleEditChannelBox(editChannelId);
