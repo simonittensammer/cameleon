@@ -145,19 +145,20 @@ p {
     margin: 2vh 0;
     width: 90%;
     height: auto;
-    background: #2C2541;
+    background: rgb(76, 60, 121);
     cursor: pointer;
     border-radius: .2rem;
     overflow: hidden;
     position: relative;
     z-index: 5;
+    box-shadow: 0 .5vh 0 0 rgba(12, 8, 37, 0.5);
 
     transition: all .1s ease;
 }
 
 .channel:hover {
     transform: translateY(-.5vh);
-    box-shadow: 0 1vh 0 0 rgba(0, 0, 0, .5);
+    box-shadow: 0 1vh 0 0 rgba(12, 8, 37, 0.5);
 }
 
 .channel:active {
@@ -166,7 +167,7 @@ p {
 }
 
 .activeChannel {
-    background: #4B387A;
+    background: rgb(112, 85, 185);
 }
 
 .channelDescription {
@@ -174,13 +175,13 @@ p {
 }
 
 #addChannelButton {
-    background: #4B367C;
+    background: rgb(76, 60, 121);
     width: 8vh;
     height: 8vh;
     line-height: 8vh;
     text-align: center;
     font-size: 2em;
-    border-radius: 2rem;
+    border-radius: 50%;
     cursor: pointer;
     user-select: none;
 
@@ -188,33 +189,36 @@ p {
     left: 50%;
     transform: translate(-50%, 0);
 
-    box-shadow: 0 1vh 0 0 #2C2541;
+    box-shadow: 0 .9vh 0 0 rgba(12, 8, 37, 0.5);
     transition: all .1s ease-in-out;
 }
 
 #addChannelButton:hover {
-    box-shadow: 0 .5vh 0 0 #2C2541;
-    transform: translate(-50%, .5vh);
+    box-shadow: 0 .5vh 0 0 rgba(12, 8, 37, 0.5);
+    transform: translate(-50%, .4vh);
 }
 
 #addChannelButton:active {
-    box-shadow: 0 0 0 0 #2C2541;
-    transform: translate(-50%, 1vh);
+    box-shadow: 0 0 0 0 rgba(12, 8, 37, 0.5);
+    transform: translate(-50%, .9vh);
 }
 
 #addChannelBox, #editChannelBox {
     position: absolute;
     left: 50vw;
     top: 50vh;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
 
     height: 60vh;
     width: 27.5vw;
-    background: #19171C;
+    background: rgba(25, 23, 28, 0.98);
     border-radius: 1rem;
 
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.65);
+
     padding: 5vh;
-    display: none;
+
+    transition: 0.2s;
 }
 
 form {
@@ -235,7 +239,7 @@ form {
     height: 10%;
 
     border: none;
-    background: #2C2541;
+    background: rgba(44, 37, 65, 0.8);
 
     border-radius: 2rem;
 
@@ -254,13 +258,17 @@ form {
     padding: 0 2.5%;
     min-width: 20%;
     font-size: 125%;
+    font-weight: bold;
 
     border-radius: .5rem;
     border: none;
+
+    transition: 0.2s;
 }
 
 .controllButton:hover {
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 .deleteControllButton {
@@ -271,7 +279,12 @@ form {
     border-radius: .5rem;
     border: none;
 
+    transition: 0.2s;
+}
+
+.deleteControllButton:hover {
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 #cancel, #cancelEdit {
@@ -279,7 +292,8 @@ form {
 }
 
 #save, #saveEdit {
-    background: #95CDA9;
+    background: rgb(114, 202, 145);
+    color: #2C2541;
 }
 
 #saveDelete {
@@ -373,14 +387,17 @@ form {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
 
     height: 15vh;
     width: 15vw;
-    background: #19171C;
+    background: rgba(25, 23, 28, 0.98);
     border-radius: 1rem;
     text-align: center;
 
+    box-shadow: 0 7px 15px rgba(0,0,0,0.65);
+
     padding: 5vh;
-    display: none;
+
+    transition: 0.2s;
 }
