@@ -34,7 +34,7 @@ let grabbedObject = null;
 // simulated data from db
 overlayObjects.push(
     {
-        'channel-id': 1,
+        'channelId': 1,
         'id': 0,
         'type': 'txt',
         'x': 100,
@@ -43,7 +43,7 @@ overlayObjects.push(
         'text': 'Hello World'
     },
     {
-        'channel-id': 1,
+        'channelId': 1,
         'id': 1,
         'type': 'txt',
         'x': 200,
@@ -52,13 +52,14 @@ overlayObjects.push(
         'text': 'Hello Cameleon'
     },
     {
-        'channel-id': 1,
+        'channelId': 1,
         'id': 2,
         'type': 'img',
         'x': 300,
         'y': 300,
         'scale': 0.5,
-        'dataURL': 'Hello World'
+        'dataURL': 'Hello World',
+        'imageName': 'image.png'
     }
 )
 
@@ -120,6 +121,7 @@ function setSelected(element) {
         setInputValues('', '');
         scaleInput.value = '';
         textInput.value = '';
+        imageInput.value = '';
         toggleValueInputs(true);
         
     } else {
@@ -133,9 +135,14 @@ function setSelected(element) {
             selectedObject.style.top.replace('%', ''));
         scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');   
 
-        if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
+        let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+
+        if(overlayObject.type === 'txt') {
             textInput.value = selectedObject.querySelector('span').innerText; 
-        } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
+            imageInput.value = '';
+        } else if(overlayObject.type === 'img') {
+            textInput.value = ''; 
+            //imageInput.value = overlayObject.imageName;
         }
         
         toggleValueInputs(false);    
@@ -159,27 +166,17 @@ function toggleValueInputs(disabled) {
     scaleInput.disabled = disabled;
 
     if(disabled) {
-        console.log('disabled');
-        
         textInput.disabled = disabled;
         imageInput.disabled = disabled;
     } else {
-        console.log('enabled');
-        
         if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
-            console.log('txt');
-            
             textInput.disabled = disabled;
             imageInput.disabled = true;
         } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
-            console.log(imageInput);
-            
             imageInput.disabled = disabled;
             textInput.disabled = true;
         } 
     }
-
-    
 }
 
 
@@ -225,7 +222,8 @@ function addObject(channelId, id, type, x, y, scale, persist) {
                 'x': x,
                 'y': y,
                 'scale': scale,
-                'dataURL': ''
+                'dataURL': '',
+                'imageName': ''
             }
         );
     }
@@ -277,8 +275,6 @@ function addEventListeners() {
 channelSelect.addEventListener('change', (event) => {
     selectedChannelHeadline.innerText = event.target.value;   
 
-    console.log(event.target.options.selectedIndex);
-
     let channelId = event.target.options[event.target.options.selectedIndex].id.replace('channel-option-', ''); 
     currentChannel =  channels[channelId];
 
@@ -289,8 +285,6 @@ channelSelect.addEventListener('change', (event) => {
 // OBJECT SELECTOR ON CHANGE 
 
 objectSelect.addEventListener('change', (event) => {
-    console.log(event.target.value);
-    
     addObject(currentChannel.id, overlayObjects.length, event.target.value, 50, 50, 1, false);
     event.target.value = 'default';
 });
@@ -300,8 +294,6 @@ objectSelect.addEventListener('change', (event) => {
 
 imagePreview.addEventListener('mousemove', (event) => {  
     if(grabbedObject != null) {
-
-
         let relativeMovementX =  event.movementX / imagePreview.clientWidth * 100;
         let relativeMovementY =  event.movementY / imagePreview.clientHeight * 100;
 
@@ -320,6 +312,10 @@ imagePreview.addEventListener('mousemove', (event) => {
         }
         
         setInputValues(left, top);
+
+        let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+        overlayObject.x = left;
+        overlayObject.y = top;
 
         grabbedObject.style.left = left + "%";
         grabbedObject.style.top = top + "%";          
@@ -350,6 +346,9 @@ imagePreview.addEventListener('click', (event) => {
 
 xInput.addEventListener('change', (event) => {
     selectedObject.style.left = event.target.value + '%';
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.x = event.target.value;
 });
 
 
@@ -357,6 +356,9 @@ xInput.addEventListener('change', (event) => {
 
 yInput.addEventListener('change', (event) => {
     selectedObject.style.top = event.target.value + '%';
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.y = event.target.value;
 });
 
 
@@ -365,6 +367,9 @@ yInput.addEventListener('change', (event) => {
 scaleInput.addEventListener('change', (event) => {
     selectedObject.style.transform = 'scale(' + event.target.value + ')';
     selectedObject.querySelector('.selection-box').style.outline = 'lightseagreen solid ' + 2/event.target.value + 'px';
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.scale = event.target.value;
 });
 
 
@@ -372,6 +377,9 @@ scaleInput.addEventListener('change', (event) => {
 
 textInput.addEventListener('change', (event) => {
     selectedObject.querySelector('span').innerText = event.target.value;
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.text = event.target.value;
 });
 
 
@@ -381,5 +389,14 @@ imageInput.addEventListener('change', async (event) => {
     let file = event.target.files[0];
     let dataURL = await getBase64(file);
     selectedObject.querySelector('img').src = dataURL;
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.dataURL = dataURL;
+
+    if(event.target.value.includes('\\')) {
+        overlayObject.imageName = event.target.value.split('\\')[event.target.value.split('\\').length - 1];
+    } else {
+        overlayObject.imageName = event.target.value.split('/')[event.target.value.split('/').length - 1];
+    }
 });
 }
