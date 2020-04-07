@@ -181,6 +181,15 @@ option {
     pointer-events: none;
 }
 
+.image-object {
+    width: 10%;
+}
+
+.image-object > img {
+    pointer-events: none;
+    width: 100%;
+}
+
 .selection-box {
     position: absolute;
     width: 100%;

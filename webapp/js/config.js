@@ -12,7 +12,7 @@ let xInput = document.getElementById('x-input');
 let yInput = document.getElementById('y-input');
 let scaleInput = document.getElementById('scale-input');
 let textInput = document.getElementById('text-input');
-let textLabel = document.getElementById('text-label');
+let imageInput = document.getElementById('image-input');
 
 
 
@@ -121,7 +121,7 @@ function setSelected(element) {
         scaleInput.value = '';
         textInput.value = '';
         toggleValueInputs(true);
-
+        
     } else {
         if(selectedObject != null) {
             selectedObject.querySelector('.selection-box').classList.remove('selected');
@@ -132,9 +132,13 @@ function setSelected(element) {
             selectedObject.style.left.replace('%', ''),
             selectedObject.style.top.replace('%', ''));
         scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');   
-        textInput.value = selectedObject.querySelector('span').innerText; 
-        toggleValueInputs(false);    
+
+        if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
+            textInput.value = selectedObject.querySelector('span').innerText; 
+        } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
+        }
         
+        toggleValueInputs(false);    
     }
 }
 
@@ -153,7 +157,29 @@ function toggleValueInputs(disabled) {
     xInput.disabled = disabled;
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
-    textInput.disabled = disabled;
+
+    if(disabled) {
+        console.log('disabled');
+        
+        textInput.disabled = disabled;
+        imageInput.disabled = disabled;
+    } else {
+        console.log('enabled');
+        
+        if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
+            console.log('txt');
+            
+            textInput.disabled = disabled;
+            imageInput.disabled = true;
+        } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
+            console.log(imageInput);
+            
+            imageInput.disabled = disabled;
+            textInput.disabled = true;
+        } 
+    }
+
+    
 }
 
 
@@ -177,6 +203,29 @@ function addObject(channelId, id, type, x, y, scale, persist) {
                 'y': y,
                 'scale': scale,
                 'text': 'Text Object'
+            }
+        );
+    }
+
+    if(type === 'img') {
+        object = document.createElement('div');
+        img = document.createElement('img');
+
+        object.classList.add('image-object');
+
+        img.src = 'https://img.icons8.com/ios/500/no-image.png';
+
+        object.appendChild(img);
+
+        overlayObjects.push(
+            {
+                'channelId': channelId,
+                'id': id,
+                'type': 'img',
+                'x': x,
+                'y': y,
+                'scale': scale,
+                'dataURL': ''
             }
         );
     }
@@ -207,6 +256,15 @@ function addObject(channelId, id, type, x, y, scale, persist) {
     imagePreview.appendChild(object);
 
     console.log(object);
+}
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
 }
 
 
@@ -314,5 +372,14 @@ scaleInput.addEventListener('change', (event) => {
 
 textInput.addEventListener('change', (event) => {
     selectedObject.querySelector('span').innerText = event.target.value;
+});
+
+
+// IMAGE-INPUT ON CHANGE
+
+imageInput.addEventListener('change', async (event) => {
+    let file = event.target.files[0];
+    let dataURL = await getBase64(file);
+    selectedObject.querySelector('img').src = dataURL;
 });
 }
