@@ -5,6 +5,7 @@ let activePage = document.getElementById('dashboard');
 let activePageButton = document.getElementById('dashboard-button');
 let imagePreview = document.getElementById('place-image-preview');
 let channelSelect = document.getElementById('channel-select');
+let channelSelectOptions;
 let selectedChannelHeadline = document.getElementById('selected-channel');
 let objectSelect = document.getElementById('object-select');
 let xInput = document.getElementById('x-input');
@@ -17,7 +18,7 @@ let textLabel = document.getElementById('text-label');
 
 // # VARIABLES #
 
-let channels;
+let channels = [];
 let currentChannel;
 
 let overlayObjects = [];
@@ -33,6 +34,7 @@ let grabbedObject = null;
 // simulated data from db
 overlayObjects.push(
     {
+        'channel-id': 1,
         'id': 0,
         'type': 'txt',
         'x': 100,
@@ -41,6 +43,7 @@ overlayObjects.push(
         'text': 'Hello World'
     },
     {
+        'channel-id': 1,
         'id': 1,
         'type': 'txt',
         'x': 200,
@@ -49,12 +52,13 @@ overlayObjects.push(
         'text': 'Hello Cameleon'
     },
     {
-        'id': 3,
+        'channel-id': 1,
+        'id': 2,
         'type': 'img',
         'x': 300,
         'y': 300,
         'scale': 0.5,
-        'text': 'Hello World'
+        'dataURL': 'Hello World'
     }
 )
 
@@ -67,107 +71,23 @@ const socket = io();
 socket.on('join', data => {
     console.log(data);
 
-    for(let i = 0; i < channels.length; i++) {
-        let channel = document.createElement('option');
-        channel.value = channels[i].name;
-        channel.innerText = channels[i].name;
-        channel.id = channels[i].id;
-        channelSelect.appendChild(channel);
-    }
+    data.forEach(channel => {
+        channels[channel.id] = channel;
+    });
+
+    channels.forEach(channel => {
+        let channelOption = document.createElement('option');
+        channelOption.value = channel.name;
+        channelOption.innerText = channel.name;
+        channelOption.id = 'channel-option-' + channel.id;
+        channelSelect.appendChild(channelOption);
+    });
+
+    channelSelectOptions = channelSelect.querySelectorAll('option');
+
+    addEventListeners();
 
     socket.emit('joined');
-});
-
-
-
-// # EVENT LISTENERS #
-
-// CHANNEL SELECTOR ON CHANGE
-
-channelSelect.addEventListener('change', (event) => {
-    selectedChannelHeadline.innerText = event.target.value;
-});
-
-
-// OBJECT SELECTOR ON CHANGE 
-
-objectSelect.addEventListener('change', (event) => {
-    addObject(event.target.value, 0, 0, 1, false);
-    event.target.value = 'default';
-});
-
-
-// IMAGE PREVIEW ON MOUSE MOVE
-
-imagePreview.addEventListener('mousemove', (event) => {  
-    if(grabbedObject != null) {
-        let left;
-        let top;
-
-        if(grabbedObject.style.left != '') {
-            left = parseInt(grabbedObject.style.left.replace('px', '')) + event.movementX;
-        } else {
-            left = event.movementX;
-        }
-        if(grabbedObject.style.top != '') {
-            top = parseInt(grabbedObject.style.top.replace('px', '')) + event.movementY;
-        } else {
-            top = event.movementY;
-        }
-
-        setInputValues(left, top);
-
-        grabbedObject.style.left = left + "px";
-        grabbedObject.style.top = top + "px";          
-    }
-    event.stopPropagation();
-});
-
-
-// IMAGE PREVIEW ON MOUSE UP
-
-imagePreview.addEventListener('mouseup', (event) => {  
-    if(grabbedObject != null) {
-        grabbedObject = null;
-    }
-    event.stopPropagation();
-});
-
-
-// IMAGE PREVIEW ON CLICK
-
-imagePreview.addEventListener('click', (event) => {
-    setSelected(null);
-    event.stopPropagation();
-});
-
-
-// X-INPUT ON CHANGE
-
-xInput.addEventListener('change', (event) => {
-    selectedObject.style.left = event.target.value + 'px';
-});
-
-
-// Y-INPUT ON CHANGE
-
-yInput.addEventListener('change', (event) => {
-    selectedObject.style.top = event.target.value + 'px';
-});
-
-
-// SCALE-INPUT ON CHANGE
-
-scaleInput.addEventListener('change', (event) => {
-    selectedObject.style.transform = 'scale(' + event.target.value + ')';
-    selectedObject.querySelector('.selection-box').style.outline = 'lightseagreen solid ' + 2/event.target.value + 'px';
-});
-
-
-// TEXT-INPUT ON CHANGE
-
-textInput.addEventListener('change', (event) => {
-    selectedObject.innerText = event.target.value;
 });
 
 
@@ -208,8 +128,8 @@ function setSelected(element) {
         selectedObject = element;
         selectedObject.querySelector('.selection-box').classList.add('selected');
         setInputValues(
-            selectedObject.style.left.replace('px', ''),
-            selectedObject.style.top.replace('px', ''));
+            selectedObject.style.left.replace('%', ''),
+            selectedObject.style.top.replace('%', ''));
         scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');    
         toggleValueInputs(false);    
         
@@ -236,7 +156,7 @@ function toggleValueInputs(disabled) {
 
 // ADD OBJECT
 
-function addObject(type, x, y, scale, persist) {
+function addObject(channelId, id, type, x, y, scale, persist) {
 
     let object;
     
@@ -244,12 +164,26 @@ function addObject(type, x, y, scale, persist) {
         object = document.createElement('div');
         object.classList.add('text-object');
         object.innerText = 'Text Object';
+
+        overlayObjects.push(
+            {
+                'channelId': channelId,
+                'id': id,
+                'type': 'txt',
+                'x': x,
+                'y': y,
+                'scale': scale,
+                'text': 'Text Object'
+            }
+        );
     }
+
+    object.id = 'overlay-object-' + id;
 
     object.classList.add('overlay-object');
     
-    object.style.left = x + 'px';
-    object.style.top = y + 'px';
+    object.style.left = x + '%';
+    object.style.top = y + '%';
     object.style.transform = 'scale(' + scale + ')';
 
     object.addEventListener('click', (event) => {
@@ -270,4 +204,116 @@ function addObject(type, x, y, scale, persist) {
     imagePreview.appendChild(object);
 
     console.log(object);
+}
+
+
+// ADD EVENT LISTENERS
+
+function addEventListeners() {
+
+// CHANNEL SELECTOR ON CHANGE
+
+channelSelect.addEventListener('change', (event) => {
+    selectedChannelHeadline.innerText = event.target.value;   
+
+    console.log(event.target.options.selectedIndex);
+
+    let channelId = event.target.options[event.target.options.selectedIndex].id.replace('channel-option-', ''); 
+    currentChannel =  channels[channelId];
+
+    objectSelect.disabled = false;
+});
+
+
+// OBJECT SELECTOR ON CHANGE 
+
+objectSelect.addEventListener('change', (event) => {
+    console.log(event.target.value);
+    
+    addObject(currentChannel.id, overlayObjects.length, event.target.value, 50, 50, 1, false);
+    event.target.value = 'default';
+});
+
+
+// IMAGE PREVIEW ON MOUSE MOVE
+
+imagePreview.addEventListener('mousemove', (event) => {  
+    if(grabbedObject != null) {
+
+
+        let relativeMovementX =  event.movementX / imagePreview.clientWidth * 100;
+        let relativeMovementY =  event.movementY / imagePreview.clientHeight * 100;
+
+        let left;
+        let top;
+
+        if(grabbedObject.style.left != '') {
+            left = parseFloat(grabbedObject.style.left.replace('%', '')) + relativeMovementX;
+        } else {
+            left = relativeMovementX;
+        }
+        if(grabbedObject.style.top != '') {
+            top = parseFloat(grabbedObject.style.top.replace('%', '')) + relativeMovementY;
+        } else {
+            top = relativeMovementY;
+        }
+
+        console.log(left);
+        console.log(top);
+        
+
+        setInputValues(left, top);
+
+        grabbedObject.style.left = left + "%";
+        grabbedObject.style.top = top + "%";          
+    }
+    event.stopPropagation();
+});
+
+
+// IMAGE PREVIEW ON MOUSE UP
+
+imagePreview.addEventListener('mouseup', (event) => {  
+    if(grabbedObject != null) {
+        grabbedObject = null;
+    }
+    event.stopPropagation();
+});
+
+
+// IMAGE PREVIEW ON CLICK
+
+imagePreview.addEventListener('click', (event) => {
+    setSelected(null);
+    event.stopPropagation();
+});
+
+
+// X-INPUT ON CHANGE
+
+xInput.addEventListener('change', (event) => {
+    selectedObject.style.left = event.target.value + '%';
+});
+
+
+// Y-INPUT ON CHANGE
+
+yInput.addEventListener('change', (event) => {
+    selectedObject.style.top = event.target.value + '%';
+});
+
+
+// SCALE-INPUT ON CHANGE
+
+scaleInput.addEventListener('change', (event) => {
+    selectedObject.style.transform = 'scale(' + event.target.value + ')';
+    selectedObject.querySelector('.selection-box').style.outline = 'lightseagreen solid ' + 2/event.target.value + 'px';
+});
+
+
+// TEXT-INPUT ON CHANGE
+
+textInput.addEventListener('change', (event) => {
+    selectedObject.innerText = event.target.value;
+});
 }
