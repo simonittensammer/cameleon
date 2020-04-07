@@ -257,11 +257,7 @@ imagePreview.addEventListener('mousemove', (event) => {
         } else {
             top = relativeMovementY;
         }
-
-        console.log(left);
-        console.log(top);
         
-
         setInputValues(left, top);
 
         grabbedObject.style.left = left + "%";
