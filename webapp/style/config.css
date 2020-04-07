@@ -172,9 +172,13 @@ option {
 }
 
 .text-object {
-    color: black;
     user-select: none;
     font-size: 1vw;
+}
+
+.text-object > span {
+    color: black;
+    pointer-events: none;
 }
 
 .selection-box {

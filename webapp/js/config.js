@@ -119,6 +119,7 @@ function setSelected(element) {
         selectedObject = null;
         setInputValues('', '');
         scaleInput.value = '';
+        textInput.value = '';
         toggleValueInputs(true);
 
     } else {
@@ -130,7 +131,8 @@ function setSelected(element) {
         setInputValues(
             selectedObject.style.left.replace('%', ''),
             selectedObject.style.top.replace('%', ''));
-        scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');    
+        scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');   
+        textInput.value = selectedObject.querySelector('span').innerText; 
         toggleValueInputs(false);    
         
     }
@@ -151,6 +153,7 @@ function toggleValueInputs(disabled) {
     xInput.disabled = disabled;
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
+    textInput.disabled = disabled;
 }
 
 
@@ -163,7 +166,7 @@ function addObject(channelId, id, type, x, y, scale, persist) {
     if(type === 'txt') {
         object = document.createElement('div');
         object.classList.add('text-object');
-        object.innerText = 'Text Object';
+        object.innerHTML = '<span>Text Object</span>';
 
         overlayObjects.push(
             {
@@ -310,6 +313,6 @@ scaleInput.addEventListener('change', (event) => {
 // TEXT-INPUT ON CHANGE
 
 textInput.addEventListener('change', (event) => {
-    selectedObject.innerText = event.target.value;
+    selectedObject.querySelector('span').innerText = event.target.value;
 });
 }
