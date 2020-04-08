@@ -36,36 +36,41 @@ let grabbedObject = null;
 // simulated data from db
 overlayObjects.push(
     {
-        'channelId': 1,
+        'channelId': '1',
         'id': 0,
         'type': 'txt',
-        'x': 100,
-        'y': 100,
+        'x': 0,
+        'y': 0,
         'scale': 1,
         'color': '#000000',
         'opacity': 1,
-        'text': 'Hello World'
+        'text': 'Hello World',
+        'dataURL': '',
+        'imageName' : ''
     },
     {
-        'channelId': 1,
+        'channelId': '1',
         'id': 1,
         'type': 'txt',
-        'x': 200,
-        'y': 200,
+        'x': 25,
+        'y': 25,
         'scale': 2,
         'color': '#aaaaaa',
         'opacity': 1,
-        'text': 'Hello Cameleon'
+        'text': 'Hello Cameleon',
+        'dataURL': '',
+        'imageName' : ''
     },
     {
-        'channelId': 1,
+        'channelId': '2',
         'id': 2,
         'type': 'img',
-        'x': 300,
-        'y': 300,
+        'x': 50,
+        'y': 50,
         'scale': 0.5,
+        'color': '',
         'opacity': 1,
-        'dataURL': 'Hello World',
+        'dataURL': 'https://img.icons8.com/ios/500/no-image.png',
         'imageName': 'image.png'
     }
 )
@@ -199,53 +204,61 @@ function toggleValueInputs(disabled) {
 
 // ADD OBJECT
 
-function addObject(channelId, id, type, x, y, scale, color, opacity, persist) {
+function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataURL, persist) {
 
     let object;
     
     if(type === 'txt') {
         object = document.createElement('div');
         object.classList.add('text-object');
-        object.innerHTML = '<span>Text Object</span>';
+        object.innerHTML = '<span>' + text + '</span>';
         object.querySelector('span').style.color = color;
         object.querySelector('span').style.opacity = opacity;
 
-        overlayObjects.push(
-            {
-                'channelId': channelId,
-                'id': id,
-                'type': 'txt',
-                'x': x,
-                'y': y,
-                'scale': scale,
-                'color': color,
-                'opacity': opacity,
-                'text': 'Text Object'
-            }
-        );
+        if(persist) {
+            overlayObjects.push(
+                {
+                    'channelId': channelId,
+                    'id': id,
+                    'type': 'txt',
+                    'x': x,
+                    'y': y,
+                    'scale': scale,
+                    'color': color,
+                    'opacity': opacity,
+                    'text': text,
+                    'dataURL': '',
+                    'imageName' : ''
+                }
+            );
+        }
     }
 
     if(type === 'img') {
         object = document.createElement('div');
         img = document.createElement('img');
         object.classList.add('image-object');
-        img.src = 'https://img.icons8.com/ios/500/no-image.png';
+        img.src = dataURL; 
         object.appendChild(img);
         object.querySelector('img').style.opacity = opacity;
 
-        overlayObjects.push(
-            {
-                'channelId': channelId,
-                'id': id,
-                'type': 'img',
-                'x': x,
-                'y': y,
-                'scale': scale,
-                'opacity': opacity,
-                'dataURL': '',
-                'imageName': ''
-            }
-        );
+        if(persist) {
+            overlayObjects.push(
+                {
+                    'channelId': channelId,
+                    'id': id,
+                    'type': 'img',
+                    'x': x,
+                    'y': y,
+                    'scale': scale,
+                    'color': '',
+                    'opacity': opacity,
+                    'text': '',
+                    'dataURL': dataURL,
+                    'imageName': ''
+                }
+            );
+        }
     }
 
     object.id = 'overlay-object-' + id;
@@ -298,6 +311,28 @@ channelSelect.addEventListener('change', (event) => {
     let channelId = event.target.options[event.target.options.selectedIndex].id.replace('channel-option-', ''); 
     currentChannel =  channels[channelId];
 
+    setSelected(null);
+    imagePreview.innerHTML = '';
+
+    overlayObjects.forEach(overlayObject => {
+        if(overlayObject.channelId === channelId) {         
+            addObject(
+                overlayObject.channelId,
+                overlayObject.id,
+                overlayObject.type,
+                overlayObject.x,
+                overlayObject.y,
+                overlayObject.scale,
+                overlayObject.color,
+                overlayObject.opacity,
+                overlayObject.text,
+                overlayObject.dataURL,
+                false
+            );
+        }
+    });
+        
+
     objectSelect.disabled = false;
 });
 
@@ -305,7 +340,19 @@ channelSelect.addEventListener('change', (event) => {
 // OBJECT SELECTOR ON CHANGE 
 
 objectSelect.addEventListener('change', (event) => {
-    addObject(currentChannel.id, overlayObjects.length, event.target.value, 50, 50, 1, '#000000', 1, false);
+    addObject(
+        currentChannel.id,
+        overlayObjects.length,
+        event.target.value,
+        50,
+        50,
+        1,
+        '#000000',
+        1,
+        'Text Object',
+        'https://img.icons8.com/ios/500/no-image.png',
+        true
+    );
     event.target.value = 'default';
 });
 
