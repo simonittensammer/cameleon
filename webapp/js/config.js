@@ -123,6 +123,14 @@ function updateOverlayObjects() {
     socket.emit('update-overlay-objects', overlayObjects);
 }
 
+function deleteOverlayObject(overlayObject) {
+    socket.emit('delete-overlay-object', overlayObject);
+
+    overlayObjects[overlayObject.id] = null;
+
+    imagePreview.removeChild(selectedObject);
+    setSelected(null);
+}
 
 
 // # FUNCTIONS #
@@ -337,20 +345,22 @@ channelSelect.addEventListener('change', (event) => {
     imagePreview.innerHTML = '';
 
     overlayObjects.forEach(overlayObject => {
-        if(overlayObject.channelId === channelId) {         
-            addObject(
-                overlayObject.channelId,
-                overlayObject.id,
-                overlayObject.type,
-                overlayObject.x,
-                overlayObject.y,
-                overlayObject.scale,
-                overlayObject.color,
-                overlayObject.opacity,
-                overlayObject.text,
-                overlayObject.dataURL,
-                false
-            );
+        if(overlayObject != null) {
+            if(overlayObject.channelId === channelId) {         
+                addObject(
+                    overlayObject.channelId,
+                    overlayObject.id,
+                    overlayObject.type,
+                    overlayObject.x,
+                    overlayObject.y,
+                    overlayObject.scale,
+                    overlayObject.color,
+                    overlayObject.opacity,
+                    overlayObject.text,
+                    overlayObject.dataURL,
+                    false
+                );
+            }
         }
     });
         
@@ -520,5 +530,15 @@ opacityInput.addEventListener('change', (event) => {
 
 saveObjectsButton.addEventListener('click', () => {
     updateOverlayObjects();
+});
+
+
+// KEY LISTENER
+
+document.addEventListener('keydown', (event) => {
+    if(event.key === 'Backspace' && selectedObject != null || event.key === 'Delete'  && selectedObject != null) {
+        let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+        deleteOverlayObject(overlayObject);
+    }
 });
 }

@@ -199,7 +199,7 @@ io.on('connection', socket => {
                 if(overlayObject != null) {
 
                     var myquery = { id: overlayObject.id + "" };
-                    
+
                     var newvalues = { $set: { 
                         channelId: ''+overlayObject.channelId,
                         id: ''+overlayObject.id, 
@@ -223,6 +223,22 @@ io.on('connection', socket => {
             db.close();
         });
     });
-})
+
+    socket.on('delete-overlay-object', data => {
+
+        console.log(data);
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            var myquery = { id: data.id + "" };
+            dbo.collection("overlayObjects").deleteOne(myquery, function(err, obj) {
+              if (err) throw err;
+              console.log("object " + data.id + " deleted");
+              db.close();
+            });
+          });
+    });
+});
 
 server.listen(3000)
