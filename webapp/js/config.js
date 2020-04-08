@@ -15,6 +15,8 @@ let textInput = document.getElementById('text-input');
 let imageInput = document.getElementById('image-input');
 let colorInput = document.getElementById('color-input');
 let opacityInput = document.getElementById('opacity-input');
+let saveObjectsButton = document.getElementById('save-objects-button');
+
 
 
 
@@ -112,6 +114,13 @@ socket.on('join', data => {
 
 function persistOverlayObject(overlayObject) {
     socket.emit('add-overlay-object', overlayObject);
+}
+
+
+// UPDATE ALL OVERLAY-OBJECTS
+
+function updateOverlayObjects() {
+    socket.emit('update-overlay-objects', overlayObjects);
 }
 
 
@@ -504,5 +513,12 @@ opacityInput.addEventListener('change', (event) => {
     }
 
     overlayObject.opacity = event.target.value;
+});
+
+
+// SAVE-OBJECTS-BUTTON ON CLICK
+
+saveObjectsButton.addEventListener('click', () => {
+    updateOverlayObjects();
 });
 }

@@ -187,7 +187,42 @@ io.on('connection', socket => {
         });
     });
 
+    socket.on('update-overlay-objects', data => {
 
+        console.log(data);
+        
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+
+            data.forEach(overlayObject => {
+                if(overlayObject != null) {
+
+                    var myquery = { id: overlayObject.id + "" };
+                    
+                    var newvalues = { $set: { 
+                        channelId: ''+overlayObject.channelId,
+                        id: ''+overlayObject.id, 
+                        type: overlayObject.type,
+                        x: overlayObject.x,
+                        y: overlayObject.y,
+                        scale: overlayObject.scale,
+                        color: overlayObject.color,
+                        opacity: overlayObject.opacity,
+                        text: overlayObject.text,
+                        dataURL: overlayObject.dataURL,
+                        imageName: overlayObject.imageName 
+                    }};
+    
+                    dbo.collection("overlayObjects").updateOne(myquery, newvalues, function(err, res) {
+                        if (err) throw err;
+                    });    
+                }
+            });
+
+            db.close();
+        });
+    });
 })
 
 server.listen(3000)
