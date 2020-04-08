@@ -96,10 +96,19 @@ io.on('connection', socket => {
     MongoClient.connect(url, (err, db) => {
         if (err) throw err;
 
+        let data = {};
+
         const dbo = db.db('cameleon')
+
         dbo.collection("cams").find().toArray((err, res) => {
             if (err) throw err;
-            socket.emit('join', res)
+            data.cams = res;
+        });
+
+        dbo.collection("overlayObjects").find().toArray((err, res) => {
+            if (err) throw err;
+            data.overlayObjects = res;
+            socket.emit('join', data);
             db.close();
         });
     });
@@ -109,7 +118,7 @@ io.on('connection', socket => {
         console.log(socket.id + ' connected')
     })
 
-    // getting cam-data from client and persisting it in the db
+    // receiving cam-data from client and persisting it in the db
     socket.on('add-channel', data => {
         console.log(data.name + '\n' + data.desc + '\n' + data.url);
 
@@ -147,6 +156,38 @@ io.on('connection', socket => {
 
         });
     });
+
+
+    // receiving overlay-object data from client and persisting it in the DB
+    socket.on('add-overlay-object', data => {
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            
+            var newObject = { 
+                channelId: ''+data.channelId,
+                id: ''+data.id, 
+                type: data.type,
+                x: data.x,
+                y: data.y,
+                scale: data.scale,
+                color: data.color,
+                opacity: data.opacity,
+                text: data.text,
+                dataURL: data.dataURL,
+                imageName: data.imageName 
+            };
+
+            dbo.collection("overlayObjects").insertOne(newObject, (err, res) => {
+              if (err) throw err;
+              console.log("inserted object: " + newObject.id);
+              db.close();
+            });     
+        });
+    });
+
+
 })
 
 server.listen(3000)

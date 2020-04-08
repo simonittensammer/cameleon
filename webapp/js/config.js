@@ -34,46 +34,46 @@ let grabbedObject = null;
 // # CODE #
 
 // simulated data from db
-overlayObjects.push(
-    {
-        'channelId': '1',
-        'id': 0,
-        'type': 'txt',
-        'x': 0,
-        'y': 0,
-        'scale': 1,
-        'color': '#000000',
-        'opacity': 1,
-        'text': 'Hello World',
-        'dataURL': '',
-        'imageName' : ''
-    },
-    {
-        'channelId': '1',
-        'id': 1,
-        'type': 'txt',
-        'x': 25,
-        'y': 25,
-        'scale': 2,
-        'color': '#aaaaaa',
-        'opacity': 1,
-        'text': 'Hello Cameleon',
-        'dataURL': '',
-        'imageName' : ''
-    },
-    {
-        'channelId': '2',
-        'id': 2,
-        'type': 'img',
-        'x': 50,
-        'y': 50,
-        'scale': 0.5,
-        'color': '',
-        'opacity': 1,
-        'dataURL': 'https://img.icons8.com/ios/500/no-image.png',
-        'imageName': 'image.png'
-    }
-)
+// overlayObjects.push(
+//     {
+//         'channelId': '1',
+//         'id': 0,
+//         'type': 'txt',
+//         'x': 0,
+//         'y': 0,
+//         'scale': 1,
+//         'color': '#000000',
+//         'opacity': 1,
+//         'text': 'Hello World',
+//         'dataURL': '',
+//         'imageName' : ''
+//     },
+//     {
+//         'channelId': '1',
+//         'id': 1,
+//         'type': 'txt',
+//         'x': 25,
+//         'y': 25,
+//         'scale': 2,
+//         'color': '#aaaaaa',
+//         'opacity': 1,
+//         'text': 'Hello Cameleon',
+//         'dataURL': '',
+//         'imageName' : ''
+//     },
+//     {
+//         'channelId': '2',
+//         'id': 2,
+//         'type': 'img',
+//         'x': 50,
+//         'y': 50,
+//         'scale': 1.5,
+//         'color': '',
+//         'opacity': 0.5,
+//         'dataURL': 'https://img.icons8.com/ios/500/no-image.png',
+//         'imageName': 'image.png'
+//     }
+// )
 
 
 
@@ -84,7 +84,7 @@ const socket = io();
 socket.on('join', data => {
     console.log(data);
 
-    data.forEach(channel => {
+    data.cams.forEach(channel => {
         channels[channel.id] = channel;
     });
 
@@ -96,12 +96,23 @@ socket.on('join', data => {
         channelSelect.appendChild(channelOption);
     });
 
+    data.overlayObjects.forEach(overlayObject => {
+        overlayObjects[overlayObject.id] = overlayObject;
+    });
+
     channelSelectOptions = channelSelect.querySelectorAll('option');
 
     addEventListeners();
 
     socket.emit('joined');
 });
+
+
+// PERSIST AN OVERLAY-OBJECT
+
+function persistOverlayObject(overlayObject) {
+    socket.emit('add-overlay-object', overlayObject);
+}
 
 
 
@@ -286,7 +297,9 @@ function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataU
     object.appendChild(selectionBox);
     imagePreview.appendChild(object);
 
-    console.log(object);
+    if(persist) {
+        persistOverlayObject(overlayObjects[id]);
+    }
 }
 
 function getBase64(file) {
