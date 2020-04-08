@@ -13,6 +13,8 @@ let yInput = document.getElementById('y-input');
 let scaleInput = document.getElementById('scale-input');
 let textInput = document.getElementById('text-input');
 let imageInput = document.getElementById('image-input');
+let colorInput = document.getElementById('color-input');
+let opacityInput = document.getElementById('opacity-input');
 
 
 
@@ -40,6 +42,8 @@ overlayObjects.push(
         'x': 100,
         'y': 100,
         'scale': 1,
+        'color': '#000000',
+        'opacity': 1,
         'text': 'Hello World'
     },
     {
@@ -49,6 +53,8 @@ overlayObjects.push(
         'x': 200,
         'y': 200,
         'scale': 2,
+        'color': '#aaaaaa',
+        'opacity': 1,
         'text': 'Hello Cameleon'
     },
     {
@@ -58,6 +64,7 @@ overlayObjects.push(
         'x': 300,
         'y': 300,
         'scale': 0.5,
+        'opacity': 1,
         'dataURL': 'Hello World',
         'imageName': 'image.png'
     }
@@ -122,6 +129,8 @@ function setSelected(element) {
         scaleInput.value = '';
         textInput.value = '';
         imageInput.value = '';
+        colorInput.value = '#000000';
+        opacityInput.value = '';
         toggleValueInputs(true);
         
     } else {
@@ -130,21 +139,23 @@ function setSelected(element) {
         }
         selectedObject = element;
         selectedObject.querySelector('.selection-box').classList.add('selected');
-        setInputValues(
-            selectedObject.style.left.replace('%', ''),
-            selectedObject.style.top.replace('%', ''));
-        scaleInput.value = selectedObject.style.transform.replace('scale(', '').replace(')', '');   
 
         let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
 
+        setInputValues(overlayObject.x, overlayObject.y);
+        scaleInput.value = overlayObject.scale;   
+        opacityInput.value = overlayObject.opacity;
+    
         if(overlayObject.type === 'txt') {
-            textInput.value = selectedObject.querySelector('span').innerText; 
+            textInput.value = overlayObject.text; 
+            colorInput.value = overlayObject.color;
             imageInput.value = '';
         } else if(overlayObject.type === 'img') {
             textInput.value = ''; 
+            colorInput.value = '#000000';
             //imageInput.value = overlayObject.imageName;
         }
-        
+           
         toggleValueInputs(false);    
     }
 }
@@ -168,13 +179,19 @@ function toggleValueInputs(disabled) {
     if(disabled) {
         textInput.disabled = disabled;
         imageInput.disabled = disabled;
+        colorInput.disabled = disabled;
+        opacityInput.disabled = disabled;
     } else {
         if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
             textInput.disabled = disabled;
+            colorInput.disabled = disabled;
+            opacityInput.disabled = disabled;
             imageInput.disabled = true;
         } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
             imageInput.disabled = disabled;
+            opacityInput.disabled = disabled;
             textInput.disabled = true;
+            colorInput.disabled = true;
         } 
     }
 }
@@ -182,7 +199,7 @@ function toggleValueInputs(disabled) {
 
 // ADD OBJECT
 
-function addObject(channelId, id, type, x, y, scale, persist) {
+function addObject(channelId, id, type, x, y, scale, color, opacity, persist) {
 
     let object;
     
@@ -190,6 +207,8 @@ function addObject(channelId, id, type, x, y, scale, persist) {
         object = document.createElement('div');
         object.classList.add('text-object');
         object.innerHTML = '<span>Text Object</span>';
+        object.querySelector('span').style.color = color;
+        object.querySelector('span').style.opacity = opacity;
 
         overlayObjects.push(
             {
@@ -199,6 +218,8 @@ function addObject(channelId, id, type, x, y, scale, persist) {
                 'x': x,
                 'y': y,
                 'scale': scale,
+                'color': color,
+                'opacity': opacity,
                 'text': 'Text Object'
             }
         );
@@ -207,12 +228,10 @@ function addObject(channelId, id, type, x, y, scale, persist) {
     if(type === 'img') {
         object = document.createElement('div');
         img = document.createElement('img');
-
         object.classList.add('image-object');
-
         img.src = 'https://img.icons8.com/ios/500/no-image.png';
-
         object.appendChild(img);
+        object.querySelector('img').style.opacity = opacity;
 
         overlayObjects.push(
             {
@@ -222,6 +241,7 @@ function addObject(channelId, id, type, x, y, scale, persist) {
                 'x': x,
                 'y': y,
                 'scale': scale,
+                'opacity': opacity,
                 'dataURL': '',
                 'imageName': ''
             }
@@ -285,7 +305,7 @@ channelSelect.addEventListener('change', (event) => {
 // OBJECT SELECTOR ON CHANGE 
 
 objectSelect.addEventListener('change', (event) => {
-    addObject(currentChannel.id, overlayObjects.length, event.target.value, 50, 50, 1, false);
+    addObject(currentChannel.id, overlayObjects.length, event.target.value, 50, 50, 1, '#000000', 1, false);
     event.target.value = 'default';
 });
 
@@ -398,5 +418,31 @@ imageInput.addEventListener('change', async (event) => {
     } else {
         overlayObject.imageName = event.target.value.split('/')[event.target.value.split('/').length - 1];
     }
+});
+
+
+// COLOR-INPUT ON CHANGE
+
+colorInput.addEventListener('change', (event) => {
+    selectedObject.querySelector('span').style.color = event.target.value;
+
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    overlayObject.color = event.target.value;
+});
+
+
+// OPACITY-INPUT ON CHANGE
+
+opacityInput.addEventListener('change', (event) => {
+    
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+
+    if(overlayObject.type === 'txt') {
+        selectedObject.querySelector('span').style.opacity = event.target.value;
+    } else if(overlayObject.type === 'img') {
+        selectedObject.querySelector('img').style.opacity = event.target.value;
+    }
+
+    overlayObject.opacity = event.target.value;
 });
 }
