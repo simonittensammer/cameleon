@@ -10,46 +10,82 @@
 </head>
 
 <body>
-    <div id="topBar">
+    <div id="top-bar">
         <a href="../index.html">
-            <div id="doneButton">
-                <h2 id="doneButtonText">done</h2>
+            <div id="done-button">
+                <h2 id="done-button-text">done</h2>
             </div>
         </a>
     </div>
 
     <div id="navigation">
-        <div id="navWrapper">
-            <h1 id="settingsHeadline">Configuration</h1>
+        <div id="nav-wrapper">
+            <h1 id="settings-headline">Configuration</h1>
 
-            <div id="settingWrapper">
-                <div id="dashboardButton" class="setting activeSetting" onclick="changeSettingPage('dashboard');">
+            <div id="setting-wrapper">
+                <div id="dashboard-button" class="setting active-setting" onclick="changeSettingPage('dashboard');">
                     <h2>Dashboard</h2>
                 </div>
 
-                <div id="addImageButton" class="setting" onclick="changeSettingPage('addImage');"">
-                    <h2>Add Image</h2>
+                <div id="channel-overlay-button" class="setting" onclick="changeSettingPage('channel-overlay');">
+                    <h2>Channel Overlay</h2>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="settingPages">
-        <div id="dashboard" class="settingPage">
-            <div class="settingPageWrapper">
-                <h1 class="pageHeadline">
+    <div id="setting-page">
+        <div id="dashboard" class="setting-page">
+            <div class="setting-page-wrapper">
+                <h1 class="page-headline">
                     Dashboard
                 </h1>
             </div>
         </div>
 
-        <div id="addImage" class="settingPage">
-            <div class="settingPageWrapper">
-                <h1 class="pageHeadline">
-                    Add Image
+        <div id="channel-overlay" class="setting-page">
+            <div class="setting-page-wrapper">
+                <h1 class="page-headline">
+                    Channel Overlay
                 </h1>
 
-                <div id="placeImagePreview">
+                <select id="channel-select">
+                    <option selected disabled hidden>select channel</option>
+                </select>
+
+                <h2 id="selected-channel"></h2>
+
+                <div id="overlay-wrapper">
+                    
+                    <div id="place-image-preview">
+                        
+                    </div>
+                    
+                    <div id="overlay-properties">
+
+                        <select id="object-select" disabled>
+                            <option value="default" selected disabled hidden>new object</option>
+                            <option value="txt">Text</option>
+                            <option value="img">Image</option>
+                            <option value="dt">Date/Time</option>
+                        </select>
+
+                        <label for="x">x: </label>
+                        <input name="x" type="number" id="x-input" disabled>
+                        <label for="y">y: </label>
+                        <input name="y" type="number" id="y-input" disabled>
+                        <label for="scale">scale: </label>
+                        <input name="scale" type="number" min="0" step="0.5" id="scale-input" disabled>
+                        <label for="text" id="text-label">text: </label>
+                        <input name="text" type="text" id="text-input" disabled>
+                        <label for="image" id="file-label">image: </label>
+                        <input name="image" type="file" accept="image/png, image/jpeg" id="image-input" disabled>
+                        <label for="color" id="color-label">color: </label>
+                        <input name="color" type="color" id="color-input" disabled>
+                        <label for="opacity" id="opacity-label">opacity: </label>
+                        <input name="opacity" type="number" step="0.1" max="1" min="0" id="opacity-input" disabled>
+                        <button id="save-objects-button">save</button>
+                    </div>
 
                 </div>
             </div>
@@ -59,6 +95,7 @@
     <!--
         JS IMPORTS
     -->
+    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/config.js"></script>
     </body>
 </html>

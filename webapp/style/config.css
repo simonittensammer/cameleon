@@ -24,7 +24,7 @@ p {
     color: #cccccc;
 }
 
-#topBar {
+#top-bar {
     width: 100vw;
     height: 8vh;
     position: absolute;
@@ -34,7 +34,7 @@ p {
     background: #4B367C;
 }
 
-#doneButton {
+#done-button {
     background: #2C2541;
     width: 6vw;
     height: 6vh;
@@ -51,7 +51,7 @@ p {
     transition: all .1s ease-in-out;
 }
 
-#doneButtonText {
+#done-button-text {
     color: #EBE3FF;
     font-weight: normal;
     text-decoration: none;
@@ -65,20 +65,20 @@ a:hover, a:visited, a:link, a:active {
     position: absolute;
     top: 0;
     left: 0;
-    width: 20vw;
+    width: 15vw;
     height: 100vh;
     background: #19171C;
     z-index: 600;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.3);
 }
 
-#navWrapper {
+#nav-wrapper {
     height: 90vh;
     width: 80%;
     margin: 5vh 10%;
 }
 
-#settingWrapper {
+#setting-wrapper {
     max-height: 90%;
     width: 100%;
     margin-top: 3vh;
@@ -99,12 +99,12 @@ a:hover, a:visited, a:link, a:active {
     transition: all .1s ease;
 }
 
-.activeSetting {
+.active-setting {
     background: #4B387A;
 }
 
-.settingPage {
-    width: 80vw;
+.setting-page {
+    width: 85vw;
     height: 92vh;
     position: absolute;
     bottom: 0;
@@ -116,20 +116,101 @@ a:hover, a:visited, a:link, a:active {
     display: block;
 }
 
-.settingPageWrapper {
+.setting-page-wrapper {
     width: 94%;
     height: 90%;
     margin: 3%;
 }
 
-.pageHeadline {
+.page-headline {
     color: #19171C;
 }
 
-#placeImagePreview {
+#overlay-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#place-image-preview {
     background: #EBE3FF;
     width: 50vw;
-    height: 50vh;
-
+    height: 28.125vw;
     margin-top: 5vh;
+    user-select: none;
+    position: relative;
+}
+
+#channel-overlay .page-headline {
+    display: inline-block;
+}
+
+select {
+    color: black;
+}
+
+option {
+    color: black;
+}
+
+#selected-channel {
+    position: absolute;
+    color: black;
+}
+
+#overlay-properties {
+    width: 30vw;
+    margin-top: 5vh;
+}
+
+.overlay-object {
+    cursor: move;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    display: inline;
+    overflow: visible;
+}
+
+.text-object {
+    user-select: none;
+    font-size: 1vw;
+}
+
+.text-object > span {
+    color: black;
+    pointer-events: none;
+}
+
+.image-object {
+    width: 10%;
+}
+
+.image-object > img {
+    pointer-events: none;
+    width: 100%;
+}
+
+.selection-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    outline: lightseagreen solid 2px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1) !important;
+
+    transition: 0.2s;
+}
+
+.selected {
+    opacity: 1;
+}
+
+input {
+    color: black;
+}
+
+label {
+    color: black;
 }
