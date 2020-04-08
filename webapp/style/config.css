@@ -24,6 +24,10 @@ p {
     color: #cccccc;
 }
 
+button {
+    color: black;
+}
+
 #top-bar {
     width: 100vw;
     height: 8vh;

@@ -16,8 +16,7 @@ let imageInput = document.getElementById('image-input');
 let colorInput = document.getElementById('color-input');
 let opacityInput = document.getElementById('opacity-input');
 let saveObjectsButton = document.getElementById('save-objects-button');
-
-
+let deleteObjectButton = document.getElementById('delete-object-button');
 
 
 // # VARIABLES #
@@ -208,6 +207,7 @@ function toggleValueInputs(disabled) {
     xInput.disabled = disabled;
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
+    deleteObjectButton.disabled = disabled;
 
     if(disabled) {
         textInput.disabled = disabled;
@@ -533,12 +533,10 @@ saveObjectsButton.addEventListener('click', () => {
 });
 
 
-// KEY LISTENER
+// DELETE-OBJECT-BUTTON ON CLICK
 
-document.addEventListener('keydown', (event) => {
-    if(event.key === 'Backspace' && selectedObject != null || event.key === 'Delete'  && selectedObject != null) {
-        let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
-        deleteOverlayObject(overlayObject);
-    }
+deleteObjectButton.addEventListener('click', () => {
+    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+    deleteOverlayObject(overlayObject);
 });
 }
