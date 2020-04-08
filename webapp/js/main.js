@@ -66,7 +66,7 @@ const socket = io();
 
 socket.on('join', data => {
     console.log(data);
-    data.forEach(channel => {
+    data.cams.forEach(channel => {
         channels[channel.id] = channel;
     });
 
@@ -76,7 +76,10 @@ socket.on('join', data => {
     }
     activeChannelId = channels[id].id;
     
-    generateChannelSelectors();
+    channels.forEach(channel => {
+        generateChannelSelector(channel.id, channel.name, channel.desc);
+    });
+
     socket.emit('joined');
 })
 
@@ -152,36 +155,64 @@ function closeChannelSelection() {
 }
 
 // GENERATE CHANNEL SELECTORS
-function generateChannelSelectors() {
-    document.getElementById("channelWrapper").innerHTML = "";
-    channels.forEach(channel => {
-        document.getElementById("channelWrapper").innerHTML +=  "<div id='" + channel.id + "' class='channel'>" +
-                                                                "<h2>" + channel.name + "</h2>" +
-                                                                "<p class='channelDescriptions'>" + channel.desc + "</p>" +
+// function generateChannelSelectors() {
+//     document.getElementById("channelWrapper").innerHTML = "";
+//     channels.forEach(channel => {
+//         document.getElementById("channelWrapper").innerHTML +=  "<div id='" + channel.id + "' class='channel'>" +
+//                                                                 "<h2>" + channel.name + "</h2>" +
+//                                                                 "<p class='channelDescriptions'>" + channel.desc + "</p>" +
+//                                                                 "<img src='img/edit.png' class='channelControlIcon'>" +
+//                                                                 "</div>";
+//     });
+
+//     channelElements = document.getElementsByClassName("channel");
+    
+//     channels.forEach(channel => {
+//         let channelElement = document.getElementById(channel.id);
+//         channelElement.addEventListener("click", function(){
+//             selectChannel(this.id);
+//         });
+//         channelElement.addEventListener("mouseover", function(){
+//             if(!editChannelBoxIsOpen) {
+//                 channelElement.querySelector(".channelControlIcon").style.opacity = .9;
+//             }
+//         });
+//         channelElement.addEventListener("mouseout", function(){
+//             channelElement.querySelector(".channelControlIcon").style.opacity = 0;
+//         });
+//         channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
+//             toggleEditChannelBox(event.target.parentNode.id);
+//             event.stopPropagation();
+//         });
+//     });
+// }
+
+function generateChannelSelector(id, name, desc) {
+    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + id + "' class='channel'>" +
+                                                                "<h2>" + name + "</h2>" +
+                                                                "<p class='channelDescriptions'>" + desc + "</p>" +
                                                                 "<img src='img/edit.png' class='channelControlIcon'>" +
                                                                 "</div>";
+    let channelElement = document.getElementById(id);
+
+    channelElement.addEventListener("click", function(){
+        selectChannel(this.id);
     });
 
-    channelElements = document.getElementsByClassName("channel");
-    
-    channels.forEach(channel => {
-        let channelElement = document.getElementById(channel.id);
-        channelElement.addEventListener("click", function(){
-            selectChannel(this.id);
-        });
-        channelElement.addEventListener("mouseover", function(){
-            if(!editChannelBoxIsOpen) {
-                channelElement.querySelector(".channelControlIcon").style.opacity = .9;
-            }
-        });
-        channelElement.addEventListener("mouseout", function(){
-            channelElement.querySelector(".channelControlIcon").style.opacity = 0;
-        });
-        channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
-            toggleEditChannelBox(event.target.parentNode.id);
-            event.stopPropagation();
-        });
+    channelElement.addEventListener("mouseover", function(){
+        if(!editChannelBoxIsOpen) {
+            channelElement.querySelector(".channelControlIcon").style.opacity = .9;
+           }
     });
+
+    channelElement.addEventListener("mouseout", function(){
+        channelElement.querySelector(".channelControlIcon").style.opacity = 0;
+    });
+
+    channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
+        toggleEditChannelBox(event.target.parentNode.id);
+        event.stopPropagation();
+    });                                                        
 }
 
 // Select Channel
@@ -286,16 +317,20 @@ function addChannel() {
     channels[channels.length].desc = descriptionInput.value;
     channels[channels.length].ip = ipInput.value;*/
 
+    let id = parseInt(channels[channels.length-1].id) + 1;
+    let name = nameInput.value;
+    let desc = descriptionInput.value;
+
     const data = {
-        "id": parseInt(channels[channels.length-1].id) + 1,
-        "name": nameInput.value,
-        "desc": descriptionInput.value,
+        "id": id,
+        "name": name,
+        "desc": desc,
         "url":  ipInput.value
     }
 
     channels.push(data);
 
-    generateChannelSelectors();
+    generateChannelSelector(id, name, desc);
     toggleAddChannelBox();
 
     socket.emit('add-channel', data);
