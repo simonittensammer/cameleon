@@ -188,11 +188,28 @@ function closeChannelSelection() {
 // }
 
 function generateChannelSelector(id, name, desc) {
-    document.getElementById("channelWrapper").innerHTML +=  "<div id='" + id + "' class='channel'>" +
-                                                                "<h2>" + name + "</h2>" +
-                                                                "<p class='channelDescriptions'>" + desc + "</p>" +
-                                                                "<img src='img/edit.png' class='channelControlIcon'>" +
-                                                                "</div>";
+
+    let channel = document.createElement('div');
+    channel.classList.add('channel');
+    channel.id = id;
+
+    let h2 = document.createElement('h2');
+    h2.innerText = name;
+
+    let p = document.createElement('p');
+    p.classList.add('channelDescription');
+    p.innerText = desc;
+
+    let img = document.createElement('img');
+    img.src = 'img/edit.png';
+    img.classList.add('channelControlIcon');
+
+    channel.appendChild(h2);
+    channel.appendChild(p);
+    channel.appendChild(img);
+
+    document.getElementById('channelWrapper').appendChild(channel);
+    
     let channelElement = document.getElementById(id);
 
     channelElement.addEventListener("click", function(){
