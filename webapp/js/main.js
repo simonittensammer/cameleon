@@ -393,11 +393,24 @@ function editChannel() {
 
 function deleteChannel() {
 
-    const data = {
-        "id": editChannelId
-    }
+    let data = {};
+
+    data.channelId = editChannelId;
+
+    let overlayObjectIds = [];
+    overlayObjects.forEach(overlayObject => {
+        if(overlayObject.channelId === editChannelId) {
+            overlayObjectIds.push(overlayObject.id);
+        }
+    });
+
+    data.overlayObjectIds = overlayObjectIds;
 
     socket.emit("delete-channel", data)
+
+    if(editChannelId === activeChannelId) {
+        overlayWrapper.innerHTML = '';
+    }
 
     deleteChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
     deleteChannelBoxIsOpen = false;

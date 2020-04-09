@@ -159,14 +159,23 @@ io.on('connection', socket => {
 
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
-            var dbo = db.db("cameleon");
-            var myquery = { id: data.id + "" };
-            dbo.collection("cams").deleteOne(myquery, function(err, obj) {
-              if (err) throw err;
-              console.log("cam " + data.id + " deleted");
-              db.close();
+            let dbo = db.db("cameleon");
+            let query = { id: data.channelId + "" };
+            dbo.collection("cams").deleteOne(query, function(err, obj) {
+                if (err) throw err;
+                console.log("cam " + data.channelId + " deleted");
             });
-          });
+
+            data.overlayObjectIds.forEach(id => {
+                let query = { id: id + "" };
+                dbo.collection("overlayObjects").deleteOne(query, function(err, obj) {
+                    if (err) throw err;
+                    console.log("overlay object " + id + " deleted");
+                });
+            });
+
+            db.close();
+        });
     });
 
     socket.on('change-stream', data => {
