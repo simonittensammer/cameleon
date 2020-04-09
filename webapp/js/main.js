@@ -410,6 +410,13 @@ function deleteChannel() {
 
     if(editChannelId === activeChannelId) {
         overlayWrapper.innerHTML = '';
+        browserVideo.style.opacity = 0;
+
+        let id = 0;
+        while(channels[id] === undefined){
+            id ++;     
+        }
+        activeChannelId = channels[id].id;
     }
 
     deleteChannelBox.style.transform = "translate(-50%, -50%) scale(0)";
