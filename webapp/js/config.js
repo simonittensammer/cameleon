@@ -5,7 +5,7 @@ let activePage = document.getElementById('dashboard');
 let activePageButton = document.getElementById('dashboard-button');
 let imagePreview = document.getElementById('place-image-preview');
 let channelSelect = document.getElementById('channel-select');
-let channelSelectOptions;
+let doneButton = document.getElementById('done-button');
 let selectedChannelHeadline = document.getElementById('selected-channel');
 let objectSelect = document.getElementById('object-select');
 let xInput = document.getElementById('x-input');
@@ -17,6 +17,7 @@ let colorInput = document.getElementById('color-input');
 let opacityInput = document.getElementById('opacity-input');
 let saveObjectsButton = document.getElementById('save-objects-button');
 let deleteObjectButton = document.getElementById('delete-object-button');
+let doneLink = document.getElementById('done-link');
 
 
 // # VARIABLES #
@@ -538,5 +539,14 @@ saveObjectsButton.addEventListener('click', () => {
 deleteObjectButton.addEventListener('click', () => {
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
     deleteOverlayObject(overlayObject);
+});
+
+
+// DONE-BUTTON ON CLICK
+
+doneLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    updateOverlayObjects();
+    location.href = doneLink.href; 
 });
 }
