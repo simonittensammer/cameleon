@@ -25,6 +25,7 @@ let saveDeleteButton = document.getElementById("saveDelete");
 let cancelDeleteButton = document.getElementById("cancelDelete");
 let deleteChannelButton = document.getElementById("deleteChannelButton");
 let deleteChannelBox = document.getElementById("deleteChannelVerifyBox");
+let overlayWrapper = document.getElementById('overlay-wrapper');
 let editChannelId = -1;
 let channelElements;
 let channelSelectionVisible = false;
@@ -36,31 +37,8 @@ let addChannelBoxIsOpen = false;
 let editChannelBoxIsOpen = false;
 let deleteChannelBoxIsOpen = false;
 
-var channelNames = [];
-var channelUrls = [];
-var channelDescriptions = [];
-/*
-let channelNames = [
-    "Image 1", 
-    "Image 2", 
-    "IP Camera 1", 
-    "IP Camera 2"
-];
-let channelUrls = [
-    "http://192.168.1.174:80/mjpegstream.cgi?-chn=12&usr=cameleon&pwd=videostream", 
-    "http://192.168.1.121:8080/video", 
-    "http://192.168.1.174:80/cgi-bin/hi3510/mjpegstream.cgi?-chn=11&-usr=cameleon&-pwd=videostream", 
-    "http://192.168.1.137:8080/video"
-];
-let channelDescriptions = [
-    "Image No. 1", 
-    "Image No. 2", 
-    "IP Camera No. 1", 
-    "IP Camera No. 2"
-];
-*/
-
 let channels = [];
+let overlayObjects = [];
 
 const socket = io();
 
@@ -68,6 +46,10 @@ socket.on('join', data => {
     console.log(data);
     data.cams.forEach(channel => {
         channels[channel.id] = channel;
+    });
+
+    data.overlayObjects.forEach(overlayObject => {
+        overlayObjects[overlayObject.id] = overlayObject;
     });
 
     let id = 0;
@@ -245,11 +227,44 @@ function selectChannel(streamId) {
     activeChannelId = streamId;
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
+    setOverlayObjects(streamId);
+
     socket.emit('change-stream', streamId);
 }
 
-function selectChannelCallback() {
 
+function setOverlayObjects(id) {
+
+    overlayWrapper.innerHTML = '';
+
+    overlayObjects.forEach(overlayObject => {
+        if(overlayObject.channelId === id) {
+            
+            let object = document.createElement('div');
+            object.id = 'overlay-object-' + overlayObject.id;
+            object.classList.add('overlay-object');
+
+            object.style.left = overlayObject.x + '%';
+            object.style.top = overlayObject.y + '%';
+            object.style.transform = 'scale(' + overlayObject.scale + ')';
+            object.style.opacity = overlayObject.opacity;
+
+            if(overlayObject.type === 'txt') {
+                object.classList.add('text-object');
+                let span = document.createElement('span');
+                span.innerText = overlayObject.text;
+                span.style.color = overlayObject.color;
+                object.appendChild(span);
+            } else if(overlayObject.type === 'img') {
+                object.classList.add('image-object');
+                let img = document.createElement('img');
+                img.src = overlayObject.dataURL;
+                object.appendChild(img);
+            }
+
+            overlayWrapper.appendChild(object);
+        }
+    });
 }
 
 // HIDE CONTROLLS AND CURSOR

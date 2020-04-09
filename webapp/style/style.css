@@ -401,3 +401,28 @@ form {
 
     transition: 0.2s;
 }
+
+#overlay-wrapper{
+    z-index: 100;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+.overlay-object {
+    position: absolute;
+}
+
+.text-object {
+    user-select: none;
+    font-size: 2vw;
+}
+
+.image-object {
+    width: 10%;
+}
+
+.image-object > img {
+    width: 100%;
+}

@@ -221,8 +221,6 @@ io.on('connection', socket => {
     });
 
     socket.on('update-overlay-objects', data => {
-
-        console.log(data);
         
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
