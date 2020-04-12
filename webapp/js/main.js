@@ -44,6 +44,9 @@ const socket = io();
 
 socket.on('join', data => {
     console.log(data);
+
+    
+
     data.cams.forEach(channel => {
         channels[channel.id] = channel;
     });
@@ -52,11 +55,14 @@ socket.on('join', data => {
         overlayObjects[overlayObject.id] = overlayObject;
     });
 
-    let id = 0;
-    while(channels[id] === undefined){
-        id ++;     
+    if(channels.length > 0) {
+        let id = 0;
+        while(channels[id] === undefined){
+            id ++;     
+        }
+        activeChannelId = channels[id].id;
     }
-    activeChannelId = channels[id].id;
+    
     
     channels.forEach(channel => {
         generateChannelSelector(channel.id, channel.name, channel.desc);
@@ -341,15 +347,12 @@ deleteChannelButton.addEventListener("click", toggleDeleteChannelBox);
 
 
 function addChannel() {
-   /* channelNames[channelNames.length] = nameInput.value;
-    channelDescriptions[channelDescriptions.length] = descriptionInput.value;
-    channelUrls[channelUrls.length] = ipInput.value;*/
 
-   /* channels[channels.length].name = nameInput.value;
-    channels[channels.length].desc = descriptionInput.value;
-    channels[channels.length].ip = ipInput.value;*/
-
-    let id = parseInt(channels[channels.length-1].id) + 1;
+    let id = 0;
+    if(channels.length > 0) {
+        id = parseInt(channels[channels.length-1].id) + 1;
+    }
+    
     let name = nameInput.value;
     let desc = descriptionInput.value;
 
