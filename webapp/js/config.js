@@ -11,6 +11,7 @@ let objectSelect = document.getElementById('object-select');
 let xInput = document.getElementById('x-input');
 let yInput = document.getElementById('y-input');
 let scaleInput = document.getElementById('scale-input');
+let scaleRange = document.getElementById('scale-range');
 let textInput = document.getElementById('text-input');
 let imageInput = document.getElementById('image-input');
 let colorInput = document.getElementById('color-input');
@@ -18,7 +19,6 @@ let opacityInput = document.getElementById('opacity-input');
 let saveObjectsButton = document.getElementById('save-objects-button');
 let deleteObjectButton = document.getElementById('delete-object-button');
 let doneLink = document.getElementById('done-link');
-
 
 // # VARIABLES #
 
@@ -160,6 +160,7 @@ function setSelected(element) {
         selectedObject = null;
         setInputValues('', '');
         scaleInput.value = '';
+        scaleRange.value = 0.1;
         textInput.value = '';
         imageInput.value = '';
         colorInput.value = '#000000';
@@ -176,7 +177,8 @@ function setSelected(element) {
         let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
 
         setInputValues(overlayObject.x, overlayObject.y);
-        scaleInput.value = overlayObject.scale;   
+        scaleInput.value = overlayObject.scale;
+        scaleRange.value = overlayObject.scale;
         opacityInput.value = overlayObject.opacity;
     
         if(overlayObject.type === 'txt') {
@@ -197,8 +199,8 @@ function setSelected(element) {
 // SET INPUT VALUES
 
 function setInputValues(x, y) {
-    xInput.value = x;
-    yInput.value = y;
+    xInput.value = parseFloat(x).toFixed(0); //parameter: nuber of decimals
+    yInput.value = parseFloat(y).toFixed(0);;  //parameter: nuber of decimals
 }
 
 
@@ -208,6 +210,7 @@ function toggleValueInputs(disabled) {
     xInput.disabled = disabled;
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
+    scaleRange.disabled = disabled;
     deleteObjectButton.disabled = disabled;
 
     if(disabled) {
@@ -444,7 +447,7 @@ imagePreview.addEventListener('click', (event) => {
 
 // X-INPUT ON CHANGE
 
-xInput.addEventListener('change', (event) => {
+xInput.addEventListener('input', (event) => {
     selectedObject.style.left = event.target.value + '%';
 
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
@@ -454,7 +457,7 @@ xInput.addEventListener('change', (event) => {
 
 // Y-INPUT ON CHANGE
 
-yInput.addEventListener('change', (event) => {
+yInput.addEventListener('input', (event) => {
     selectedObject.style.top = event.target.value + '%';
 
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
@@ -464,18 +467,28 @@ yInput.addEventListener('change', (event) => {
 
 // SCALE-INPUT ON CHANGE
 
-scaleInput.addEventListener('change', (event) => {
+scaleInput.addEventListener('input', (event) => {
+    scaleRange.value = event.target.value;
+    changeScale(event);
+});
+
+scaleRange.addEventListener('input', (event) => {
+    scaleInput.value = event.target.value;
+    changeScale(event);
+});
+
+function changeScale(event) {
     selectedObject.style.transform = 'scale(' + event.target.value + ')';
     selectedObject.querySelector('.selection-box').style.outline = 'lightseagreen solid ' + 2/event.target.value + 'px';
 
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
     overlayObject.scale = event.target.value;
-});
+}
 
 
 // TEXT-INPUT ON CHANGE
 
-textInput.addEventListener('change', (event) => {
+textInput.addEventListener('keyup', (event) => {
     selectedObject.querySelector('span').innerText = event.target.value;
 
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
@@ -503,7 +516,7 @@ imageInput.addEventListener('change', async (event) => {
 
 // COLOR-INPUT ON CHANGE
 
-colorInput.addEventListener('change', (event) => {
+colorInput.addEventListener('input', (event) => {
     selectedObject.querySelector('span').style.color = event.target.value;
 
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
@@ -513,7 +526,7 @@ colorInput.addEventListener('change', (event) => {
 
 // OPACITY-INPUT ON CHANGE
 
-opacityInput.addEventListener('change', (event) => {
+opacityInput.addEventListener('input', (event) => {
     
     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
 

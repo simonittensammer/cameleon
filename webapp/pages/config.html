@@ -49,45 +49,68 @@
                     Channel Overlay
                 </h1>
 
+                <br>
                 <select id="channel-select">
-                    <option selected disabled hidden>select channel</option>
+                    <option selected disabled hidden>Select a channel</option>
                 </select>
-
-                <h2 id="selected-channel"></h2>
 
                 <div id="overlay-wrapper">
                     
                     <div id="place-image-preview">
-                        
                     </div>
                     
                     <div id="overlay-properties">
-
                         <select id="object-select" disabled>
-                            <option value="default" selected disabled hidden>new object</option>
+                            <option value="default" selected disabled hidden>Create new object</option>
                             <option value="txt">Text</option>
                             <option value="img">Image</option>
                             <option value="dt">Date/Time</option>
                         </select>
+                        <br><br>
 
-                        <label for="x">x: </label>
+                        <label for="x">Position x</label>
+                        <br>
                         <input name="x" type="number" id="x-input" disabled>
-                        <label for="y">y: </label>
+                        <br>
+                        <label for="y">Position y</label>
+                        <br>
                         <input name="y" type="number" id="y-input" disabled>
-                        <label for="scale">scale: </label>
-                        <input name="scale" type="number" min="0" step="0.5" id="scale-input" disabled>
-                        <label for="text" id="text-label">text: </label>
-                        <input name="text" type="text" id="text-input" disabled>
-                        <label for="image" id="file-label">image: </label>
+                        <br>
+                        
+                        <label for="scale">Scale</label>
+                        <br>
+                        <input name="scale" type="number" min="0" step="0.1" id="scale-input" disabled>
+                        <br>
+                        <input type="range" min="0.1" max="5" value="1" step="0.1" class="slider" id="scale-range" disabled >
+                        <br>
+                        
+                        <label for="text" id="text-label">Text</label>
+                        <br>
+                        <textarea name="text" type="textarea" id="text-input" disabled></textarea>
+                        <br>
+                        
+                        <label for="image" id="file-label">Image</label>
+                        <br>
                         <input name="image" type="file" accept="image/png, image/jpeg" id="image-input" disabled>
-                        <label for="color" id="color-label">color: </label>
-                        <input name="color" type="color" id="color-input" disabled>
-                        <label for="opacity" id="opacity-label">opacity: </label>
+                        <br>
+                        
+                        <label for="color" id="color-label">Color</label>
+                        <br>
+                        <input name="color" type="color" id="color-input" class="input-color" disabled>
+                        <br>
+                        <label for="opacity" id="opacity-label">Opacity</label>
+                        <br>
                         <input name="opacity" type="number" step="0.1" max="1" min="0" id="opacity-input" disabled>
+                        <br><br>
+                        
+                        <button id="delete-object-button" disabled>delete</button>
                         <button id="save-objects-button">save</button>
-                        <button id="delete-object-button">delete</button>
                     </div>
+                </div>
 
+                <div id="selected-channel-wrapper">
+                    <h3 id="selected-channel-label">Current selected channel:</h3>
+                    <h2 id="selected-channel">No channel selected</h2>
                 </div>
             </div>
         </div>
