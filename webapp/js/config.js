@@ -31,6 +31,8 @@ let objects = document.querySelectorAll('.overlay-object');
 let selectedObject = null;
 let grabbedObject = null;
 
+let deletingDisabled = false;
+
 
 
 // # CODE #
@@ -563,5 +565,30 @@ doneLink.addEventListener('click', (event) => {
     event.preventDefault();
     updateOverlayObjects();
     location.href = doneLink.href; 
+});
+
+
+// TEXT AND NUMBER INPUTS ON FOCUS
+
+const inputs = document.getElementById('overlay-properties').querySelectorAll('input');
+inputs.forEach(input => {
+    if(input.type === 'text' || input.type === 'number') {
+        input.addEventListener('focusin', (event) => {
+            deletingDisabled = true;
+        });
+    
+        input.addEventListener('focusout', (event) => {
+            deletingDisabled = false;
+        });
+    }
+});
+
+
+// KEY LISTENER 
+
+document.addEventListener('keydown', (event) => {
+    if(event.key === 'Backspace' && !deletingDisabled && selectedObject !== null || event.key === 'Delete'  && !deletingDisabled && selectedObject !== null) {
+        deleteOverlayObject(overlayObjects[selectedObject.id.replace('overlay-object-','')]);
+    }
 });
 }
