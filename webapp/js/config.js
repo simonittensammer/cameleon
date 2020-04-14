@@ -314,6 +314,8 @@ function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataU
 
     let selectionBox = document.createElement('div');
     selectionBox.classList.add('selection-box');
+    selectionBox.style.outline = 'lightseagreen solid ' + 2/scale + 'px';
+
 
     object.appendChild(selectionBox);
     imagePreview.appendChild(object);
