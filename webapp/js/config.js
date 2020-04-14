@@ -632,5 +632,25 @@ document.addEventListener('keydown', (event) => {
     if(event.key === 'Backspace' && !deletingDisabled && selectedObject !== null || event.key === 'Delete'  && !deletingDisabled && selectedObject !== null) {
         deleteOverlayObject(overlayObjects[selectedObject.id.replace('overlay-object-','')]);
     }
+
+    if(event.key === 'Tab' && !deletingDisabled) {
+        event.preventDefault();
+        if(selectedObject === null && overlayObjects.length > 0) {
+            const element = document.querySelector('.overlay-object');
+            setSelected(element);
+        } else if(overlayObjects.length > 0) {
+            const elements = document.querySelectorAll('.overlay-object');
+            for(let i = 0; i < elements.length; i++) {
+                if(elements[i] === selectedObject) {
+                    if(elements[i+1] === undefined) {
+                        setSelected(elements[0]);
+                    } else {
+                        setSelected(elements[i+1]);                       
+                    }
+                    break;
+                }
+            }
+        }   
+    }
 });
 }
