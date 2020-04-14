@@ -266,11 +266,27 @@ function setOverlayObjects(id) {
                 let img = document.createElement('img');
                 img.src = overlayObject.dataURL;
                 object.appendChild(img);
+            } else if(overlayObject.type === 'dt') {
+                object.classList.add('date-time-object');
+                let span = document.createElement('span');
+                span.style.color = overlayObject.color;
+                object.appendChild(span);
+                setDate(object);
+                setInterval(() => {
+                    setDate(object);
+                }, 1000);
             }
 
             overlayWrapper.appendChild(object);
         }
     });
+}
+
+function setDate(element) {
+    const now = new Date();
+    element.querySelector('span').innerHTML =
+                now.getDate() + '.' + (now.getMonth() + 1) + '.' + now.getFullYear() + '<br>' + 
+                String("0" + now.getHours()).slice(-2) + ':' + String("0" + now.getMinutes()).slice(-2) + ':' + String("0" + now.getSeconds()).slice(-2);
 }
 
 // HIDE CONTROLLS AND CURSOR

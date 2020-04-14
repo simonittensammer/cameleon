@@ -191,6 +191,9 @@ function setSelected(element) {
             textInput.value = ''; 
             colorInput.value = '#000000';
             //imageInput.value = overlayObject.imageName;
+        } else if(overlayObject.type === 'dt') {
+            colorInput.value = overlayObject.color;
+            imageInput.value = '';
         }
            
         toggleValueInputs(false);    
@@ -214,23 +217,26 @@ function toggleValueInputs(disabled) {
     scaleInput.disabled = disabled;
     scaleRange.disabled = disabled;
     deleteObjectButton.disabled = disabled;
+    opacityInput.disabled = disabled;
 
     if(disabled) {
         textInput.disabled = disabled;
         imageInput.disabled = disabled;
         colorInput.disabled = disabled;
-        opacityInput.disabled = disabled;
     } else {
         if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'txt') {
             textInput.disabled = disabled;
             colorInput.disabled = disabled;
-            opacityInput.disabled = disabled;
             imageInput.disabled = true;
         } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'img') {
             imageInput.disabled = disabled;
-            opacityInput.disabled = disabled;
+            
             textInput.disabled = true;
             colorInput.disabled = true;
+        } else if(overlayObjects[selectedObject.id.replace('overlay-object-', '')].type === 'dt') {
+            colorInput.disabled = disabled;
+            textInput.disabled = true;
+            imageInput.disabled = true;
         } 
     }
 }
@@ -240,10 +246,9 @@ function toggleValueInputs(disabled) {
 
 function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataURL, persist) {
 
-    let object;
+    let object = document.createElement('div');
     
     if(type === 'txt') {
-        object = document.createElement('div');
         object.classList.add('text-object');
         object.innerHTML = '<span>' + text + '</span>';
         object.querySelector('span').style.color = color;
@@ -269,8 +274,7 @@ function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataU
     }
 
     if(type === 'img') {
-        object = document.createElement('div');
-        img = document.createElement('img');
+        let img = document.createElement('img');
         object.classList.add('image-object');
         img.src = dataURL; 
         object.appendChild(img);
@@ -289,6 +293,37 @@ function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataU
                     'opacity': opacity,
                     'text': '',
                     'dataURL': dataURL,
+                    'imageName': ''
+                }
+            );
+        }
+    }
+
+    if(type === 'dt') {
+        object.classList.add('date-time-object');
+        object.innerHTML = '<span>' + text + '</span>';
+        object.querySelector('span').style.color = color;
+        object.querySelector('span').style.opacity = opacity;
+
+        setDate(object);
+
+        setInterval(() => {
+            setDate(object);
+        }, 1000);
+
+        if(persist) {
+            overlayObjects.push(
+                {
+                    'channelId': channelId,
+                    'id': id,
+                    'type': 'dt',
+                    'x': x,
+                    'y': y,
+                    'scale': scale,
+                    'color': color,
+                    'opacity': opacity,
+                    'text': '',
+                    'dataURL': '',
                     'imageName': ''
                 }
             );
@@ -334,6 +369,13 @@ function getBase64(file) {
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
+}
+
+function setDate(element) {
+    const now = new Date();
+    element.querySelector('span').innerHTML =
+                now.getDate() + '.' + (now.getMonth() + 1) + '.' + now.getFullYear() + '<br>' + 
+                String("0" + now.getHours()).slice(-2) + ':' + String("0" + now.getMinutes()).slice(-2) + ':' + String("0" + now.getSeconds()).slice(-2);
 }
 
 

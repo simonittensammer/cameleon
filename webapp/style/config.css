@@ -190,15 +190,18 @@ option {
     overflow: visible;
 }
 
-.text-object {
+.text-object, .date-time-object {
     user-select: none;
     font-size: 1vw;
 }
 
-.text-object > span {
+.text-object > span, .date-time-object > span {
     color: black;
     pointer-events: none;
+    text-align: center;
+    display: block;
 }
+
 
 .image-object {
     width: 10%;
