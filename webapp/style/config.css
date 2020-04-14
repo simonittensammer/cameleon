@@ -226,13 +226,21 @@ option {
     opacity: 1;
 }
 
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5vw;
+}
+
 label {
+    order: 1;
     color: #2C2541;
     font-weight: bold;
     margin-left: 3px;
 }
 
 input, textarea {
+    order: 2;
     color: black;
     margin-top: .5vh;
     margin-bottom: 1vh;
@@ -242,6 +250,10 @@ input, textarea {
     border-radius: 3px;
 
     transition: all .2s ease;
+}
+
+input[type='text'] {
+    width: 30%;
 }
 
 input:not([type='color']):not([type='file']):not([type='range']), textarea {
@@ -329,6 +341,10 @@ option {
 }
 
 input:disabled, textarea:disabled, button:disabled, select:disabled {
+    filter: opacity(.5);
+}
+
+input:disabled~label {
     filter: opacity(.5);
 }
 

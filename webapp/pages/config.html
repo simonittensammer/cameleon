@@ -68,40 +68,43 @@
                         </select>
                         <br><br>
 
-                        <label for="x">Position x</label>
-                        <br>
-                        <input name="x" type="number" id="x-input" disabled>
-                        <br>
-                        <label for="y">Position y</label>
-                        <br>
-                        <input name="y" type="number" id="y-input" disabled>
-                        <br>
+                        <div class="input-wrapper">
+                            <input name="x" type="number" id="x-input" disabled>
+                            <label for="x">Position x</label>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input name="y" type="number" id="y-input" disabled>
+                            <label for="y">Position y</label>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input name="scale" type="number" min="0" step="0.1" id="scale-input" disabled>
+                            <input type="range" min="0.1" max="5" value="1" step="0.1" class="slider" id="scale-range" disabled >
+                            <label for="scale">Scale</label>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input name="text" type="text" id="text-input" disabled>
+                            <label for="text" id="text-label">Text</label>
+                        </div>
                         
-                        <label for="scale">Scale</label>
-                        <br>
-                        <input name="scale" type="number" min="0" step="0.1" id="scale-input" disabled>
-                        <br>
-                        <input type="range" min="0.1" max="5" value="1" step="0.1" class="slider" id="scale-range" disabled >
-                        <br>
+                        <div class="input-wrapper">
+                            <input name="image" type="file" accept="image/png, image/jpeg" id="image-input" disabled>
+                            <label for="image" id="file-label">Image</label>
+                        </div>
                         
-                        <label for="text" id="text-label">Text</label>
-                        <br>
-                        <textarea name="text" type="textarea" id="text-input" disabled></textarea>
-                        <br>
+                        <div class="input-wrapper">
+                            <input name="color" type="color" id="color-input" class="input-color" disabled>
+                            <label for="color" id="color-label">Color</label>
+                        </div>
                         
-                        <label for="image" id="file-label">Image</label>
-                        <br>
-                        <input name="image" type="file" accept="image/png, image/jpeg" id="image-input" disabled>
-                        <br>
+                        <div class="input-wrapper">
+                            <input name="opacity" type="number" step="0.1" max="1" min="0" id="opacity-input" disabled>              
+                            <label for="opacity" id="opacity-label">Opacity</label>
+                        </div>
                         
-                        <label for="color" id="color-label">Color</label>
                         <br>
-                        <input name="color" type="color" id="color-input" class="input-color" disabled>
-                        <br>
-                        <label for="opacity" id="opacity-label">Opacity</label>
-                        <br>
-                        <input name="opacity" type="number" step="0.1" max="1" min="0" id="opacity-input" disabled>
-                        <br><br>
                         
                         <button id="delete-object-button" disabled>delete</button>
                         <button id="save-objects-button">save</button>
