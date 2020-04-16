@@ -20,6 +20,7 @@ let MongoClient = require('mongodb').MongoClient;
 let url = "mongodb://localhost:27017/";
 
 let currentImage;
+let currentStream;
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
@@ -136,9 +137,12 @@ io.on('connection', socket => {
             if (err) throw err;
             var dbo = db.db("cameleon");
             
-            var query = {id: ''+data};         
+            var query = {id: '' + data};         
             dbo.collection("cams").find(query).toArray((err, result) => {
                 if (err) throw err;
+
+                currentStream = result[0];
+
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
                 }catch(err) {
@@ -254,18 +258,39 @@ bot.on('message', function(msg) {
 
     switch (text) {
         case '/start':
-            bot.sendMessage(id, 
-                "*Welcome to CamelBot!*\n" +
-                "use \n/update to get an live image\n\n",
+            bot.sendMessage(
+                id, 
+                "*Welcome to CamelBot!*\n\n" +
+                "Usage:\n" + 
+                "/update - get a live image\n" +
+                "/currentStream - get info about current stream ",
                 textOpts
-            )
+            );
             break;
         case '/update':
             let buff = new Buffer(currentImage, 'base64');
-            bot.sendPhoto(id, buff, {caption: "Current Image of the stream"});
+            bot.sendPhoto(
+                id, 
+                buff, 
+                {caption: "Current Image of the stream"}
+            );
+            break;
+        case '/currentStream':
+            bot.sendMessage(
+                id,
+                "*id: *" + currentStream.id + "\n" +
+                "*name: *" + currentStream.name + "\n" +
+                "*description: *" + currentStream.desc + "\n" +
+                "*ip: *" + currentStream.ip,
+                textOpts 
+            );
             break;
         default:
-            bot.sendMessage(id, "I'm sorry, I couldn't understand this.", textOpts);
+            bot.sendMessage(
+                id, 
+                "I'm sorry, I couldn't understand this.", 
+                textOpts
+            );
             break;
     }
 });
