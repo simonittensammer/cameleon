@@ -258,9 +258,7 @@ bot.onText(/\/start/, (msg) => {
     bot.sendMessage(
         id, 
         "*Welcome to CamelBot!*\n\n" +
-        "Usage:\n" + 
-        "/update - get a live image\n" +
-        "/currentStream - get info about current stream ",
+        printHelp(),
         textOpts
     );
 });
@@ -308,6 +306,18 @@ bot.onText(/\/currentStream/, (msg) => {
     );
 });
 
+// HELP
+bot.onText(/\/help/, (msg) => {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    bot.sendMessage(
+        id,
+        '' + printHelp(),
+        textOpts 
+    );
+});
+
 // DEFAULT
 bot.on('message', function(msg) {
     var id = msg.chat.id;
@@ -315,15 +325,26 @@ bot.on('message', function(msg) {
 
     if(!text.toString().includes('start') 
         && !text.toString().includes('update') 
-        && !text.toString().includes('currentStream')) {
+        && !text.toString().includes('currentStream')
+        && !text.toString().includes('help')) {
             
             bot.sendMessage(
                 id, 
-                "I'm sorry, I couldn't understand this.", 
+                "I'm sorry, I couldn't understand this. Type " + '"/help"' + " to get an overview of all commands.", 
                 textOpts
             );
     }
 
 });
+
+// PRINT HELP Function
+function printHelp() {
+    let helpString = "*Usage:*\n" +
+        "/update - get a live image\n" +
+        "/currentStream - get info about current stream\n" +
+        "/help - get overview of all commands"
+
+    return helpString;
+}
 
 server.listen(3000)
