@@ -19,6 +19,7 @@
     "fs": "0.0.1-security",
     "mongodb": "^3.5.4",
     "node-html-parser": "^1.2.8",
+    "node-telegram-bot-api": "^0.40.0",
     "opencv4nodejs": "^5.5.0",
     "path": "^0.12.7",
     "socket.io": "^2.3.0"

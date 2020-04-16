@@ -12,15 +12,14 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
-const parse = require('node-html-parser').parse;
+const TelegramBot = require('node-telegram-bot-api');
 
 //DB
 
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+let MongoClient = require('mongodb').MongoClient;
+let url = "mongodb://localhost:27017/";
 
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+let currentImage;
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
@@ -39,8 +38,8 @@ app.get('/', (req, res) => {
 
 setInterval(() => {
     const frame = wCap.read();
-    const image = cv.imencode('.jpg', frame).toString('base64');
-    io.emit('image', image);
+    currentImage = cv.imencode('.jpg', frame).toString('base64');
+    io.emit('image', currentImage);
 }, 1000 / FPS);
 
 io.on('connection', socket => {
@@ -232,6 +231,22 @@ io.on('connection', socket => {
             });
           });
     });
+});
+
+// Telegram Message Bot
+var token = '1140892960:AAF4WsMDU62fTe-Wpe_U0JgXysSLNGYUoHs';
+var opt = {
+    polling: true
+};
+
+const textOpts = {
+    parse_mode: 'Markdown'
+};
+
+var bot = new TelegramBot(token, opt);
+
+bot.on('message', function(msg) {
+    console.log(msg);
 });
 
 server.listen(3000)
