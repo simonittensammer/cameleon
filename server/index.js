@@ -234,7 +234,8 @@ io.on('connection', socket => {
 });
 
 // Telegram Message Bot
-var token = '1140892960:AAF4WsMDU62fTe-Wpe_U0JgXysSLNGYUoHs';
+
+var token = '1151670452:AAFFOIPbYPlIXB_lJp5IfoC77DXAUknabZg';
 var opt = {
     polling: true
 };
@@ -247,6 +248,26 @@ var bot = new TelegramBot(token, opt);
 
 bot.on('message', function(msg) {
     console.log(msg);
+    
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    switch (text) {
+        case '/start':
+            bot.sendMessage(id, 
+                "*Welcome to CamelBot!*\n" +
+                "use \n/update to get an live image\n\n",
+                textOpts
+            )
+            break;
+        case '/update':
+            let buff = new Buffer(currentImage, 'base64');
+            bot.sendPhoto(id, buff, {caption: "Current Image of the stream"});
+            break;
+        default:
+            bot.sendMessage(id, "I'm sorry, I couldn't understand this.", textOpts);
+            break;
+    }
 });
 
 server.listen(3000)
