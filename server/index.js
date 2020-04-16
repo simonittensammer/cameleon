@@ -250,49 +250,80 @@ const textOpts = {
 
 var bot = new TelegramBot(token, opt);
 
-bot.on('message', function(msg) {
-    console.log(msg);
-    
+// START
+bot.onText(/\/start/, (msg) => {
     var id = msg.chat.id;
     var text = msg.text;
 
-    switch (text) {
-        case '/start':
-            bot.sendMessage(
-                id, 
-                "*Welcome to CamelBot!*\n\n" +
-                "Usage:\n" + 
-                "/update - get a live image\n" +
-                "/currentStream - get info about current stream ",
-                textOpts
-            );
-            break;
-        case '/update':
-            let buff = new Buffer(currentImage, 'base64');
-            bot.sendPhoto(
-                id, 
-                buff, 
-                {caption: "Current Image of the stream"}
-            );
-            break;
-        case '/currentStream':
-            bot.sendMessage(
-                id,
-                "*id: *" + currentStream.id + "\n" +
-                "*name: *" + currentStream.name + "\n" +
-                "*description: *" + currentStream.desc + "\n" +
-                "*ip: *" + currentStream.ip,
-                textOpts 
-            );
-            break;
-        default:
+    bot.sendMessage(
+        id, 
+        "*Welcome to CamelBot!*\n\n" +
+        "Usage:\n" + 
+        "/update - get a live image\n" +
+        "/currentStream - get info about current stream ",
+        textOpts
+    );
+});
+
+// UPDATE
+bot.onText(/\/update/, (msg) => {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    let date_ob = new Date();
+
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+
+    let hours = ("0" + (date_ob.getHours())).slice(-2);
+    let minutes = ("0" + (date_ob.getMinutes())).slice(-2);
+    let seconds = ("0" + (date_ob.getSeconds())).slice(-2);
+            
+    let caption = "This image was recorded on " + year + "-" + month + "-" + date +
+        " at " + hours + ":" + minutes + ":" + seconds +
+        ' by the camera called "' + currentStream.name + '" with the id ' + currentStream.id + ".";
+
+    let buff = new Buffer(currentImage, 'base64');
+    bot.sendPhoto(
+        id, 
+        buff, 
+        {caption: caption},
+        textOpts
+    );
+});
+
+// CURRENTSTREAM
+bot.onText(/\/currentStream/, (msg) => {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    bot.sendMessage(
+        id,
+        "*id: *" + currentStream.id + "\n" +
+        "*name: *" + currentStream.name + "\n" +
+        "*description: *" + currentStream.desc + "\n" +
+        "*ip: *" + currentStream.ip,
+        textOpts 
+    );
+});
+
+// DEFAULT
+bot.on('message', function(msg) {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    if(!text.toString().includes('start') 
+        && !text.toString().includes('update') 
+        && !text.toString().includes('currentStream')) {
+            
             bot.sendMessage(
                 id, 
                 "I'm sorry, I couldn't understand this.", 
                 textOpts
             );
-            break;
     }
+
 });
 
 server.listen(3000)
