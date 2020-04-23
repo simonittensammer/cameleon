@@ -21,6 +21,7 @@ let url = "mongodb://localhost:27017/";
 
 let currentImage;
 let currentStream;
+let = currentStreamUrl = 'http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8';
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
@@ -29,7 +30,7 @@ const FPS = 15;
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
 //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
-let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
+let wCap = new cv.VideoCapture(currentStreamUrl);
 wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
 wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
 
@@ -38,9 +39,14 @@ app.get('/', (req, res) => {
 });
 
 setInterval(() => {
-    const frame = wCap.read();
-    currentImage = cv.imencode('.jpg', frame).toString('base64');
-    io.emit('image', currentImage);
+    try {
+        const frame = wCap.read();
+        const image = cv.imencode('.jpg', frame).toString('base64');
+        io.emit('image', image);
+    } catch (error) {
+        console.log('wCap restart');
+        wCap = new cv.VideoCapture(currentStreamUrl);
+    }
 }, 1000 / FPS);
 
 io.on('connection', socket => {
@@ -145,6 +151,7 @@ io.on('connection', socket => {
 
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
+                    currentStreamUrl = result[0].ip;
                 }catch(err) {
                     console.log('unable to connect to this url: ' + result[0].ip);
                     socket.emit('stream-change-error');
