@@ -24,7 +24,7 @@ let currentStream;
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
-const FPS = 30;
+const FPS = 15;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
