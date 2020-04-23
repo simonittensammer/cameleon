@@ -30,11 +30,16 @@
                 <div id="channel-overlay-button" class="setting" onclick="changeSettingPage('channel-overlay');">
                     <h2>Channel Overlay</h2>
                 </div>
+
+                <div id="notification-button" class="setting" onclick="changeSettingPage('notification');">
+                    <h2>Notification</h2>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="setting-page">
+        <!-- DASHBOARD -->
         <div id="dashboard" class="setting-page">
             <div class="setting-page-wrapper">
                 <h1 class="page-headline">
@@ -43,6 +48,7 @@
             </div>
         </div>
 
+        <!-- OVERLAY -->
         <div id="channel-overlay" class="setting-page">
             <div class="setting-page-wrapper">
                 <h1 class="page-headline">
@@ -115,6 +121,88 @@
                     <h3 id="selected-channel-label">Current selected channel:</h3>
                     <h2 id="selected-channel">No channel selected</h2>
                 </div>
+            </div>
+        </div>
+
+        <!-- NOTIFICATION -->
+        <div id="notification" class="setting-page">
+            <div class="setting-page-wrapper">
+                <h1 class="page-headline">
+                    Notification
+                </h1>
+
+                <h2 class="sub-headline">
+                    Telegram Bot
+                </h2>
+
+                <ol type="1">
+                    <li class="tutorial-li">Download Telegram</li>
+                    <dd class="tutorial-text">
+                        Download Telegram if you haven't already.
+                    </dd>
+
+                    <li class="tutorial-li">Log in</li>
+                    <dd class="tutorial-text">
+                        Log in into Telegram using your phonenumber.
+                    </dd>
+
+                    <li class="tutorial-li">Search for "BotFather"</li>
+                    <dd class="tutorial-text">
+                        In the top right corner of the app there should be a search-icon. If you use the web or desktop version of Telegram there should be a seachbar on the top left. <br>
+                        Now search for <b>"BotFather"</b>.
+                    </dd>
+
+                    <li class="tutorial-li">Start "BotFather"</li>
+                    <dd class="tutorial-text">
+                        When you now select the BotFather there should appear a <b>"START"</b> button on the bottom of the screen. Now simply click on this button to start the Bot.<br>
+                        If this button doesn't appear type and send <b>"/start"</b>. 
+                    </dd>
+
+                    <li class="tutorial-li">Create a new Bot</li>
+                    <dd class="tutorial-text">
+                        The BotFather should now have sent you a message with all commands. Select <b>"/newbot"</b> or send it as a message.
+                    </dd>
+
+                    <li class="tutorial-li">Choose a name</li>
+                    <dd class="tutorial-text">
+                        The BotFather will ask you to choose a name for your Notification-Bot. <br>
+                        Send him a message with the name you want. We suggest <b>"CamelBot"</b>. ;)
+                    </dd>
+
+                    <li class="tutorial-li">Choose a username</li>
+                    <dd class="tutorial-text">
+                        Next you have to choose the Bot's username for Telegram. <br>
+                        The username has to be unique, so it might take a few attempts to find one which is not taken already. <br>
+                        Something like <b>"[your name]-camelbot"</b> will do the trick.
+                    </dd>
+
+                    <li class="tutorial-li">Submit the token</li>
+                    <dd class="tutorial-text">
+                        Your Bot is now created. <br>
+                        Copy, paste and save the token, which you got from the Bot, in the input-field below. (You could also type in the token letter by letter if you have too much time)
+                        <div class="token-input-wrapper">
+                            <input name="token" type="password" id="token-input"><br>
+                            <button id="save-token-button">save</button>
+                        </div>
+                    </dd>
+
+                    <li class="tutorial-li">Open your Bot-chat</li>
+                    <dd class="tutorial-text">
+                        In the same message as the token, there should also be a link, which leads you to your own bot. <br>
+                        The link should look something like this: <b>"t.me/[bot-username]"</b>. Klick on that link.  
+                    </dd>
+
+                    <li class="tutorial-li">Start your Bot</li>
+                    <dd class="tutorial-text">
+                        Start your own Bot the same way you started the BotFather. 
+                    </dd>
+
+                    <li class="tutorial-li">Congratulations, you now have your own CamelBot!</li>
+                    <dd class="tutorial-text">
+                        Your Bot now sends you a message with all the commands it supports. <br>
+                        <b>Have fun using CamelBot!</b>
+                    </dd>
+                </ol>
             </div>
         </div>
     </div>

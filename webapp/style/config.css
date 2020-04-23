@@ -12,16 +12,20 @@ body {
 }
 
 h1 {
-    font-size: 1.75em;
+    font-size: 2.25em;
 }
 
 h2 {
-    font-size: 1.5em;
+    font-size: 1.75em;
+}
+
+h3 {
+    font-size: 1.25em;
 }
 
 p {
     font-size: .75em;
-    color: #cccccc;
+    color: #eeeeee;
 }
 
 button {
@@ -88,6 +92,10 @@ a:hover, a:visited, a:link, a:active {
     margin-top: 3vh;
 
     overflow-y: auto;
+}
+
+#settings-headline {
+    font-size: 1.75em;
 }
 
 .setting {
@@ -412,4 +420,37 @@ button:enabled:active {
 
 #image-input:disabled:hover::before {
     cursor: default;
+}
+
+.sub-headline {
+    margin-top: 2.5vh;
+    color: #4B367C;
+}
+
+ol {
+    list-style-position: inside;
+    height: 75%;
+    overflow-y: scroll;
+}
+
+.tutorial-li {
+    margin-top: 2.5vh;
+    color: #4B367C;
+    font-weight: bolder;
+}
+
+.tutorial-text {
+    color: #19171C;
+    font-size: 1em;
+    margin-top: 1vh;
+    line-height: 150%;
+}
+
+b {
+    color: #4B367C;
+}
+
+#token-input-wrapper {
+    width: 25%;
+    font-size: 1.25em;
 }
