@@ -13,7 +13,8 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
-
+const sizeOf = require('buffer-image-size');
+const jimp = require('jimp');
 //DB
 
 let MongoClient = require('mongodb').MongoClient;
@@ -21,7 +22,6 @@ let url = "mongodb://localhost:27017/";
 
 let currentImage;
 let currentStream;
-let = currentStreamUrl = 'http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8';
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
@@ -30,23 +30,16 @@ const FPS = 15;
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
 //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
-let wCap = new cv.VideoCapture(currentStreamUrl);
-wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
-wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
+let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 setInterval(() => {
-    try {
-        const frame = wCap.read();
-        const image = cv.imencode('.jpg', frame).toString('base64');
-        io.emit('image', image);
-    } catch (error) {
-        console.log('wCap restart');
-        wCap = new cv.VideoCapture(currentStreamUrl);
-    }
+    const frame = wCap.read();
+    currentImage = cv.imencode('.jpg', frame).toString('base64');
+    io.emit('image', currentImage);
 }, 1000 / FPS);
 
 io.on('connection', socket => {
@@ -151,7 +144,6 @@ io.on('connection', socket => {
 
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
-                    currentStreamUrl = result[0].ip;
                 }catch(err) {
                     console.log('unable to connect to this url: ' + result[0].ip);
                     socket.emit('stream-change-error');
@@ -289,14 +281,68 @@ bot.onText(/\/update/, (msg) => {
         " at " + hours + ":" + minutes + ":" + seconds +
         ' by the camera called "' + currentStream.name + '" with the id ' + currentStream.id + ".";
 
-    let buff = new Buffer(currentImage, 'base64');
-    bot.sendPhoto(
-        id, 
-        buff, 
-        {caption: caption},
-        textOpts
-    );
+    let overlayObjects = {};
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("cameleon");
+
+        var query = {channelId: currentStream.id};
+        dbo.collection("overlayObjects").find(query).toArray(async (err, res) => {
+            if (err) throw err;
+            overlayObjects = res;
+            db.close();
+
+            let buff = new Buffer(currentImage, 'base64');
+            let currentImageWidth = sizeOf(buff).width;
+            let currentImageHeight = sizeOf(buff).height;
+            
+            let baseImg = await jimp.read(buff);
+            
+            await asyncForEach(overlayObjects, async overlayObject => {
+                
+                if(overlayObject.type === "txt") {
+
+                } else if(overlayObject.type === "img") {
+                    const overlayBuff = new Buffer(overlayObject.dataURL.replace('data:image/jpeg;base64,', ''), 'base64');
+                    const overlayImageWidth = sizeOf(buff).width;
+                    const overlayImageHeight = sizeOf(buff).height;
+                    const imageScale = currentImageWidth / (10 * overlayImageWidth);                 
+
+                    const img = await jimp.read(overlayBuff).then(img => {
+                        return img
+                            .resize(overlayImageWidth * imageScale * overlayObject.scale, overlayImageHeight * imageScale * overlayObject.scale)
+                            .opacity(overlayObject.opacity);
+                    });
+
+                    baseImg = baseImg.blit(img, 100 * currentImageWidth/overlayObject.x, 100 * currentImageHeight/overlayObject.y);
+                    //baseImg = img;
+                    console.log('done loading image');
+                    
+                } else if(overlayObject.type === "dt") {
+
+                }
+            });
+
+            console.log('done with loop');
+            
+            
+            const imgBuff = await baseImg.getBufferAsync(jimp.AUTO);
+
+            bot.sendPhoto(
+                id,
+                imgBuff,
+                {caption: caption},
+                textOpts
+            );
+        });
+    });
 });
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  }
 
 // CURRENTSTREAM
 bot.onText(/\/currentStream/, (msg) => {
