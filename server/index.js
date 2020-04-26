@@ -15,7 +15,10 @@ const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
 const sizeOf = require('buffer-image-size');
 const jimp = require('jimp');
+<<<<<<< HEAD
 const text2png = require('text2png');
+=======
+>>>>>>> 40ad04e896e1042c7bd5d8edbfb285ebc58db78d
 //DB
 
 let MongoClient = require('mongodb').MongoClient;
@@ -369,6 +372,12 @@ bot.onText(/\/update/, (msg) => {
         });
     });
 });
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+  }
 
 // CURRENTSTREAM
 bot.onText(/\/currentStream/, (msg) => {
