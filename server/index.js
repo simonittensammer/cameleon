@@ -15,6 +15,7 @@ const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
 const sizeOf = require('buffer-image-size');
 const jimp = require('jimp');
+const text2png = require('text2png');
 //DB
 
 let MongoClient = require('mongodb').MongoClient;
@@ -237,7 +238,7 @@ io.on('connection', socket => {
 });
 
 
-function mergeOverlayImages(baseImgDataURL, overlayObjects) {
+function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
     return new Promise(resolve => {
 
         const baseImgBuff = new Buffer(baseImgDataURL, 'base64');
@@ -248,25 +249,48 @@ function mergeOverlayImages(baseImgDataURL, overlayObjects) {
             if (err) throw err;
 
             for (const overlayObject of overlayObjects) {
-                if(overlayObject.type === 'txt') {
-    
+                let overlayImg;
+                if(overlayObject.type === 'txt' || overlayObject.type === 'dt') {
+
+                    let text;
+                    if(overlayObject.type === 'txt') {
+                        text = overlayObject.text;
+                    } else if(overlayObject.type === 'dt') {
+                        text = 
+                            dateTime.getDate() + '.' + 
+                            (dateTime.getMonth() + 1) + '.' + 
+                            dateTime.getFullYear() + '\n' + 
+                            String("0" + dateTime.getHours()).slice(-2) + ':' + 
+                            String("0" + dateTime.getMinutes()).slice(-2) + ':' + 
+                            String("0" + dateTime.getSeconds()).slice(-2);
+                    }
+
+                    const fontSize = baseImgWidth * 2 / 100 * overlayObjects.scale;
+                    
+                    const textBuff = text2png(text, {
+                        font: fontSize + 'px Montserrat',
+                        localFontPath: 'fonts/Montserrat-Regular.ttf',
+                        localFontName: 'Montserrat',
+                        color: overlayObject.color,
+                        lineSpacing: 5
+                    });
+
+                    overlayImg = await jimp.read(textBuff);
+                    overlayImg.opacity(parseFloat(overlayObject.opacity));
+
                 } else if(overlayObject.type === 'img') {
                     const overlayImgBuff = new Buffer(overlayObject.dataURL.replace('data:image/jpeg;base64,', ''), 'base64');
                     const overlayImageWidth = sizeOf(overlayImgBuff).width;
                     const overlayImageHeight = sizeOf(overlayImgBuff).height;
                     const imageScale = baseImgWidth / (10 * overlayImageWidth);                 
 
-                    const overlayImg = await jimp.read(overlayImgBuff);
+                    overlayImg = await jimp.read(overlayImgBuff);
 
                     overlayImg
                         .resize(overlayImageWidth * imageScale * overlayObject.scale, overlayImageHeight * imageScale * overlayObject.scale)
-                        .opacity(overlayObject.opacity);
-                    
-                    baseImg.blit(overlayImg, baseImgWidth * overlayObject.x / 100, baseImgHeight * overlayObject.y / 100);           
-    
-                } else if(overlayObject.type === 'dt') {
-    
+                        .opacity(parseFloat(overlayObject.opacity));
                 }
+                baseImg.blit(overlayImg, baseImgWidth * overlayObject.x / 100, baseImgHeight * overlayObject.y / 100);  
             }; 
 
             baseImg.getBuffer(jimp.AUTO, (err, res) => {
@@ -334,7 +358,7 @@ bot.onText(/\/update/, (msg) => {
             overlayObjects = res;
             db.close();
 
-            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects);
+            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects, date_ob);
 
             bot.sendPhoto(
                 id,

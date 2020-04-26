@@ -24,6 +24,7 @@
     "node-telegram-bot-api": "^0.40.0",
     "opencv4nodejs": "^5.5.0",
     "path": "^0.12.7",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "text2png": "^2.3.0"
   }
 }
