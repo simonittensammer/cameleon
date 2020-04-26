@@ -15,8 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "buffer-image-size": "^0.6.4",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
+    "jimp": "^0.10.3",
     "mongodb": "^3.5.4",
     "node-html-parser": "^1.2.8",
     "node-telegram-bot-api": "^0.40.0",

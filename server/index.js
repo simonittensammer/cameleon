@@ -13,7 +13,8 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
-
+const sizeOf = require('buffer-image-size');
+const jimp = require('jimp');
 //DB
 
 let MongoClient = require('mongodb').MongoClient;
@@ -21,7 +22,6 @@ let url = "mongodb://localhost:27017/";
 
 let currentImage;
 let currentStream;
-let = currentStreamUrl = 'http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8';
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
@@ -30,23 +30,16 @@ const FPS = 15;
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
 //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
-let wCap = new cv.VideoCapture(currentStreamUrl);
-wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
-wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
+let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 setInterval(() => {
-    try {
-        const frame = wCap.read();
-        const image = cv.imencode('.jpg', frame).toString('base64');
-        io.emit('image', image);
-    } catch (error) {
-        console.log('wCap restart');
-        wCap = new cv.VideoCapture(currentStreamUrl);
-    }
+    const frame = wCap.read();
+    currentImage = cv.imencode('.jpg', frame).toString('base64');
+    io.emit('image', currentImage);
 }, 1000 / FPS);
 
 io.on('connection', socket => {
@@ -151,7 +144,6 @@ io.on('connection', socket => {
 
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
-                    currentStreamUrl = result[0].ip;
                 }catch(err) {
                     console.log('unable to connect to this url: ' + result[0].ip);
                     socket.emit('stream-change-error');
@@ -244,6 +236,48 @@ io.on('connection', socket => {
     });
 });
 
+
+function mergeOverlayImages(baseImgDataURL, overlayObjects) {
+    return new Promise(resolve => {
+
+        const baseImgBuff = new Buffer(baseImgDataURL, 'base64');
+        const baseImgWidth = sizeOf(baseImgBuff).width;
+        const baseImgHeight = sizeOf(baseImgBuff).height;
+
+        jimp.read(baseImgBuff, async (err, baseImg) => {
+            if (err) throw err;
+
+            for (const overlayObject of overlayObjects) {
+                if(overlayObject.type === 'txt') {
+    
+                } else if(overlayObject.type === 'img') {
+                    const overlayImgBuff = new Buffer(overlayObject.dataURL.replace('data:image/jpeg;base64,', ''), 'base64');
+                    const overlayImageWidth = sizeOf(overlayImgBuff).width;
+                    const overlayImageHeight = sizeOf(overlayImgBuff).height;
+                    const imageScale = baseImgWidth / (10 * overlayImageWidth);                 
+
+                    const overlayImg = await jimp.read(overlayImgBuff);
+
+                    overlayImg
+                        .resize(overlayImageWidth * imageScale * overlayObject.scale, overlayImageHeight * imageScale * overlayObject.scale)
+                        .opacity(overlayObject.opacity);
+                    
+                    baseImg.blit(overlayImg, baseImgWidth * overlayObject.x / 100, baseImgHeight * overlayObject.y / 100);           
+    
+                } else if(overlayObject.type === 'dt') {
+    
+                }
+            }; 
+
+            baseImg.getBuffer(jimp.AUTO, (err, res) => {
+                if (err) throw err;
+                resolve(res);
+            });
+        });   
+    });
+}
+
+
 // Telegram Message Bot
 
 var token = '1151670452:AAFFOIPbYPlIXB_lJp5IfoC77DXAUknabZg';
@@ -289,13 +323,27 @@ bot.onText(/\/update/, (msg) => {
         " at " + hours + ":" + minutes + ":" + seconds +
         ' by the camera called "' + currentStream.name + '" with the id ' + currentStream.id + ".";
 
-    let buff = new Buffer(currentImage, 'base64');
-    bot.sendPhoto(
-        id, 
-        buff, 
-        {caption: caption},
-        textOpts
-    );
+    let overlayObjects = {};
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("cameleon");
+
+        var query = {channelId: currentStream.id};
+        dbo.collection("overlayObjects").find(query).toArray(async (err, res) => {
+            if (err) throw err;
+            overlayObjects = res;
+            db.close();
+
+            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects);
+
+            bot.sendPhoto(
+                id,
+                imgBuff,
+                {caption: caption},
+                textOpts
+            );
+        });
+    });
 });
 
 // CURRENTSTREAM
