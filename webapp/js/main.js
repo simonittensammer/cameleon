@@ -88,6 +88,10 @@ socket.on('stream-change-error', () => {
     });
 });
 
+function recordVideo(length) {
+    socket.emit('record-video', {id: activeChannelId, length: length});
+}
+
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
     if (!channelSelectionVisible) {

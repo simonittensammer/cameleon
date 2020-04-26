@@ -8,6 +8,7 @@ const cv = require('opencv4nodejs');
 const path = require('path')
 const express = require('express');
 const fs = require('fs');
+const rimraf = require('rimraf');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -16,6 +17,10 @@ const TelegramBot = require('node-telegram-bot-api');
 const sizeOf = require('buffer-image-size');
 const jimp = require('jimp');
 const text2png = require('text2png');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
+const command = ffmpeg();
 
 //DB
 
@@ -236,12 +241,16 @@ io.on('connection', socket => {
             });
           });
     });
+
+    socket.on('record-video', data => {
+        recordVideo(data.id, data.length);
+    });
 });
 
 
 function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
     return new Promise(resolve => {
-
+        
         const baseImgBuff = new Buffer(baseImgDataURL, 'base64');
         const baseImgWidth = sizeOf(baseImgBuff).width;
         const baseImgHeight = sizeOf(baseImgBuff).height;
@@ -302,6 +311,117 @@ function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
     });
 }
 
+function getVideoFrames(streamURL, length) {
+    return new Promise(resolve => {
+
+        let frames = []
+        const vCap = new cv.VideoCapture(streamURL);
+
+        console.log('recoring video frames');
+
+        const getFrame = setInterval(() => {
+            const frame = wCap.read();
+            const image = cv.imencode('.jpg', frame).toString('base64');
+            const now = new Date();
+            frames.push({
+                'dataURL': image,
+                'time': now
+            });
+            //console.log('frame recordet');
+        }, 1000 / FPS);
+
+        setTimeout(() => {
+            console.log('finished recording');
+            clearInterval(getFrame);
+            resolve(frames);
+        }, length);
+    });
+}
+
+async function recordVideo(streamId, length) {
+
+    // getting stream and its overlayObjects from the DB
+    const getStreamObjects = () => {
+        return new Promise(resolve => {
+            MongoClient.connect(url, (err, db) => {
+                if (err) throw err;
+    
+                const dbo = db.db("cameleon");
+    
+                const camQuery = {id: '' + streamId}; 
+                dbo.collection('cams').find(camQuery).toArray((err, stream) => {
+                    if (err) throw err;
+    
+                    const overlayQuery = {channelId: '' + streamId};
+                    dbo.collection('overlayObjects').find(overlayQuery).toArray((err, overlayObjects) => {
+                        if (err) throw err;
+                        resolve({
+                            stream: stream,
+                            overlayObjects: overlayObjects
+                        });
+                        db.close();
+                    });
+                });
+            });
+        });
+    }    
+
+    const streamObjects = await getStreamObjects();
+    const stream = streamObjects.stream[0];
+    const overlayObjects = streamObjects.overlayObjects;
+
+    const frames = await getVideoFrames(stream.ip, length);
+    
+    console.log('start generating video frame binary');
+    
+    let videoFramesBinary = [];
+    for(frame of frames) {
+        videoFramesBinary.push(await mergeOverlayImages(frame.dataURL, overlayObjects, frame.time));
+    }
+
+    console.log('finished generating video frame binary');
+
+    if (!fs.existsSync('./tmp')){
+        fs.mkdirSync('./tmp');
+    }
+
+    console.log('start generating image files');
+    
+    for (let i = 0; i < videoFramesBinary.length; i++) {
+        try {
+            fs.writeFile("./tmp/image" + String("00" + (i + 1 )).slice(-3) + ".jpg", videoFramesBinary[i], err => {
+                if (err) throw err;
+            });
+        } catch (err) {
+            console.error(err)
+        }
+    };
+
+    console.log('finished generating image files');
+
+    command
+        .on('start', () => {
+            console.log('start video encoding');
+        })
+        .on('end', () => {
+            console.log('finished video encoding');
+            rimraf("./tmp", err => {
+                if (err) throw err;
+            });
+        })
+        .on('progress', progress => {
+            console.log(progress); 
+        })
+        .on('error', err => {
+            if (err) throw err;
+        })
+        .input('./tmp/image%3d.jpg')
+        .inputFPS(15)
+        .output('./video.avi')
+        .outputFPS(15)
+        .noAudio()
+        .run();
+}
 
 // Telegram Message Bot
 
