@@ -10,7 +10,7 @@ Whenever movement is detected you will be notified and you will also be able to 
 
 == Overview
 
-https://simonittensammer.github.io/video-analyser/[]
+https://simonittensammer.github.io/cameleon/[]
 
 == State
 

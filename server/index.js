@@ -13,7 +13,9 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
-
+const sizeOf = require('buffer-image-size');
+const jimp = require('jimp');
+const text2png = require('text2png');
 //DB
 
 let MongoClient = require('mongodb').MongoClient;
@@ -24,14 +26,12 @@ let currentStream;
 
 app.use(express.static(path.join(__dirname, '../webapp')));
 
-const FPS = 30;
+const FPS = 15;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
 //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
 let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
-wCap.set(cv.CAP_PROP_FRAME_WIDTH, 300);
-wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 300);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
@@ -237,6 +237,71 @@ io.on('connection', socket => {
     });
 });
 
+
+function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
+    return new Promise(resolve => {
+
+        const baseImgBuff = new Buffer(baseImgDataURL, 'base64');
+        const baseImgWidth = sizeOf(baseImgBuff).width;
+        const baseImgHeight = sizeOf(baseImgBuff).height;
+
+        jimp.read(baseImgBuff, async (err, baseImg) => {
+            if (err) throw err;
+
+            for (const overlayObject of overlayObjects) {
+                let overlayImg;
+                if(overlayObject.type === 'txt' || overlayObject.type === 'dt') {
+
+                    let text;
+                    if(overlayObject.type === 'txt') {
+                        text = overlayObject.text;
+                    } else if(overlayObject.type === 'dt') {
+                        text = 
+                            dateTime.getDate() + '.' + 
+                            (dateTime.getMonth() + 1) + '.' + 
+                            dateTime.getFullYear() + '\n' + 
+                            String("0" + dateTime.getHours()).slice(-2) + ':' + 
+                            String("0" + dateTime.getMinutes()).slice(-2) + ':' + 
+                            String("0" + dateTime.getSeconds()).slice(-2);
+                    }
+
+                    const fontSize = baseImgWidth * 2 / 100 * overlayObjects.scale;
+                    
+                    const textBuff = text2png(text, {
+                        font: fontSize + 'px Montserrat',
+                        localFontPath: 'fonts/Montserrat-Regular.ttf',
+                        localFontName: 'Montserrat',
+                        color: overlayObject.color,
+                        lineSpacing: 5
+                    });
+
+                    overlayImg = await jimp.read(textBuff);
+                    overlayImg.opacity(parseFloat(overlayObject.opacity));
+
+                } else if(overlayObject.type === 'img') {
+                    const overlayImgBuff = new Buffer(overlayObject.dataURL.replace('data:image/jpeg;base64,', ''), 'base64');
+                    const overlayImageWidth = sizeOf(overlayImgBuff).width;
+                    const overlayImageHeight = sizeOf(overlayImgBuff).height;
+                    const imageScale = baseImgWidth / (10 * overlayImageWidth);                 
+
+                    overlayImg = await jimp.read(overlayImgBuff);
+
+                    overlayImg
+                        .resize(overlayImageWidth * imageScale * overlayObject.scale, overlayImageHeight * imageScale * overlayObject.scale)
+                        .opacity(parseFloat(overlayObject.opacity));
+                }
+                baseImg.blit(overlayImg, baseImgWidth * overlayObject.x / 100, baseImgHeight * overlayObject.y / 100);  
+            }; 
+
+            baseImg.getBuffer(jimp.AUTO, (err, res) => {
+                if (err) throw err;
+                resolve(res);
+            });
+        });   
+    });
+}
+
+
 // Telegram Message Bot
 
 var token = '1151670452:AAFFOIPbYPlIXB_lJp5IfoC77DXAUknabZg';
@@ -282,13 +347,27 @@ bot.onText(/\/update/, (msg) => {
         " at " + hours + ":" + minutes + ":" + seconds +
         ' by the camera called "' + currentStream.name + '" with the id ' + currentStream.id + ".";
 
-    let buff = new Buffer(currentImage, 'base64');
-    bot.sendPhoto(
-        id, 
-        buff, 
-        {caption: caption},
-        textOpts
-    );
+    let overlayObjects = {};
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("cameleon");
+
+        var query = {channelId: currentStream.id};
+        dbo.collection("overlayObjects").find(query).toArray(async (err, res) => {
+            if (err) throw err;
+            overlayObjects = res;
+            db.close();
+
+            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects, date_ob);
+
+            bot.sendPhoto(
+                id,
+                imgBuff,
+                {caption: caption},
+                textOpts
+            );
+        });
+    });
 });
 
 // CURRENTSTREAM
