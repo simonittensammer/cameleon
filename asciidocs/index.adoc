@@ -90,6 +90,10 @@ rectangle cameleon {
 
 image:sprints.png[]
 
+=== Epic
+
+image:epic.png[]
+
 === GANTT-Diagramm
 
 image:gantt.png[]
