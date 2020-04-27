@@ -6,7 +6,7 @@ Simon Ittensammer
 :toc: left
 
 Github:
-https://github.com/simonittensammer/cameleon
+https://github.com/simonittensammer/video-analyser
 
 == Pflichtenheft
 

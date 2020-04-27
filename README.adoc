@@ -1,33 +1,161 @@
-= CAMeleon
-Lorenz Gruber, Simon Ittensammer, Simon Zweimüller
-1.0.1, 2020-03-29
-
-== Description
-
-This application allows you to manage your surveillance cameras. +
-You can personalize the surveillance videos with images, text and other objects. +
-Whenever movement is detected you will be notified and you will also be able to see a short clip of the movement action.
+= asciidoctor-docker-template
+:imagesdir: images
+:icons: font
 
 == Overview
 
-https://simonittensammer.github.io/cameleon/[]
+The documents are generated in a Docker-container.
+Three scripts are available:
 
-== State
+* for html-pages -> build-html-docker.sh
+* for slides -> build-reveal-docker.sh
+* for pds -> build-pdf-docker.sh
 
-=== Current
+For each output (revealjs, html5 and pdf) a single folder is created.
 
-With the current state of the project, the user can view streams on the webpage. +
-He is also able to add videostreams on the webpage. +
-These streams are persisted in the local mongodb database, which means that they will also be shown after you reload the page. +
-After the streams where added to the database, the user is still able to change the name, description and url of his streams, by using the edit button on the client.
+IMPORTANT: The html-output is generated into a `docs`-folder, so it is published to gh-pages automatically.
 
-=== In Progress
+== gh-pages
 
-We are currently working on a feature, which allows the user to lay texts, images and other objects over his streams. +
-We assume that this feature will be finshed by april 15th.
+This are the gh-pages of the template-project.
 
-=== Next Steps
+* https://htl-leonding-college.github.io/asciidoctor-docker-template
+* https://htl-leonding-college.github.io/asciidoctor-docker-template/demo.html[]
 
-Starting with april 16th, we will work on motion detection. +
-This feature will the user allow to receive notifications if movement is detected by the current camera. +
-In this case the application will also be recording short videoclips.
+== Steps to your own doc-repo
+
+=== Create your own github-repo
+
+Leave it empty for now.
+
+=== Clone the Template Repo
+
+----
+git clone https://github.com/htl-leonding-college/asciidoctor-docker-template.git
+----
+
+=== Change the Remote Origin
+
+For your own documentation change the remote origin to
+your own empty git-repo and commit your own docs.
+
+* Rename folder of project (from `asciidoctor-docker-template` to <your-repo-name>)
+* Rename Project
+* Project Structure - Project - Rename Project
+* change git remote
+
+.Your current remote origin
+----
+git remote -v
+----
+
+.Change the remote origin
+----
+git remote set-url origin <new repo link>
+----
+
+ie
+
+----
+git remote set-url origin https://github.com/htl-leonding/asciidoctor-docker-testdrive.git
+----
+
+.Your new remote origin
+----
+git remote -v
+----
+
+
+In case you change your remote repository to https URL, you will be prompted for your username and password next time you use git fetch, git pull or git push.
+
+source: https://www.xenovation.com/blog/source-control-management/git/how-to-change-remote-git-repository[How to change remote git repository]
+
+
+=== Commit some Files into the New Repo
+
+Commit the shell-scripts, .ignore-File, ... into the repo.
+It is not possible to create gh-pages, without content in the repo.
+
+=== Activate the gh-pages for your repo.
+
+https://github.com/<your-git-user>/<your-project>/settings
+
+image:doc-setup-gh-pages.png[]
+
+
+
+== Create the Docs
+
+=== Create the adoc-Files in the asciidocs-Folder
+
+image:doc-folder.png[]
+
+CAUTION: Don't remove `docinfo.html`. This file is needed for highlighting.
+
+
+=== The Header of the adoc-File
+
+----
+= Title
+firstname lastname <email>
+1.0, yyyy-mm-dd
+ifndef::sourcedir[:sourcedir: ../src/main/java]
+ifndef::imagesdir[:imagesdir: images]
+ifndef::backend[:backend: html5]
+:icons: font
+:toc: left
+----
+
+
+=== For images use the image-folder
+
+image:doc-folder-images.png[]
+
+=== Necessary Frameworks
+
+For RevealJS the revealjs-folder will be added automatically
+
+image:doc-folder-revealjs.png[]
+
+
+== Available scripts
+
+IMPORTANT: Before using the scripts, revisit them carefully.
+
+|===
+| script | purpose
+
+| `build-html-docker.sh`
+| creates the html-output
+
+| `build-pdf-docker.sh`
+| creates the pdf-output
+
+| `build-reveal-docker.sh`
+| creates the reveal-output for generating slides
+
+| `download-reveal.sh`
+| downloads the reveal-library from the github-repo and unzips the files.
+This script is used by `build-reveal-docker.sh`.
+
+| `build-all.sh`
+| create the html-, pdf-, and revealjs-output
+
+| `clean-all.sh`
+| deletes all output-files, which are #not# necessary for the gh-pages
+
+| `publish-gh-pages.sh`
+| creates the html-output and publish it on the gh-pages.
+
+|===
+
+
+
+
+=== The Generated Output
+
+gh-pages need the doc-folder for publishing.
+
+image:doc-folder-output.png[]
+
+

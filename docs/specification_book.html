@@ -5,9 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="Simon Ittensammer">
 <link rel="icon" type="image/png" href="themes/favicon.png">
-<title>CAMeleon</title>
+<title>Specification Book</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -449,184 +448,85 @@ pre.rouge .hll * {
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>CAMeleon</h1>
-<div class="details">
-<span id="author" class="author">Simon Ittensammer</span><br>
-<span id="revnumber">version 1.0.1,</span>
-<span id="revdate">2020-03-2</span>
-</div>
+<h1>Specification Book</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_pflichtenheft">1. Pflichtenheft</a>
-<ul class="sectlevel2">
-<li><a href="#_ausgangssituation">1.1. Ausgangssituation</a></li>
-<li><a href="#_istzustand">1.2. Istzustand</a></li>
-<li><a href="#_problemstellung">1.3. Problemstellung</a></li>
-<li><a href="#_aufgabenstellung">1.4. Aufgabenstellung</a></li>
-<li><a href="#_ziele">1.5. Ziele</a></li>
-<li><a href="#_mengengerüst">1.6. Mengengerüst</a></li>
-<li><a href="#_rahmenbedingungen">1.7. Rahmenbedingungen</a></li>
-</ul>
-</li>
-<li><a href="#_entwurf">2. Entwurf</a>
-<ul class="sectlevel2">
-<li><a href="#_systemarchitektur">2.1. Systemarchitektur</a></li>
-<li><a href="#_design">2.2. Design</a></li>
-</ul>
-</li>
-<li><a href="#_projekthandbuch">3. Projekthandbuch</a>
-<ul class="sectlevel2">
-<li><a href="#_use_case_diagramm">3.1. Use-Case Diagramm</a></li>
-<li><a href="#_sprints">3.2. Sprints</a></li>
-<li><a href="#_gantt_diagramm">3.3. GANTT-Diagramm</a></li>
-</ul>
-</li>
+<ul class="sectlevel3">
+<li><a href="#_lorenz_gruber_simon_ittensammer_simon_zweimüller">1. Lorenz Gruber, Simon Ittensammer, Simon Zweimüller</a></li>
+<li><a href="#_initial_situation">2. Initial situation</a></li>
+<li><a href="#_current_situation">3. Current Situation</a></li>
+<li><a href="#_problems">4. Problems</a></li>
+<li><a href="#_tasks">5. Tasks</a></li>
+<li><a href="#_goals">6. Goals</a></li>
+<li><a href="#_next_steps">7. Next steps</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Github:
-<a href="https://github.com/simonittensammer/video-analyser" class="bare">https://github.com/simonittensammer/video-analyser</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_pflichtenheft"><a class="anchor" href="#_pflichtenheft"></a>1. Pflichtenheft</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_ausgangssituation"><a class="anchor" href="#_ausgangssituation"></a>1.1. Ausgangssituation</h3>
-<div class="paragraph">
-<p>Die HTL Leonding ist eine HTL im oö. Zentralraum mit ca. 1000 Schülern und den Fachabteilungen Medientechnik, Informatik, Medizintechnik und Elektronik.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_istzustand"><a class="anchor" href="#_istzustand"></a>1.2. Istzustand</h3>
-<div class="paragraph">
-<p>An der HTL in Leonding gibt es ein sogenanntes "RoboLab". Dieses kann von Schülern und Lehrern zum Arbeiten genutzt werden. Im RoboLab werden zahlreiche und unter anderem auch teure Werkzeuge und Materialien zur Verfügung gestellt.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_problemstellung"><a class="anchor" href="#_problemstellung"></a>1.3. Problemstellung</h3>
-<div class="paragraph">
-<p>Da das RoboLab jederzeit von Personen in der HTL benutzt werden kann, kann es zu Fällen von Vandalismus und Diebstahl kommen. Durch die große Schüleranzahl weiß man nicht genau wer und wann das RoboLab betreten und verlassen hat.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aufgabenstellung"><a class="anchor" href="#_aufgabenstellung"></a>1.4. Aufgabenstellung</h3>
 <div class="sect3">
-<h4 id="_funktionale_anforderungen"><a class="anchor" href="#_funktionale_anforderungen"></a>1.4.1. Funktionale Anforderungen</h4>
+<h4 id="_lorenz_gruber_simon_ittensammer_simon_zweimüller"><a class="anchor" href="#_lorenz_gruber_simon_ittensammer_simon_zweimüller"></a>1. Lorenz Gruber, Simon Ittensammer, Simon Zweimüller</h4>
+
+</div>
+<div class="sect1">
+<h2 id="_initial_situation"><a class="anchor" href="#_initial_situation"></a>2. Initial situation</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Es ist ein Softwaresystem zu entwickeln, welches es ermöglicht Personen, die das RoboLab betreten und verlassen, zu sehen und zu protokollieren.
-Der User kann sich jederzeit am Rechner oder Smartphone die Livestreams seiner Kameras ansehen.
-Betritt eine Person das RoboLab, wird ein Foto oder ein kurzer Videoclip gespeichert.
-Wenn gewünscht, kann auch eine e-mail an den User gesendet werden.
-Diese gespeicherten Medien, kann sich der User jederzeit im Nachhinein ansehen.
-Auch ist es möglich seine Videostreams anzupassen. Es können Logos, Texte, die Uhrzeit usw. eingeblendet werden.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_nichtfunktionale_anforderungen"><a class="anchor" href="#_nichtfunktionale_anforderungen"></a>1.4.2. Nichtfunktionale Anforderungen</h4>
-<div class="paragraph">
-<p>Das System soll unabhängig vom Typ der Kamera bzw. des Streams funktionieren.
-Auch soll es nutzerfreundlich und leicht zu bedienen sein.
-Ein Fehler bei der Übertragung des Videostreams soll keinesfalls das System zum Absturz und auch nicht zu Performanceproblemen führen.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ziele"><a class="anchor" href="#_ziele"></a>1.5. Ziele</h3>
-<div class="paragraph">
-<p>Vorbeugen bzw. Aufklären von Diebstahl und Vandalismus im RoboLab.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_mengengerüst"><a class="anchor" href="#_mengengerüst"></a>1.6. Mengengerüst</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Für den Server an sich werden ca. 1,5-2 GB gebraucht werden.</p>
-</li>
-<li>
-<p>Die Website an sich hat rund 15-20 MB.</p>
-</li>
-<li>
-<p>Pro Videostream wird in der Datenbank eine Zeile angelegt. Die gebrauchten Daten sind daher nur einige kB groß.</p>
-</li>
-<li>
-<p>Pro persionalisiertem Element, welches kein Bild ist, wird eine Zeile in der DB angelegt. Das entspricht wiederum nur eineigen kB.</p>
-</li>
-<li>
-<p>Pro eingefügtem Bild wird ebenfalls eine Zeile angelegt. Das Bild an sich wird am Server gespeichert und hat ca. 0,5-3 MB.</p>
-</li>
-<li>
-<p>Pro gespeichertem Bild wird eine Zeile in der DB angelegt und das Bild am Server gespeichert. Das Bild hat ca. 3-5 MB.</p>
-</li>
-<li>
-<p>Pro gespeichertem Video wird auch eine Zeile in der DB angelegt und das Video am Server gespeichert. Das Video hat eine größe von ca. 20 MB umfassen.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_rahmenbedingungen"><a class="anchor" href="#_rahmenbedingungen"></a>1.7. Rahmenbedingungen</h3>
-<div class="paragraph">
-<p>Das System ist bis mitte Juni fertigzustellen.
-Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.</p>
-</div>
+<p>The higher technical college in Leonding is a school in Upper Austria.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_entwurf"><a class="anchor" href="#_entwurf"></a>2. Entwurf</h2>
+<h2 id="_current_situation"><a class="anchor" href="#_current_situation"></a>3. Current Situation</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_systemarchitektur"><a class="anchor" href="#_systemarchitektur"></a>2.1. Systemarchitektur</h3>
 <div class="paragraph">
-<p><span class="image"><img src="images/systemarchitektur.png" alt="systemarchitektur"></span></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_design"><a class="anchor" href="#_design"></a>2.2. Design</h3>
-<div class="paragraph">
-<p><span class="image"><img src="images/design.png" alt="design"></span></p>
-</div>
+<p>The school provides teachers and students with a Robolab.<br>
+The Robolab is a place where students can experiment and work on their projects.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_projekthandbuch"><a class="anchor" href="#_projekthandbuch"></a>3. Projekthandbuch</h2>
+<h2 id="_problems"><a class="anchor" href="#_problems"></a>4. Problems</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_use_case_diagramm"><a class="anchor" href="#_use_case_diagramm"></a>3.1. Use-Case Diagramm</h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/use-case.png" alt="use case" width="278" height="388">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_sprints"><a class="anchor" href="#_sprints"></a>3.2. Sprints</h3>
 <div class="paragraph">
-<p><span class="image"><img src="images/sprints.png" alt="sprints"></span></p>
+<p>The Robolab contains valuable technical devices which could be damaged or stolen because many students have access to the lab.<br>
+Currently there is no possibility to keep track of who enters and leaves the Robolab.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_gantt_diagramm"><a class="anchor" href="#_gantt_diagramm"></a>3.3. GANTT-Diagramm</h3>
+</div>
+<div class="sect1">
+<h2 id="_tasks"><a class="anchor" href="#_tasks"></a>5. Tasks</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="images/gantt.png" alt="gantt"></span></p>
+<p>Display the surveillance streams on a website.<br>
+Record whenever someone enters or leaves the Robolab.<br>
+Notify the owner whenever someone enters.<br>
+Let the user customize their surveillance streams.<br>
+Combine all of the above in one web application.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_goals"><a class="anchor" href="#_goals"></a>6. Goals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Make it easier and less time consuming to observe the Robolab.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps"><a class="anchor" href="#_next_steps"></a>7. Next steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implement motion detection.<br>
+Let the user customize their streams by adding text, images and other special objects like timestamps.<br>
+Add a database to the server which persists streams and the users customization.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.1<br>
-Last updated 2020-04-19 19:04:52 UTC
+Last updated 2020-04-23 09:03:21 UTC
 </div>
 </div>
 </body>
