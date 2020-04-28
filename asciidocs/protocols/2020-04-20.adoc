@@ -1,0 +1,47 @@
+= Besprechungsprotokoll 20.04.2020
+Simon Zweimüller
+1.0, 2020-04-20
+ifndef::imagesdir[:imagesdir: images]
+:icons: font
+//:toc: left
+
+.Teilnehmer
+|===
+|anwesend
+
+|Lorenz Gruber
+
+|Simon Ittensammer
+
+|Simon Zweimüller
+
+|R. Reder
+
+|T. Stütz
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Discord
+
+|von-bis
+|Mo. 20.4.2020, 4. EH
+|Dauer
+|15 min
+|===
+
+
+
+== Besprochene Themen
+
+* Github-Repository Struktur
+* Telegram-Bot
+* Video Aufzeichnung
+
+=== Vereinbarungen und Entscheidungen
+
+* Die Asciidoctor Struktur soll mit voller Funktionaliät in das Gihub Repository übertragen werden
+* Der Telegram-Bot soll die Overlay-Objekte mitschicken
+* Der Video Aufzeichnungsbereich soll früher begonnen werden, da er am kompliziertesten ist
