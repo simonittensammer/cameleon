@@ -19,15 +19,14 @@ https://simonittensammer.github.io/cameleon/[]
 With the current state of the project, the user can view streams on the webpage. +
 He is also able to add videostreams on the webpage. +
 These streams are persisted in the local mongodb database, which means that they will also be shown after you reload the page. +
-After the streams where added to the database, the user is still able to change the name, description and url of his streams, by using the edit button on the client.
+After the streams where added to the database, the user is still able to change the name, description and url of his streams, by using the edit button on the client. +
+The user can also  lay texts, images and other objects over his streams.
 
 === In Progress
 
-We are currently working on a feature, which allows the user to lay texts, images and other objects over his streams. +
-We assume that this feature will be finshed by april 15th.
+We are currently working on a feature, which allows the user to receive notifications via Telegram. +
+We are also working on recording short videoclips from the stream footage.
 
 === Next Steps
 
-Starting with april 16th, we will work on motion detection. +
-This feature will the user allow to receive notifications if movement is detected by the current camera. +
-In this case the application will also be recording short videoclips.
+The next feature will be motion detection. +
