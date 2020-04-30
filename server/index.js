@@ -338,89 +338,93 @@ function getVideoFrames(streamURL, length) {
     });
 }
 
-async function recordVideo(streamId, length) {
+function recordVideo(streamId, length) {
 
-    // getting stream and its overlayObjects from the DB
-    const getStreamObjects = () => {
-        return new Promise(resolve => {
-            MongoClient.connect(url, (err, db) => {
-                if (err) throw err;
-    
-                const dbo = db.db("cameleon");
-    
-                const camQuery = {id: '' + streamId}; 
-                dbo.collection('cams').find(camQuery).toArray((err, stream) => {
+    return new Promise(async resolve => {
+
+        // getting stream and its overlayObjects from the DB
+        const getStreamObjects = () => {
+            return new Promise(resolve => {
+                MongoClient.connect(url, (err, db) => {
                     if (err) throw err;
-    
-                    const overlayQuery = {channelId: '' + streamId};
-                    dbo.collection('overlayObjects').find(overlayQuery).toArray((err, overlayObjects) => {
+        
+                    const dbo = db.db("cameleon");
+        
+                    const camQuery = {id: '' + streamId}; 
+                    dbo.collection('cams').find(camQuery).toArray((err, stream) => {
                         if (err) throw err;
-                        resolve({
-                            stream: stream,
-                            overlayObjects: overlayObjects
+        
+                        const overlayQuery = {channelId: '' + streamId};
+                        dbo.collection('overlayObjects').find(overlayQuery).toArray((err, overlayObjects) => {
+                            if (err) throw err;
+                            resolve({
+                                stream: stream,
+                                overlayObjects: overlayObjects
+                            });
+                            db.close();
                         });
-                        db.close();
                     });
                 });
             });
-        });
-    }    
-
-    const streamObjects = await getStreamObjects();
-    const stream = streamObjects.stream[0];
-    const overlayObjects = streamObjects.overlayObjects;
-
-    const frames = await getVideoFrames(stream.ip, length);
+        }    
     
-    console.log('start generating video frame binary');
+        const streamObjects = await getStreamObjects();
+        const stream = streamObjects.stream[0];
+        const overlayObjects = streamObjects.overlayObjects;
     
-    let videoFramesBinary = [];
-    for(frame of frames) {
-        videoFramesBinary.push(await mergeOverlayImages(frame.dataURL, overlayObjects, frame.time));
-    }
-
-    console.log('finished generating video frame binary');
-
-    if (!fs.existsSync('./tmp')){
-        fs.mkdirSync('./tmp');
-    }
-
-    console.log('start generating image files');
-    
-    for (let i = 0; i < videoFramesBinary.length; i++) {
-        try {
-            fs.writeFile("./tmp/image" + String("00" + (i + 1 )).slice(-3) + ".jpg", videoFramesBinary[i], err => {
-                if (err) throw err;
-            });
-        } catch (err) {
-            console.error(err)
+        const frames = await getVideoFrames(stream.ip, length);
+        
+        console.log('start generating video frame binary');
+        
+        let videoFramesBinary = [];
+        for(frame of frames) {
+            videoFramesBinary.push(await mergeOverlayImages(frame.dataURL, overlayObjects, frame.time));
         }
-    };
-
-    console.log('finished generating image files');
-
-    command
-        .on('start', () => {
-            console.log('start video encoding');
-        })
-        .on('end', () => {
-            console.log('finished video encoding');
-            rimraf("./tmp", err => {
+    
+        console.log('finished generating video frame binary');
+    
+        if (!fs.existsSync('./tmp')){
+            fs.mkdirSync('./tmp');
+        }
+    
+        console.log('start generating image files');
+        
+        for (let i = 0; i < videoFramesBinary.length; i++) {
+            try {
+                fs.writeFile("./tmp/image" + String("00" + (i + 1 )).slice(-3) + ".jpg", videoFramesBinary[i], err => {
+                    if (err) throw err;
+                });
+            } catch (err) {
+                console.error(err)
+            }
+        };
+    
+        console.log('finished generating image files');
+    
+        command
+            .on('start', () => {
+                console.log('start video encoding');
+            })
+            .on('end', () => {
+                console.log('finished video encoding');
+                resolve(true);
+                rimraf("./tmp", err => {
+                    if (err) throw err;
+                });
+            })
+            .on('progress', progress => {
+                console.log(progress); 
+            })
+            .on('error', err => {
                 if (err) throw err;
-            });
-        })
-        .on('progress', progress => {
-            console.log(progress); 
-        })
-        .on('error', err => {
-            if (err) throw err;
-        })
-        .input('./tmp/image%3d.jpg')
-        .inputFPS(15)
-        .output('./video.avi')
-        .outputFPS(15)
-        .noAudio()
-        .run();
+            })
+            .input('./tmp/image%3d.jpg')
+            .inputFPS(15)
+            .output('./video.avi')
+            .outputFPS(15)
+            .noAudio()
+            .run();
+    });
 }
 
 // Telegram Message Bot
@@ -512,6 +516,36 @@ bot.onText(/\/currentStream/, (msg) => {
     );
 });
 
+// RECORD VIDEO
+bot.onText(/\/record/, async (msg) => {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    bot.sendMessage(
+        id,
+        'Video is beeing processes. This may take a few seconds.',
+        textOpts 
+    );
+
+    const video = await recordVideo(currentStream.id, 5000);
+
+    console.log('video is ready');
+    
+
+    fs.readFile('./video.avi', (err, data) => {
+        if (err) {
+          console.error(err)
+        }
+        console.log(data);
+        
+        bot.sendVideo(
+            id,
+            data
+        );   
+      })
+});
+
+
 // HELP
 bot.onText(/\/help/, (msg) => {
     var id = msg.chat.id;
@@ -532,7 +566,8 @@ bot.on('message', function(msg) {
     if(!text.toString().includes('start') 
         && !text.toString().includes('update') 
         && !text.toString().includes('currentStream')
-        && !text.toString().includes('help')) {
+        && !text.toString().includes('help')
+        && !text.toString().includes('record')) {
             
             bot.sendMessage(
                 id, 
@@ -548,6 +583,7 @@ function printHelp() {
     let helpString = "*Usage:*\n" +
         "/update - get a live image\n" +
         "/currentStream - get info about current stream\n" +
+        "/record - get a live recording\n" +
         "/help - get overview of all commands"
 
     return helpString;
