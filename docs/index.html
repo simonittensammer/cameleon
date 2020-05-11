@@ -460,13 +460,14 @@ pre.rouge .hll * {
 <ul class="sectlevel1">
 <li><a href="#_pflichtenheft">1. Pflichtenheft</a>
 <ul class="sectlevel2">
-<li><a href="#_ausgangssituation">1.1. Ausgangssituation</a></li>
-<li><a href="#_istzustand">1.2. Istzustand</a></li>
-<li><a href="#_problemstellung">1.3. Problemstellung</a></li>
-<li><a href="#_aufgabenstellung">1.4. Aufgabenstellung</a></li>
-<li><a href="#_ziele">1.5. Ziele</a></li>
-<li><a href="#_mengengerüst">1.6. Mengengerüst</a></li>
-<li><a href="#_rahmenbedingungen">1.7. Rahmenbedingungen</a></li>
+<li><a href="#_projektteam">1.1. Projektteam</a></li>
+<li><a href="#_ausgangssituation">1.2. Ausgangssituation</a></li>
+<li><a href="#_istzustand">1.3. Istzustand</a></li>
+<li><a href="#_problemstellung">1.4. Problemstellung</a></li>
+<li><a href="#_aufgabenstellung">1.5. Aufgabenstellung</a></li>
+<li><a href="#_ziele">1.6. Ziele</a></li>
+<li><a href="#_mengengerüst">1.7. Mengengerüst</a></li>
+<li><a href="#_rahmenbedingungen">1.8. Rahmenbedingungen</a></li>
 </ul>
 </li>
 <li><a href="#_entwurf">2. Entwurf</a>
@@ -491,7 +492,7 @@ pre.rouge .hll * {
 <div class="sectionbody">
 <div class="paragraph">
 <p>Github:
-<a href="https://github.com/simonittensammer/video-analyser" class="bare">https://github.com/simonittensammer/video-analyser</a></p>
+<a href="https://github.com/simonittensammer/cameleon" class="bare">https://github.com/simonittensammer/cameleon</a></p>
 </div>
 </div>
 </div>
@@ -499,27 +500,43 @@ pre.rouge .hll * {
 <h2 id="_pflichtenheft"><a class="anchor" href="#_pflichtenheft"></a>1. Pflichtenheft</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_ausgangssituation"><a class="anchor" href="#_ausgangssituation"></a>1.1. Ausgangssituation</h3>
+<h3 id="_projektteam"><a class="anchor" href="#_projektteam"></a>1.1. Projektteam</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gruber Lorenz (4AHITM)</p>
+</li>
+<li>
+<p>Simon Ittensammer (4AHITM)</p>
+</li>
+<li>
+<p>Simon Zweimüller (4AHITM)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ausgangssituation"><a class="anchor" href="#_ausgangssituation"></a>1.2. Ausgangssituation</h3>
 <div class="paragraph">
 <p>Die HTL Leonding ist eine HTL im oö. Zentralraum mit ca. 1000 Schülern und den Fachabteilungen Medientechnik, Informatik, Medizintechnik und Elektronik.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_istzustand"><a class="anchor" href="#_istzustand"></a>1.2. Istzustand</h3>
+<h3 id="_istzustand"><a class="anchor" href="#_istzustand"></a>1.3. Istzustand</h3>
 <div class="paragraph">
 <p>An der HTL in Leonding gibt es ein sogenanntes "RoboLab". Dieses kann von Schülern und Lehrern zum Arbeiten genutzt werden. Im RoboLab werden zahlreiche und unter anderem auch teure Werkzeuge und Materialien zur Verfügung gestellt.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problemstellung"><a class="anchor" href="#_problemstellung"></a>1.3. Problemstellung</h3>
+<h3 id="_problemstellung"><a class="anchor" href="#_problemstellung"></a>1.4. Problemstellung</h3>
 <div class="paragraph">
 <p>Da das RoboLab jederzeit von Personen in der HTL benutzt werden kann, kann es zu Fällen von Vandalismus und Diebstahl kommen. Durch die große Schüleranzahl weiß man nicht genau wer und wann das RoboLab betreten und verlassen hat.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_aufgabenstellung"><a class="anchor" href="#_aufgabenstellung"></a>1.4. Aufgabenstellung</h3>
+<h3 id="_aufgabenstellung"><a class="anchor" href="#_aufgabenstellung"></a>1.5. Aufgabenstellung</h3>
 <div class="sect3">
-<h4 id="_funktionale_anforderungen"><a class="anchor" href="#_funktionale_anforderungen"></a>1.4.1. Funktionale Anforderungen</h4>
+<h4 id="_funktionale_anforderungen"><a class="anchor" href="#_funktionale_anforderungen"></a>1.5.1. Funktionale Anforderungen</h4>
 <div class="paragraph">
 <p>Es ist ein Softwaresystem zu entwickeln, welches es ermöglicht Personen, die das RoboLab betreten und verlassen, zu sehen und zu protokollieren.
 Der User kann sich jederzeit am Rechner oder Smartphone die Livestreams seiner Kameras ansehen.
@@ -530,7 +547,7 @@ Auch ist es möglich seine Videostreams anzupassen. Es können Logos, Texte, die
 </div>
 </div>
 <div class="sect3">
-<h4 id="_nichtfunktionale_anforderungen"><a class="anchor" href="#_nichtfunktionale_anforderungen"></a>1.4.2. Nichtfunktionale Anforderungen</h4>
+<h4 id="_nichtfunktionale_anforderungen"><a class="anchor" href="#_nichtfunktionale_anforderungen"></a>1.5.2. Nichtfunktionale Anforderungen</h4>
 <div class="paragraph">
 <p>Das System soll unabhängig vom Typ der Kamera bzw. des Streams funktionieren.
 Auch soll es nutzerfreundlich und leicht zu bedienen sein.
@@ -539,13 +556,13 @@ Ein Fehler bei der Übertragung des Videostreams soll keinesfalls das System zum
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ziele"><a class="anchor" href="#_ziele"></a>1.5. Ziele</h3>
+<h3 id="_ziele"><a class="anchor" href="#_ziele"></a>1.6. Ziele</h3>
 <div class="paragraph">
 <p>Vorbeugen bzw. Aufklären von Diebstahl und Vandalismus im RoboLab.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_mengengerüst"><a class="anchor" href="#_mengengerüst"></a>1.6. Mengengerüst</h3>
+<h3 id="_mengengerüst"><a class="anchor" href="#_mengengerüst"></a>1.7. Mengengerüst</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -558,22 +575,22 @@ Ein Fehler bei der Übertragung des Videostreams soll keinesfalls das System zum
 <p>Pro Videostream wird in der Datenbank eine Zeile angelegt. Die gebrauchten Daten sind daher nur einige kB groß.</p>
 </li>
 <li>
-<p>Pro persionalisiertem Element, welches kein Bild ist, wird eine Zeile in der DB angelegt. Das entspricht wiederum nur eineigen kB.</p>
+<p>Pro personalisiertem Element, welches kein Bild ist, wird eine Zeile in der DB angelegt. Das entspricht wiederum nur einigen kB.</p>
 </li>
 <li>
-<p>Pro eingefügtem Bild wird ebenfalls eine Zeile angelegt. Das Bild an sich wird am Server gespeichert und hat ca. 0,5-3 MB.</p>
+<p>Pro eingefügtem Bild wird ebenfalls eine Zeile angelegt. Das Bild an sich als Base64 String in der DB gespeichert und hat ca. 0,5-3 MB.</p>
 </li>
 <li>
-<p>Pro gespeichertem Bild wird eine Zeile in der DB angelegt und das Bild am Server gespeichert. Das Bild hat ca. 3-5 MB.</p>
+<p>Pro gespeichertem Bild wird eine Zeile in der DB angelegt und das Bild am als Base64 String in der DB gespeichert. Das Bild hat ca. 3-5 MB.</p>
 </li>
 <li>
-<p>Pro gespeichertem Video wird auch eine Zeile in der DB angelegt und das Video am Server gespeichert. Das Video hat eine größe von ca. 20 MB umfassen.</p>
+<p>Pro gespeichertem Video wird auch eine Zeile in der DB angelegt und das Video im Filesystem am Server gespeichert. Das Video hat eine größe von ca. 20 MB umfassen.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rahmenbedingungen"><a class="anchor" href="#_rahmenbedingungen"></a>1.7. Rahmenbedingungen</h3>
+<h3 id="_rahmenbedingungen"><a class="anchor" href="#_rahmenbedingungen"></a>1.8. Rahmenbedingungen</h3>
 <div class="paragraph">
 <p>Das System ist bis mitte Juni fertigzustellen.
 Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.</p>
@@ -605,9 +622,40 @@ Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.</p>
 <h3 id="_use_case_diagramm"><a class="anchor" href="#_use_case_diagramm"></a>3.1. Use-Case Diagramm</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/use-case.png" alt="use case" width="278" height="388">
+<img src="images/use-case.png" alt="use case" width="324" height="433">
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Use Cases</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Use Case</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">View live video-stream</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">View the live feed of the current selected live-stream</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure overlay-objects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Let the user add text-, image- and datetime-objects to all of his live-streams.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Receive notification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get notified on <a href="https://telegram.org">telegram</a> when motion is detected</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">View recordings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Let the user view recorded stream-snippets on the website</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_sprints"><a class="anchor" href="#_sprints"></a>3.2. Sprints</h3>
@@ -633,7 +681,7 @@ Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.1<br>
-Last updated 2020-04-27 06:42:46 UTC
+Last updated 2020-05-11 07:32:09 UTC
 </div>
 </div>
 </body>
