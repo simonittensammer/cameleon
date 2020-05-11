@@ -1,0 +1,43 @@
+= Besprechungsprotokoll 20.04.2020
+Simon Zweimüller
+1.0, 2020-04-20
+ifndef::imagesdir[:imagesdir: images]
+:icons: font
+//:toc: left
+
+.Teilnehmer
+|===
+|anwesend
+
+|Lorenz Gruber
+
+|Simon Ittensammer
+
+|Simon Zweimüller
+
+|T. Stütz
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Discord
+
+|von-bis
+|Mo. 11.5.2020, 1. - 2. EH
+|Dauer
+|15 min
+|===
+
+== Besprochene Themen
+
+* Dokumentation
+* Demo-Videos
+
+=== Vereinbarungen und Entscheidungen
+
+* Rechtschreibfehler in der Doku ausbessern
+* Namen und Klasse ins Projekthandbuch eintragen
+* Eindeutiger formulieren
+* Demo Server erstellen
