@@ -17,7 +17,7 @@ let imageInput = document.getElementById('image-input');
 let colorInput = document.getElementById('color-input');
 let opacityInput = document.getElementById('opacity-input');
 let saveObjectsButton = document.getElementById('save-objects-button');
-let deleteObjectButton = document.getElementById('delete-object-button');
+// let deleteObjectButton = document.getElementById('delete-object-button');
 let doneLink = document.getElementById('done-link');
 
 // # VARIABLES #
@@ -216,7 +216,7 @@ function toggleValueInputs(disabled) {
     yInput.disabled = disabled;
     scaleInput.disabled = disabled;
     scaleRange.disabled = disabled;
-    deleteObjectButton.disabled = disabled;
+    // deleteObjectButton.disabled = disabled;
     opacityInput.disabled = disabled;
 
     if(disabled) {
@@ -416,6 +416,7 @@ channelSelect.addEventListener('change', (event) => {
         
 
     objectSelect.disabled = false;
+    saveObjectsButton.disabled = false;
 });
 
 
@@ -595,10 +596,10 @@ saveObjectsButton.addEventListener('click', () => {
 
 // DELETE-OBJECT-BUTTON ON CLICK
 
-deleteObjectButton.addEventListener('click', () => {
-    let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
-    deleteOverlayObject(overlayObject);
-});
+// deleteObjectButton.addEventListener('click', () => {
+//     let overlayObject = overlayObjects[selectedObject.id.replace('overlay-object-', '')];
+//     deleteOverlayObject(overlayObject);
+// });
 
 
 // DONE-BUTTON ON CLICK

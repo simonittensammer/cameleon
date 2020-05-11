@@ -352,12 +352,14 @@ option {
 }
 
 input:disabled, textarea:disabled, button:disabled, select:disabled {
-    filter: opacity(.5);
+    display: none;
 }
 
 input:disabled~label {
-    filter: opacity(.5);
+    display: none;
 }
+
+
 
 button:enabled:hover, select:enabled:hover {
     cursor: pointer;
