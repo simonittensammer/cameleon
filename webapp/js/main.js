@@ -71,9 +71,12 @@ socket.on('join', data => {
     socket.emit('joined');
 })
 
-socket.on('image', (image) => {
+socket.on('image', (buffer) => {
     const imageElm = document.getElementById("browserVideo");
-    imageElm.src = `data:image/jpeg;base64,${image}`;
+
+    const imageBase64 = _arrayBufferToBase64(buffer);
+
+    imageElm.src = `data:image/jpeg;base64,${imageBase64}`;
 });
 
 socket.on('stream-change-error', () => {
@@ -90,6 +93,16 @@ socket.on('stream-change-error', () => {
 
 function recordVideo(length) {
     socket.emit('record-video', {id: activeChannelId, length: length});
+}
+
+function _arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
 }
 
 // HOVER EFFECTS

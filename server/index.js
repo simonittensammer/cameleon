@@ -44,8 +44,7 @@ app.get('/', (req, res) => {
 });
 
 setInterval(() => {
-    const frame = wCap.read();
-    currentImage = cv.imencode('.jpg', frame).toString('base64');
+    currentImage = cv.imencode('.png', wCap.read());
     io.emit('image', currentImage);
 }, 1000 / FPS);
 
@@ -483,7 +482,7 @@ bot.onText(/\/update/, (msg) => {
             overlayObjects = res;
             db.close();
 
-            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects, date_ob);
+            const imgBuff = await mergeOverlayImages(currentImage.toString('base64'), overlayObjects, date_ob);
 
             bot.sendPhoto(
                 id,
