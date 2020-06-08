@@ -45,7 +45,6 @@ const socket = io();
 socket.on('join', data => {
     console.log(data);
 
-    
 
     data.cams.forEach(channel => {
         channels[channel.id] = channel;
@@ -93,6 +92,10 @@ socket.on('stream-change-error', () => {
 
 function recordVideo(length) {
     socket.emit('record-video', {id: activeChannelId, length: length});
+}
+
+function motionDetection() {
+    socket.emit('motion-detect', activeChannelId);
 }
 
 function _arrayBufferToBase64(buffer) {

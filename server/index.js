@@ -21,6 +21,7 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 const command = ffmpeg();
+const MotionDetection = require('./MotionDetection');
 
 //DB
 
@@ -30,9 +31,11 @@ let url = "mongodb://localhost:27017/";
 let currentImage;
 let currentStream;
 
+let motionDetections = [];
+
 app.use(express.static(path.join(__dirname, '../webapp')));
 
-const FPS = 15;
+const FPS = 10;
 //0 for Webcam
 //rtsp://10.0.0.5:8080/h264_ulaw.sdp
 //http://10.0.0.5:8080/video
@@ -243,6 +246,20 @@ io.on('connection', socket => {
 
     socket.on('record-video', data => {
         recordVideo(data.id, data.length);
+    });
+
+    socket.on('motion-detect', data => {
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            var myquery = { id: data + "" };
+            dbo.collection("cams").find(myquery).toArray((err, res) => {
+                if (err) throw err;
+                motionDetections.push(new MotionDetection(res[0],25, 2));
+                motionDetections[0].start();
+                db.close();
+            });
+        });
     });
 });
 
