@@ -1,0 +1,42 @@
+= Setup CAMeleon
+
+* install git
+```
+sudo apt-get install git
+```
+
+* clone project
+```
+git clone https://github.com/simonittensammer/cameleon.git
+```
+
+* change to server directory
+```
+cd cameleon/server
+```
+
+* install nodejs, npm and cmake
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install nodejs
+sudo apt-get install npm
+sudo apt-get install cmake
+```
+
+* install mongo
+Just follow the steps shown on this page:
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+* install node_modules
+```
+npm install
+```
+
+* start Server
+```
+node index.js
+```
+
+
+
