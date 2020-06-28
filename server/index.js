@@ -250,7 +250,7 @@ io.on('connection', socket => {
         recordVideo(data.id, data.length);
     });
 
-    socket.on('motion-detect', data => {
+    socket.on('start-motion-detection', data => {
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db("cameleon");
@@ -258,10 +258,19 @@ io.on('connection', socket => {
             dbo.collection("cams").find(myquery).toArray((err, res) => {
                 if (err) throw err;
                 motionDetections.push(new MotionDetection(res[0],25, 5));
-                motionDetections[0].start();
+                motionDetections[motionDetections.length-1].start();
                 db.close();
             });
         });
+    });
+
+    socket.on('end-motion-detection', data => {    
+        for(let i =  0; i < motionDetections.length; i++) {
+            if(motionDetections[i].stream.id === data) {
+                motionDetections[i].stop();
+                motionDetections.splice(i,1);
+            }
+        }
     });
 });
 
@@ -548,7 +557,6 @@ bot.onText(/\/record/, async (msg) => {
     const video = await recordVideo(currentStream.id, 5000);
 
     console.log('video is ready');
-    
 
     fs.readFile('./video.avi', (err, data) => {
         if (err) {

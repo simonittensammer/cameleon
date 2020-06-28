@@ -23,6 +23,8 @@ module.exports = class MotionDetection {
     }
 
     start() {
+        console.log(this.stream.name + ' : Motion Detection started');
+
         this.lastFrame = this.camera.read()
             .cvtColor(cv.COLOR_BGR2GRAY)
             .blur(new cv.Size(21, 21))
@@ -36,7 +38,7 @@ module.exports = class MotionDetection {
                     .blur(new cv.Size(21, 21))
                     .rescale(0.5)
             } catch (error) {
-                this.camera = new cv.VideoCapture('http://10.0.0.7:8080/video');
+                this.camera = new cv.VideoCapture(stream.ip);
                 console.log('camera reset');
                 console.log(error);
             }
@@ -67,21 +69,18 @@ module.exports = class MotionDetection {
                         String("0" + now.getSeconds()).slice(-2) + '-' +
                         now.getMilliseconds();
         
-                    fs.writeFile('./surveillance-images/' + dateString + '.jpg', cv.imencode('.jpg', this.currentFrameRaw), function (err) {
+                    fs.writeFile('./surveillance-images/' + this.stream.name + ',' + dateString + '.jpg', cv.imencode('.jpg', this.currentFrameRaw), function (err) {
                         if (err) return console.log(err);
                       });
                 }
-        
-            }
-        
-            cv.imshow('Motion Detection', thresh);
-            cv.waitKey(1);
-        
+            }      
+
             this.lastFrame = this.currentFrame;
         }, 1000 / this.fps);
     }
 
     stop() {
+        console.log(this.stream.name + ' : Motion Detection ended');
         clearInterval(this.interval);
     }
 

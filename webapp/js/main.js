@@ -212,9 +212,32 @@ function generateChannelSelector(id, name, desc) {
     img.src = 'img/edit.png';
     img.classList.add('channelControlIcon');
 
+    let camera = document.createElement('img');
+    camera.src = 'img/camera-icon.png';
+    camera.classList.add('channelControlIcon');
+    camera.classList.add('not-recording');
+
+    camera.addEventListener('click', (event) => {
+        if(event.target.classList.contains('not-recording')) {
+            event.target.classList.remove('not-recording');
+            event.target.classList.add('recording');
+            event.target.parentNode.classList.toggle('surveillance-mode');
+
+            socket.emit('start-motion-detection', id);
+        } else {
+            event.target.classList.remove('recording');
+            event.target.classList.add('not-recording');
+            event.target.parentNode.classList.toggle('surveillance-mode');
+
+            socket.emit('end-motion-detection', id);
+        }
+        event.stopPropagation();
+    });
+
     channel.appendChild(h2);
     channel.appendChild(p);
     channel.appendChild(img);
+    channel.appendChild(camera);
 
     document.getElementById('channelWrapper').appendChild(channel);
     
@@ -226,12 +249,16 @@ function generateChannelSelector(id, name, desc) {
 
     channelElement.addEventListener("mouseover", function(){
         if(!editChannelBoxIsOpen) {
-            channelElement.querySelector(".channelControlIcon").style.opacity = .9;
-           }
+            channelElement.querySelectorAll(".channelControlIcon").forEach(element => {
+                element.style.opacity = .9;  
+            });
+        }
     });
 
     channelElement.addEventListener("mouseout", function(){
-        channelElement.querySelector(".channelControlIcon").style.opacity = 0;
+        channelElement.querySelectorAll(".channelControlIcon").forEach(element => {
+            element.style.opacity = 0;  
+        });
     });
 
     channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
