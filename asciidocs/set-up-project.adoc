@@ -1,21 +1,28 @@
-= Setup CAMeleon
+= Setup CAMeleon on raspberry pi 3
 
-* install git
+== Raspberry login
+
+* User: pi
+* Password: cameleon20
+
+== Setup
+
+* Git installieren
 ```
 sudo apt-get install git
 ```
 
-* clone project
+* Clone CAMeleon project
 ```
 git clone https://github.com/simonittensammer/cameleon.git
 ```
 
-* change to server directory
+* Change to server directory
 ```
 cd cameleon/server
 ```
 
-* install nodejs, npm and cmake
+* Install nodejs, npm and cmake
 ```
 sudo apt-get update
 sudo apt-get upgrade
@@ -24,20 +31,33 @@ sudo apt-get install npm
 sudo apt-get install cmake
 ```
 
-* install mongo
+* Install docker
 
-Just follow the steps shown on this page:
-https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+```
+sudo apt-get update && sudo apt-get upgrade
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+```
 
-* install node_modules
+* Install MongoDB
+
+Simply follow the steps described on this page: https://github.com/andresvidal/rpi3-mongodb3
+
+In the MongoDB terminal:
+```
+use camleon
+db.createCollection("cams")
+```
+
+Then change the user and password in the db-url in the index.js file (default values are "cameleon" for user and "videostream" for password)
+
+
+* Install node_modules
 ```
 npm install
 ```
 
-* start Server
+* Run 
 ```
 node index.js
 ```
-
-
-
