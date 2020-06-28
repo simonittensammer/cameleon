@@ -70,13 +70,13 @@ socket.on('join', data => {
     socket.emit('joined');
 })
 
-socket.on('image', (buffer) => {
-    const imageElm = document.getElementById("browserVideo");
+// socket.on('image', (buffer) => {
+//     const imageElm = document.getElementById("browserVideo");
 
-    const imageBase64 = _arrayBufferToBase64(buffer);
+//     const imageBase64 = _arrayBufferToBase64(buffer);
 
-    imageElm.src = `data:image/jpeg;base64,${imageBase64}`;
-});
+//     imageElm.src = `data:image/jpeg;base64,${imageBase64}`;
+// });
 
 socket.on('stream-change-error', () => {
     browserVideo.style.opacity = 0;
@@ -254,6 +254,8 @@ function selectChannel(streamId) {
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
     setOverlayObjects(streamId);
+
+    browserVideo.src = channels[streamId].ip;
 
     socket.emit('change-stream', streamId);
 }

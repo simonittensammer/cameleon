@@ -36,20 +36,20 @@ let motionDetections = [];
 app.use(express.static(path.join(__dirname, '../webapp')));
 
 const FPS = 10;
-//0 for Webcam
-//rtsp://10.0.0.5:8080/h264_ulaw.sdp
-//http://10.0.0.5:8080/video
-//http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
+// //0 for Webcam
+// //rtsp://10.0.0.5:8080/h264_ulaw.sdp
+// //http://10.0.0.5:8080/video
+// //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
 let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-setInterval(() => {
-    currentImage = cv.imencode('.png', wCap.read());
-    io.emit('image', currentImage);
-}, 1000 / FPS);
+// setInterval(() => {
+//     currentImage = cv.imencode('.png', wCap.read());
+//     io.emit('image', currentImage);
+// }, 1000 / FPS);
 
 io.on('connection', socket => {
 
@@ -150,6 +150,8 @@ io.on('connection', socket => {
                 if (err) throw err;
 
                 currentStream = result[0];
+                console.log('changed stream to: ' + currentStream.name);
+                
 
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
@@ -336,7 +338,7 @@ function getVideoFrames(streamURL, length) {
         console.log('recoring video frames');
 
         const getFrame = setInterval(() => {
-            const frame = wCap.read();
+            const frame = vCap.read();
             const image = cv.imencode('.jpg', frame).toString('base64');
             const now = new Date();
             frames.push({
@@ -435,9 +437,9 @@ function recordVideo(streamId, length) {
                 if (err) throw err;
             })
             .input('./tmp/image%3d.jpg')
-            .inputFPS(15)
+            .inputFPS(FPS)
             .output('./video.avi')
-            .outputFPS(15)
+            .outputFPS(FPS)
             .noAudio()
             .run();
     });
@@ -499,7 +501,7 @@ bot.onText(/\/update/, (msg) => {
             overlayObjects = res;
             db.close();
 
-            const imgBuff = await mergeOverlayImages(currentImage.toString('base64'), overlayObjects, date_ob);
+            const imgBuff = await mergeOverlayImages(cv.imencode('.png', wCap.read()).toString('base64'), overlayObjects, date_ob);
 
             bot.sendPhoto(
                 id,
