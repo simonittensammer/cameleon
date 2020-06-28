@@ -257,7 +257,7 @@ io.on('connection', socket => {
             var myquery = { id: data + "" };
             dbo.collection("cams").find(myquery).toArray((err, res) => {
                 if (err) throw err;
-                motionDetections.push(new MotionDetection(res[0],25, 2));
+                motionDetections.push(new MotionDetection(res[0],25, 5));
                 motionDetections[0].start();
                 db.close();
             });
