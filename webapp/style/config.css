@@ -532,10 +532,12 @@ b {
     height: 100vh;
     transition: 0.2s;
     filter: blur(0);
+    transform: scale(1);
 }
 
 .out-of-focus {
     filter: blur(10px) !important;
+    transform: scale(1.1) !important;
     pointer-events: none;
 }
 
