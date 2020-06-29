@@ -1,0 +1,24 @@
+= Errors when trying to set up cameleon on Raspberry Pi
+
+=== Raspbian
+```
+MongoError: Server at localhost:27017 reports wire version 0, but this version of Node.js Driver requires at least 2
+```
+
+This error can only be fixed by using a newer version of MongoDB, as seen on this table:
+https://docs.mongodb.com/drivers/driver-compatibility-reference#node-js-driver-compatibility
+
+Unfortunately the newest version Raspbian supports is MongoDB 2.4, but for the NodeJS Server you need at least MongoDB 4.2.
+
+=== Ubuntu Mate 18.04.4 LTS 32bit
+
+Because of this error we tried to set the project up on Ubuntu Mate 32bit. 
+But the 32bit does not support MongoDB at all.
+```
+Package 'mongodb' has no installation candidate
+```
+
+=== Ubuntu Mate 18.04.4 LTS 64bit
+
+The MongoDB Server correctly runns on the Raspberry Pi. 
+The Problem on this verion is that the command ```npm install``` always gets stuck.
