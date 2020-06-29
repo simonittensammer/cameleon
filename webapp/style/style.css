@@ -152,6 +152,8 @@ p {
     position: relative;
     z-index: 5;
     box-shadow: 0 .5vh 0 0 rgba(12, 8, 37, 0.5);
+    border-left: solid 0 rgb(255, 58, 91);
+    box-sizing: border-box;
 
     transition: all .1s ease;
 }
@@ -161,9 +163,14 @@ p {
     box-shadow: 0 1vh 0 0 rgba(12, 8, 37, 0.5);
 }
 
-.channel:active {
+/* .channel:active {
     transform: translateY(0);
     box-shadow: none;
+} */
+
+.surveillance-mode {
+    border-left: solid 3px rgb(255, 58, 91);
+    padding-left: -3px;
 }
 
 .activeChannel {
@@ -354,16 +361,35 @@ form {
     width: 7.5%;
     right: 5%;
     top: 50%;
-    transform: translateY(-50%);
     transition: 0.3s;
     opacity: 0;
     z-index: 100;
 }
 
-.channelControlIcon:hover {
-    transform: translateY(-50%) scale(1.2);
-    opacity: 1;
+.channelControlIcon:nth-child(odd) {
+    transform: translateY(20%);
 }
+
+.channelControlIcon:nth-child(even) {
+    transform: translateY(-120%);
+}
+
+.channelControlIcon:nth-child(odd):hover {
+    transform: translateY(20%) scale(1.2);
+}
+
+.channelControlIcon:nth-child(even):hover {
+    transform: translateY(-120%) scale(1.2);
+}
+
+.not-recording {
+    filter: brightness(0.5);
+}
+
+.recording {
+    filter: brightness(1);
+}
+
 
 #editChannelBox > form {
     position: relative;

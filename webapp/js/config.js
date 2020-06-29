@@ -2,6 +2,7 @@
 // # ELEMENTS #
 
 let activePage = document.getElementById('dashboard');
+let dashboardWrapper = document.getElementById('dashboard').querySelector('.setting-page-wrapper');
 let activePageButton = document.getElementById('dashboard-button');
 let imagePreview = document.getElementById('place-image-preview');
 let channelSelect = document.getElementById('channel-select');
@@ -19,6 +20,9 @@ let opacityInput = document.getElementById('opacity-input');
 let saveObjectsButton = document.getElementById('save-objects-button');
 // let deleteObjectButton = document.getElementById('delete-object-button');
 let doneLink = document.getElementById('done-link');
+let largeImage = document.getElementById('large-image');
+let wrapper = document.getElementById('wrapper');
+let darkBackground = document.getElementById('dark-background')
 
 // # VARIABLES #
 
@@ -27,58 +31,13 @@ let currentChannel;
 
 let overlayObjects = [];
 
+let surveillanceImages = [];
+
 let objects = document.querySelectorAll('.overlay-object');
 let selectedObject = null;
 let grabbedObject = null;
 
 let deletingDisabled = false;
-
-
-
-// # CODE #
-
-// simulated data from db
-// overlayObjects.push(
-//     {
-//         'channelId': '1',
-//         'id': 0,
-//         'type': 'txt',
-//         'x': 0,
-//         'y': 0,
-//         'scale': 1,
-//         'color': '#000000',
-//         'opacity': 1,
-//         'text': 'Hello World',
-//         'dataURL': '',
-//         'imageName' : ''
-//     },
-//     {
-//         'channelId': '1',
-//         'id': 1,
-//         'type': 'txt',
-//         'x': 25,
-//         'y': 25,
-//         'scale': 2,
-//         'color': '#aaaaaa',
-//         'opacity': 1,
-//         'text': 'Hello Cameleon',
-//         'dataURL': '',
-//         'imageName' : ''
-//     },
-//     {
-//         'channelId': '2',
-//         'id': 2,
-//         'type': 'img',
-//         'x': 50,
-//         'y': 50,
-//         'scale': 1.5,
-//         'color': '',
-//         'opacity': 0.5,
-//         'dataURL': 'https://img.icons8.com/ios/500/no-image.png',
-//         'imageName': 'image.png'
-//     }
-// )
-
 
 
 // # SOCKET #
@@ -103,6 +62,11 @@ socket.on('join', data => {
     data.overlayObjects.forEach(overlayObject => {
         overlayObjects[overlayObject.id] = overlayObject;
     });
+
+    surveillanceImages = data.images;
+    if(surveillanceImages.length > 0) {
+        generateGallery(surveillanceImages);
+    }
 
     channelSelectOptions = channelSelect.querySelectorAll('option');
 
@@ -360,6 +324,69 @@ function addObject(channelId, id, type, x, y, scale, color, opacity, text, dataU
     if(persist) {
         persistOverlayObject(overlayObjects[id]);
     }
+}
+
+function generateGallery(images) {
+    const orderedImages = [];
+    orderedImages[0] = [];
+    let currentChannelId = images[0].charAt(0); 
+
+    let index = 0;
+    for(let i = 0; i < images.length; i++) {
+        if(images[i].charAt(0) === currentChannelId) {
+            orderedImages[index].push(images[i]);
+        } else {
+            index ++;
+            currentChannelId = images[i].charAt(0);
+            orderedImages[index] = [];
+            orderedImages[index].push(images[i]);
+        }
+    }
+
+    orderedImages.forEach(imagesFromChannel => {
+
+        imageInfo = imagesFromChannel[0].split(',');
+
+        let headline = document.createElement('h2');
+        headline.innerText = imageInfo[1];
+        headline.classList.add('channel-name');
+
+        let gallery = document.createElement('div');
+        gallery.classList.add('image-gallery');
+
+        imagesFromChannel.forEach(image => {
+            let galleryImage = document.createElement('div');
+            galleryImage.style.backgroundImage = 'url("../surveillance-images/' + image + '")';
+            galleryImage.classList.add('gallery-image');
+
+            let imageTooltip = document.createElement('span');
+            imageTooltip.classList.add('image-tooltip');
+            imageTooltip.innerText = image.split(',')[2].replace('-', '/').replace('-', '/') + '\n' + image.split(',')[3].replace('-', ':').replace('-', ':').replace('-', ':').replace('.jpg', '');
+
+            galleryImage.addEventListener('click', (event) => {
+                toggleLargeImage(image);
+            });
+
+            galleryImage.appendChild(imageTooltip);
+            gallery.appendChild(galleryImage);
+        });
+
+        dashboardWrapper.appendChild(headline);
+        dashboardWrapper.appendChild(gallery);
+        
+    });
+    
+}
+
+function toggleLargeImage(image) {
+    console.log('helu?');
+    
+
+    largeImage.src = '../surveillance-images/' + image;
+
+    largeImage.classList.toggle('large-image-active');
+    wrapper.classList.toggle('out-of-focus');
+    darkBackground.classList.toggle('dark-background-active');
 }
 
 function getBase64(file) {
@@ -655,3 +682,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 }
+
+darkBackground.addEventListener('click', () => {
+    toggleLargeImage('');
+});

@@ -8,6 +8,7 @@ const cv = require('opencv4nodejs');
 const path = require('path')
 const express = require('express');
 const fs = require('fs');
+const rimraf = require('rimraf');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -16,6 +17,11 @@ const TelegramBot = require('node-telegram-bot-api');
 const sizeOf = require('buffer-image-size');
 const jimp = require('jimp');
 const text2png = require('text2png');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
+const command = ffmpeg();
+const MotionDetection = require('./MotionDetection');
 
 //DB
 
@@ -25,24 +31,26 @@ let url = "mongodb://localhost:27017/";
 let currentImage;
 let currentStream;
 
-app.use(express.static(path.join(__dirname, '../webapp')));
+let motionDetections = [];
 
-const FPS = 15;
-//0 for Webcam
-//rtsp://10.0.0.5:8080/h264_ulaw.sdp
-//http://10.0.0.5:8080/video
-//http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
+app.use(express.static(path.join(__dirname, '../webapp')));
+app.use(express.static(path.join(__dirname, 'surveillance-images')));
+
+const FPS = 10;
+// //0 for Webcam
+// //rtsp://10.0.0.5:8080/h264_ulaw.sdp
+// //http://10.0.0.5:8080/video
+// //http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8 - test stream
 let wCap = new cv.VideoCapture('http://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-setInterval(() => {
-    const frame = wCap.read();
-    currentImage = cv.imencode('.jpg', frame).toString('base64');
-    io.emit('image', currentImage);
-}, 1000 / FPS);
+// setInterval(() => {
+//     currentImage = cv.imencode('.png', wCap.read());
+//     io.emit('image', currentImage);
+// }, 1000 / FPS);
 
 io.on('connection', socket => {
 
@@ -51,6 +59,8 @@ io.on('connection', socket => {
         if (err) throw err;
 
         let data = {};
+
+        data.images = fs.readdirSync('../webapp/surveillance-images');
 
         const dbo = db.db('cameleon')
 
@@ -143,6 +153,8 @@ io.on('connection', socket => {
                 if (err) throw err;
 
                 currentStream = result[0];
+                console.log('changed stream to: ' + currentStream.name);
+                
 
                 try {
                     wCap = new cv.VideoCapture(result[0].ip);
@@ -236,12 +248,39 @@ io.on('connection', socket => {
             });
           });
     });
+
+    socket.on('record-video', data => {
+        recordVideo(data.id, data.length);
+    });
+
+    socket.on('start-motion-detection', data => {
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("cameleon");
+            var myquery = { id: data + "" };
+            dbo.collection("cams").find(myquery).toArray((err, res) => {
+                if (err) throw err;
+                motionDetections.push(new MotionDetection(res[0],25, 5));
+                motionDetections[motionDetections.length-1].start();
+                db.close();
+            });
+        });
+    });
+
+    socket.on('end-motion-detection', data => {    
+        for(let i =  0; i < motionDetections.length; i++) {
+            if(motionDetections[i].stream.id === data) {
+                motionDetections[i].stop();
+                motionDetections.splice(i,1);
+            }
+        }
+    });
 });
 
 
 function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
     return new Promise(resolve => {
-
+        
         const baseImgBuff = new Buffer(baseImgDataURL, 'base64');
         const baseImgWidth = sizeOf(baseImgBuff).width;
         const baseImgHeight = sizeOf(baseImgBuff).height;
@@ -302,6 +341,121 @@ function mergeOverlayImages(baseImgDataURL, overlayObjects, dateTime) {
     });
 }
 
+function getVideoFrames(streamURL, length) {
+    return new Promise(resolve => {
+
+        let frames = []
+        const vCap = new cv.VideoCapture(streamURL);
+
+        console.log('recoring video frames');
+
+        const getFrame = setInterval(() => {
+            const frame = vCap.read();
+            const image = cv.imencode('.jpg', frame).toString('base64');
+            const now = new Date();
+            frames.push({
+                'dataURL': image,
+                'time': now
+            });
+            //console.log('frame recordet');
+        }, 1000 / FPS);
+
+        setTimeout(() => {
+            console.log('finished recording');
+            clearInterval(getFrame);
+            resolve(frames);
+        }, length);
+    });
+}
+
+function recordVideo(streamId, length) {
+
+    return new Promise(async resolve => {
+
+        // getting stream and its overlayObjects from the DB
+        const getStreamObjects = () => {
+            return new Promise(resolve => {
+                MongoClient.connect(url, (err, db) => {
+                    if (err) throw err;
+        
+                    const dbo = db.db("cameleon");
+        
+                    const camQuery = {id: '' + streamId}; 
+                    dbo.collection('cams').find(camQuery).toArray((err, stream) => {
+                        if (err) throw err;
+        
+                        const overlayQuery = {channelId: '' + streamId};
+                        dbo.collection('overlayObjects').find(overlayQuery).toArray((err, overlayObjects) => {
+                            if (err) throw err;
+                            resolve({
+                                stream: stream,
+                                overlayObjects: overlayObjects
+                            });
+                            db.close();
+                        });
+                    });
+                });
+            });
+        }    
+    
+        const streamObjects = await getStreamObjects();
+        const stream = streamObjects.stream[0];
+        const overlayObjects = streamObjects.overlayObjects;
+    
+        const frames = await getVideoFrames(stream.ip, length);
+        
+        console.log('start generating video frame binary');
+        
+        let videoFramesBinary = [];
+        for(frame of frames) {
+            videoFramesBinary.push(await mergeOverlayImages(frame.dataURL, overlayObjects, frame.time));
+        }
+    
+        console.log('finished generating video frame binary');
+    
+        if (!fs.existsSync('./tmp')){
+            fs.mkdirSync('./tmp');
+        }
+    
+        console.log('start generating image files');
+        
+        for (let i = 0; i < videoFramesBinary.length; i++) {
+            try {
+                fs.writeFile("./tmp/image" + String("00" + (i + 1 )).slice(-3) + ".jpg", videoFramesBinary[i], err => {
+                    if (err) throw err;
+                });
+            } catch (err) {
+                console.error(err)
+            }
+        };
+    
+        console.log('finished generating image files');
+    
+        command
+            .on('start', () => {
+                console.log('start video encoding');
+            })
+            .on('end', () => {
+                console.log('finished video encoding');
+                resolve(true);
+                rimraf("./tmp", err => {
+                    if (err) throw err;
+                });
+            })
+            .on('progress', progress => {
+                console.log(progress); 
+            })
+            .on('error', err => {
+                if (err) throw err;
+            })
+            .input('./tmp/image%3d.jpg')
+            .inputFPS(FPS)
+            .output('./video.avi')
+            .outputFPS(FPS)
+            .noAudio()
+            .run();
+    });
+}
 
 // Telegram Message Bot
 
@@ -359,7 +513,7 @@ bot.onText(/\/update/, (msg) => {
             overlayObjects = res;
             db.close();
 
-            const imgBuff = await mergeOverlayImages(currentImage, overlayObjects, date_ob);
+            const imgBuff = await mergeOverlayImages(cv.imencode('.png', wCap.read()).toString('base64'), overlayObjects, date_ob);
 
             bot.sendPhoto(
                 id,
@@ -392,6 +546,35 @@ bot.onText(/\/currentStream/, (msg) => {
     );
 });
 
+// RECORD VIDEO
+bot.onText(/\/record/, async (msg) => {
+    var id = msg.chat.id;
+    var text = msg.text;
+
+    bot.sendMessage(
+        id,
+        'Video is beeing processes. This may take a few seconds.',
+        textOpts 
+    );
+
+    const video = await recordVideo(currentStream.id, 5000);
+
+    console.log('video is ready');
+
+    fs.readFile('./video.avi', (err, data) => {
+        if (err) {
+          console.error(err)
+        }
+        console.log(data);
+        
+        bot.sendVideo(
+            id,
+            data
+        );   
+      })
+});
+
+
 // HELP
 bot.onText(/\/help/, (msg) => {
     var id = msg.chat.id;
@@ -412,7 +595,8 @@ bot.on('message', function(msg) {
     if(!text.toString().includes('start') 
         && !text.toString().includes('update') 
         && !text.toString().includes('currentStream')
-        && !text.toString().includes('help')) {
+        && !text.toString().includes('help')
+        && !text.toString().includes('record')) {
             
             bot.sendMessage(
                 id, 
@@ -428,6 +612,7 @@ function printHelp() {
     let helpString = "*Usage:*\n" +
         "/update - get a live image\n" +
         "/currentStream - get info about current stream\n" +
+        "/record - get a live recording\n" +
         "/help - get overview of all commands"
 
     return helpString;

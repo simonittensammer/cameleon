@@ -456,3 +456,105 @@ b {
     width: 25%;
     font-size: 1.25em;
 }
+
+
+.channel-name {
+    color: #19171C;
+    margin-top: 5%;
+}
+
+.image-gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+    padding-bottom: 1%;
+    overflow: visible;
+}
+
+.gallery-image {
+    width: 5vw;
+    height: 0;
+    padding-top: 4vw;
+    background: no-repeat center;
+    background-size: cover;
+    margin: .5%;
+    border-radius: 3px;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.7);
+    cursor: pointer;
+    transition: 0.2s;
+    overflow: visible;
+    overflow-x: visible;
+}
+
+.gallery-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.4);
+}
+
+.image-tooltip {
+    position: absolute;
+    padding: 5%;
+    z-index: 100;
+    text-align: center;
+    background-color: rgb(58, 58, 58);
+    width: 100%;
+    left: 50%;
+    top: -20%;
+    border-radius: 4px;
+    font-size: .6vw;
+    transform: translateX(-50%) scale(0);
+    pointer-events: none;
+    transition: 0.15s;
+}
+
+.gallery-image:hover .image-tooltip {
+    transform: translateX(-50%) scale(1);
+}
+
+#large-image {
+    z-index: 100;
+    position: absolute;
+    width: 60vw;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    box-shadow: 0px 7px 20px rgba(0,0,0,0.7);
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.2s;
+}
+
+.large-image-active {
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+
+#wrapper {
+    width: 100vw;
+    height: 100vh;
+    transition: 0.2s;
+    filter: blur(0);
+    transform: scale(1);
+}
+
+.out-of-focus {
+    filter: blur(10px) !important;
+    transform: scale(1.1) !important;
+    pointer-events: none;
+}
+
+#dark-background {
+    background-color: black;
+    position: absolute;
+    z-index: 99;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.dark-background-active {
+    opacity: 0.5 !important;
+    pointer-events: all !important;
+}

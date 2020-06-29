@@ -45,7 +45,6 @@ const socket = io();
 socket.on('join', data => {
     console.log(data);
 
-    
 
     data.cams.forEach(channel => {
         channels[channel.id] = channel;
@@ -71,10 +70,13 @@ socket.on('join', data => {
     socket.emit('joined');
 })
 
-socket.on('image', (image) => {
-    const imageElm = document.getElementById("browserVideo");
-    imageElm.src = `data:image/jpeg;base64,${image}`;
-});
+// socket.on('image', (buffer) => {
+//     const imageElm = document.getElementById("browserVideo");
+
+//     const imageBase64 = _arrayBufferToBase64(buffer);
+
+//     imageElm.src = `data:image/jpeg;base64,${imageBase64}`;
+// });
 
 socket.on('stream-change-error', () => {
     browserVideo.style.opacity = 0;
@@ -87,6 +89,24 @@ socket.on('stream-change-error', () => {
         document.body.removeChild(errorPopup);
     });
 });
+
+function recordVideo(length) {
+    socket.emit('record-video', {id: activeChannelId, length: length});
+}
+
+function motionDetection() {
+    socket.emit('motion-detect', activeChannelId);
+}
+
+function _arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
 
 // HOVER EFFECTS
 channelSelectionIndicator.addEventListener("mouseover", function () {
@@ -192,9 +212,32 @@ function generateChannelSelector(id, name, desc) {
     img.src = 'img/edit.png';
     img.classList.add('channelControlIcon');
 
+    let camera = document.createElement('img');
+    camera.src = 'img/camera-icon.png';
+    camera.classList.add('channelControlIcon');
+    camera.classList.add('not-recording');
+
+    camera.addEventListener('click', (event) => {
+        if(event.target.classList.contains('not-recording')) {
+            event.target.classList.remove('not-recording');
+            event.target.classList.add('recording');
+            event.target.parentNode.classList.toggle('surveillance-mode');
+
+            socket.emit('start-motion-detection', id);
+        } else {
+            event.target.classList.remove('recording');
+            event.target.classList.add('not-recording');
+            event.target.parentNode.classList.toggle('surveillance-mode');
+
+            socket.emit('end-motion-detection', id);
+        }
+        event.stopPropagation();
+    });
+
     channel.appendChild(h2);
     channel.appendChild(p);
     channel.appendChild(img);
+    channel.appendChild(camera);
 
     document.getElementById('channelWrapper').appendChild(channel);
     
@@ -206,12 +249,16 @@ function generateChannelSelector(id, name, desc) {
 
     channelElement.addEventListener("mouseover", function(){
         if(!editChannelBoxIsOpen) {
-            channelElement.querySelector(".channelControlIcon").style.opacity = .9;
-           }
+            channelElement.querySelectorAll(".channelControlIcon").forEach(element => {
+                element.style.opacity = .9;  
+            });
+        }
     });
 
     channelElement.addEventListener("mouseout", function(){
-        channelElement.querySelector(".channelControlIcon").style.opacity = 0;
+        channelElement.querySelectorAll(".channelControlIcon").forEach(element => {
+            element.style.opacity = 0;  
+        });
     });
 
     channelElement.querySelector(".channelControlIcon").addEventListener("click", (event) => {
@@ -234,6 +281,8 @@ function selectChannel(streamId) {
     document.getElementById(activeChannelId).classList.add("activeChannel");
 
     setOverlayObjects(streamId);
+
+    browserVideo.src = channels[streamId].ip;
 
     socket.emit('change-stream', streamId);
 }
