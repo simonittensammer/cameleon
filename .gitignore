@@ -222,3 +222,5 @@ node_modules/
 package-lock.json
 
 *.avi
+
+webapp/surveillance-images/

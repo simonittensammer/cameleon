@@ -34,6 +34,7 @@ let currentStream;
 let motionDetections = [];
 
 app.use(express.static(path.join(__dirname, '../webapp')));
+app.use(express.static(path.join(__dirname, 'surveillance-images')));
 
 const FPS = 10;
 // //0 for Webcam
@@ -58,6 +59,8 @@ io.on('connection', socket => {
         if (err) throw err;
 
         let data = {};
+
+        data.images = fs.readdirSync('../webapp/surveillance-images');
 
         const dbo = db.db('cameleon')
 

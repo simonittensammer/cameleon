@@ -69,7 +69,7 @@ module.exports = class MotionDetection {
                         String("0" + now.getSeconds()).slice(-2) + '-' +
                         now.getMilliseconds();
         
-                    fs.writeFile('./surveillance-images/' + this.stream.name + ',' + dateString + '.jpg', cv.imencode('.jpg', this.currentFrameRaw), function (err) {
+                    fs.writeFile('../webapp/surveillance-images/' + this.stream.id + ',' + this.stream.name + ',' + dateString + '.jpg', cv.imencode('.jpg', this.currentFrameRaw), function (err) {
                         if (err) return console.log(err);
                       });
                 }
