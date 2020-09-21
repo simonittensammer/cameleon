@@ -353,6 +353,7 @@ function generateGallery(images) {
 
         let gallery = document.createElement('div');
         gallery.classList.add('image-gallery');
+       
 
         imagesFromChannel.forEach(image => {
             let galleryImage = document.createElement('div');
@@ -370,7 +371,8 @@ function generateGallery(images) {
             galleryImage.appendChild(imageTooltip);
             gallery.appendChild(galleryImage);
         });
-
+        
+        dashboardWrapper.classList.add('scroll');
         dashboardWrapper.appendChild(headline);
         dashboardWrapper.appendChild(gallery);
         

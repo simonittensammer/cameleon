@@ -429,7 +429,7 @@ button:enabled:active {
     color: #4B367C;
 }
 
-ol {
+.scroll {
     list-style-position: inside;
     height: 75%;
     overflow-y: scroll;
