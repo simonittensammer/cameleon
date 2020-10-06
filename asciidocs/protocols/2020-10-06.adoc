@@ -45,5 +45,6 @@ Genauere Dokumentation ueber:
 * Ist-Zustand
 
 Anderes:
+
 * Raspberry Pi
 * Instar Kamera
