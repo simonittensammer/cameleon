@@ -25,9 +25,9 @@ ifndef::imagesdir[:imagesdir: images]
 |Klasse
 
 |von-bis
-|Di. 06.10.2020, 1.
+|Di. 06.10.2020, 1. EH
 |Dauer
-|1EH
+|1 EH
 |===
 
 == Besprochene Themen
