@@ -1,0 +1,48 @@
+= Besprechungsprotokoll 06.10.2020
+Simon Zweimüller
+1.0, 2020-10-06
+ifndef::imagesdir[:imagesdir: images]
+:icons: font
+//:toc: left
+
+.Teilnehmer
+|===
+|anwesend
+
+|Lorenz Gruber
+
+|Simon Ittensammer
+
+|Simon Zweimüller
+
+|T. Stütz
+|===
+
+.Ort und Zeit
+[cols=2*]
+|===
+|Ort
+|Klasse
+
+|von-bis
+|Di. 06.10.2020, 1. - 2. EH
+|Dauer
+|15 min
+|===
+
+== Besprochene Themen
+
+* Dokumentation
+* Organisatorisches
+
+=== Vereinbarungen und Entscheidungen
+
+Genauere Dokumentation ueber:
+- Systemarchitektur
+- Komponentendiagramm
+- Verwendete Libraries
+- Ist-Zustand
+
+Anderes:
+- Raspberry Pi
+- Instar Kamera
