@@ -1,35 +1,42 @@
-= Technologies
----
+= Technologien
+simon ittensammer
+1.1.0, 2020-09-29: Used Technologies in "Cameleon"
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
 
-== Stream
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
 
-* HTTP
+== Backend
 
-* RTSP
+=== Server
+* *NodeJS:* Hostet die Website und ist für alle unten stehenden Backend-Funktionen verantwortlich.
 
-== Server
+=== Aufnehmen von Bildern/Videos & Bewegungserkennung
+* *OpenCV 4 NodeJS:* Ermöglicht es Frames aus einem Videostream abzugreifen um diese später zu speichern, zu verschicken oder weiterzuverarbeiten. Auch verwenden wir OpenCV um verschiedene Frames zu vergleichen und so Bewegung erkennen können.
 
-* Node (Javascript)
-** Consistency with the client part (both Javascript)
-** We already have some experience with it
+=== Overlay
+* *Text2Png*: Erzeugt aus einem Eingabe-String ein PNG-Bild.
+* *Jimp:* Mithilfe von Jimp werden die Overlay-Objekte, also Bilder oder Texte, in einen Frame eingearbeitet.
 
-* Quarkus (Java EE)
+=== Benachrichtigung
+* *Telegram-Bot API:* Diese API ermöglicht es automatische Nachrichten per Telegram an den User zu senden.
 
-== Browser framework
+=== WebCam als IP-Kamera
+* *ffmpeg:* Ermöglicht es eine normale WebCam als IP-Camera zu verwenden.
 
-* pure js
-** We are very excperienced with it
-** It is easy to personalize
-** Takes up very little space
+== Datenbank
 
-* GOHUGO
-** New syntax
-** Harder to personalize
+* *MongoDB:* Ist für die Speicherung aller Daten zuständig. Diese sind z.B. Overlay-Objekte oder Kamerainfos.
 
-== Temporary IP-Camera: "IP Webcam" App
-https://play.google.com/store/apps/details?id=com.pas.webcam&hl=de_AT[IP Webcam]
+== Frontend
 
-== IP-Camera
-https://www.instar.de/ip-aussenkameras-sicherheitskamera-netzwerkkamera-wlan-kamera-poe-ueberwachungskamera-smarthome-onvif/in-9008fullhd-serie-fullhd-full-hd-ip-kamera-ueberwachungskamera-netzwerkkamera-wlan-kamera-poe-kamera-onvif-p2p-ddns/in-9008fullhd-white.html[IN-9008 Full-HD LAN / WLAN]
+* *Reines JavaScript:* Mithilfe von JS werden Clientseitig alle Funktionen umgesetzt. Diese sind z.B. das Verschieben von Overlay-Elementen.
 
-https://www.instar.de/ip-aussenkameras-sicherheitskamera-netzwerkkamera-wlan-kamera-poe-ueberwachungskamera-smarthome-onvif/in-9010-full-hd-wifi-white.html[IN-9010 Full HD WiFi]
+== Kommunikation
+
+* *Websockets:* Ermöglicht eine bidirektionale Kommunikation zwischen Client und Server. So werden z.B. neue Kameras und Overlays hinzugefügt. Auch können durch WebSockets Push-Notifications am Client angezeigt werden.
