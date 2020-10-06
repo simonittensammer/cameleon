@@ -1,0 +1,34 @@
+= State of the Project
+simon ittensammer
+1.1.0, 2020-09-29: Current State of "Cameleon"
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+== Current
+
+With the current state of the project, the user can view streams on the webpage. +
+He is also able to add videostreams on the webpage. +
+These streams are persisted in the local mongodb database, which means that they will also be shown after you reload the page. +
+After the streams where added to the database, the user is still able to change the name, description and url of his streams, by using the edit button on the client. +
+The user can also  lay texts, images and other objects over his streams. +
+Using the Telegram-Bot it is possible to record short Videoclips and get notified if motion is detected.
+
+== Planned
+
+A complete refactoring of the entire project-structure is planned. +
+
+There are also many small improvements that have to be done:
+
+* Include Overlay-Objects in Motion Detection Images
+* Motion Detection Cooldown
+* Telegram-Bot-Token Input functionality
+* Fix Overlay-Object positioning and sizing
+* Sort and filter Motion-Detection Images
+* Submit-Button-Feedback
