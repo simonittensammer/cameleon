@@ -38,6 +38,7 @@ ifndef::imagesdir[:imagesdir: images]
 === Vereinbarungen und Entscheidungen
 
 Genauere Dokumentation ueber:
+
 * Systemarchitektur
 * Komponentendiagramm
 * Verwendete Libraries
