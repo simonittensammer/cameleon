@@ -18,10 +18,10 @@ npm install
 npm start
 ```
 
-This process make take a few minutes. Afterwards you can reach the CAMeleon app under localhost:3000
+This process may take a few minutes. Afterwards you can reach the CAMeleon app under localhost:3000
 
 ==== *on Windows*
-You might run into issues trying to install opencv on windows. If this is the case make sure to install https://cmake.org/[cmake] on your system and run the following command.
+You might run into issues trying to install opencv on windows. If this is the case make sure to install https://cmake.org/[cmake] on your system and run the following command:
 
 ```bash
 npm install --global windows-build-tools@4.0.0
