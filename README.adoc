@@ -13,17 +13,23 @@ Start an instance of mongoDB.
 
 ==== *Node*
 
-```bash
+Note: you need to create a folder called 'surveillance-images' in the webapp folder.
+This is a bug that will be fixed in time.
+
+[source, bash]
+----
 npm install
 npm start
-```
+----
 
 This process may take a few minutes. Afterwards you can reach the CAMeleon app under localhost:3000
 
 ==== *on Windows*
 You might run into issues trying to install opencv on windows. If this is the case make sure to install https://cmake.org/[cmake] on your system and run the following command:
 
-```bash
+[source, bash]
+----
 npm install --global windows-build-tools@4.0.0
-```
+----
+
 for a more detailed setup guide see https://github.com/simonittensammer/cameleon/blob/master/asciidocs/set-up-project.adoc
