@@ -1,32 +1,29 @@
 = CAMeleon
 Lorenz Gruber, Simon Ittensammer, Simon Zweimüller
-1.0.1, 2020-03-29
+1.0.2, 2020-10-20
 
-== Description
+=== Description
 
-This application allows you to manage your surveillance cameras. +
-You can personalize the surveillance videos with images, text and other objects. +
-Whenever movement is detected you will be notified and you will also be able to see a short clip of the movement action.
+CAMeleon is a easy-to-use surveillance system for ip-cameras, complete with motion detection, customizable overlays and automatic notifications. It lets you connect devices and video streams via their url and allowes you to view and manage them on a neat user interface.
 
-== Overview
+=== Runing the application
 
-https://simonittensammer.github.io/cameleon/[]
+==== *Mongo*
+Start an instance of mongoDB. 
 
-== State
+==== *Node*
 
-=== Current
+```bash
+npm install
+npm start
+```
 
-With the current state of the project, the user can view streams on the webpage. +
-He is also able to add videostreams on the webpage. +
-These streams are persisted in the local mongodb database, which means that they will also be shown after you reload the page. +
-After the streams where added to the database, the user is still able to change the name, description and url of his streams, by using the edit button on the client. +
-The user can also  lay texts, images and other objects over his streams.
+This process make take a few minutes. Afterwards you can reach the CAMeleon app under localhost:3000
 
-=== In Progress
+==== *on Windows*
+You might run into issues trying to install opencv on windows. If this is the case make sure to install https://cmake.org/[cmake] on your system and run the following command.
 
-We are currently working on a feature, which allows the user to receive notifications via Telegram. +
-We are also working on recording short videoclips from the stream footage.
-
-=== Next Steps
-
-The next feature will be motion detection. +
+```bash
+npm install --global windows-build-tools@4.0.0
+```
+for a more detailed setup guide see https://github.com/simonittensammer/cameleon/blob/master/asciidocs/set-up-project.adoc
