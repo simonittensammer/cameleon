@@ -32,3 +32,4 @@ There are also many small improvements that have to be done:
 * Fix Overlay-Object positioning and sizing
 * Sort and filter Motion-Detection Images
 * Submit-Button-Feedback
+* Automatically create the 'surveillance-images' folder
