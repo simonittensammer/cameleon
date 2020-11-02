@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LiveViewComponent } from './live-view/live-view.component';
+import {HeaderComponent} from './header/header.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LiveViewComponent
-  ],
+    declarations: [
+        AppComponent,
+        LiveViewComponent,
+        HeaderComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule

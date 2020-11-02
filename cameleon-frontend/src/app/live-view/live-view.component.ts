@@ -12,4 +12,8 @@ export class LiveViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  scrollDown() {
+    // replacy y-value with current height of window
+    window.scroll(0, 750);
+  }
 }
