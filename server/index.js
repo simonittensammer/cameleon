@@ -17,10 +17,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const sizeOf = require('buffer-image-size');
 const jimp = require('jimp');
 const text2png = require('text2png');
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg = require('fluent-ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
-const command = ffmpeg();
 const MotionDetection = require('./MotionDetection');
 
 //DB
