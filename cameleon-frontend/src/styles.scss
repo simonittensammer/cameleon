@@ -8,10 +8,6 @@
   scroll-behavior: smooth;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 *::-webkit-scrollbar {
   display: none;
@@ -21,4 +17,14 @@ body {
 * {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.content {
+  min-height: 100vh;
+  padding: 5vh 10vw 0 10vw;
+  color: #19171C;
 }

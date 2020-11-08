@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CamService} from '../services/cam.service';
 
 @Component({
   selector: 'app-live-view',
@@ -7,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LiveViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private camService: CamService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  // tslint:disable-next-line:typedef
   scrollDown() {
     // replacy y-value with current height of window
     window.scroll(0, 750);
