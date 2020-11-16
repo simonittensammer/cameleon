@@ -1,0 +1,61 @@
+###
+
+POST http://localhost:8080/cam
+Content-Type: application/json
+
+{
+  "name": "testName",
+  "description": "testDesc",
+  "url": "testUrl"
+}
+
+###
+
+GET http://localhost:8080/cam
+Accept: application/json
+
+###
+
+POST http://localhost:8080/overlay/img
+Content-Type: application/json
+
+{
+  "cam": 1,
+  "x": 100.0,
+  "y": 200.0,
+  "scale": 1.0,
+  "opacity": 1.0,
+  "url": "some url"
+}
+
+###
+
+POST http://localhost:8080/overlay/txt
+Content-Type: application/json
+
+{
+  "cam": 1,
+  "x": 100.0,
+  "y": 200.0,
+  "scale": 1.0,
+  "opacity": 1.0,
+  "text": "some text",
+  "color": "#FFFFFF"
+}
+
+###
+
+GET http://localhost:8080/overlay
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/overlay/img/2
+Accept: application/json
+
+###
+
+DELETE http://localhost:8080/overlay/txt/3
+Accept: application/json
+
+###
