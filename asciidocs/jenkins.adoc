@@ -1,0 +1,9 @@
+= Jenkins
+Simon Zweimüller
+1.0.0, 2020-11-16
+
+Jenkins führt dient zur Durchführung von Continuous Integration (CI) also dem regelmäßigen automatisierten Testen von Projekten.
+
+Diese Tests können manuell, bei jedem git-commit oder zu einem bestimmten Zeitpunkt gestartet werden.
+
+Jenkins stellt lediglich die Infrastruktur zur automatisierung der Tests zur Verfügung.
