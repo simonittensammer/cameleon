@@ -224,3 +224,5 @@ package-lock.json
 *.avi
 
 webapp/surveillance-images/
+
+data/
