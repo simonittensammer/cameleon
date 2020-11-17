@@ -5,7 +5,7 @@ import {Cam} from '../models/cam';
   providedIn: 'root'
 })
 export class CamService {
-  selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
+  public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
 
   constructor() { }
 }
