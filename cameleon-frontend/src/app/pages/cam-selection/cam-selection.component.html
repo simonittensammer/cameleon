@@ -1,0 +1,10 @@
+<div class="content">
+  <h1>Cams:</h1>
+
+  <div class="camContainer">
+    <div class="camSelector" (click)="changeCam(cam)" *ngFor="let cam of camList">
+      <div class="camName">{{ cam.name }}</div>
+      <div class="camDesc">{{ cam.desc }}</div>
+    </div>
+  </div>
+</div>

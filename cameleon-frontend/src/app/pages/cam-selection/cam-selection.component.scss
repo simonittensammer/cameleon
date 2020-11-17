@@ -1,0 +1,27 @@
+.camContainer {
+  width: 100%;
+  margin-top: 2rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+}
+
+.camSelector {
+  padding: 15px;
+  float: left;
+
+  color: white;
+  background: #4B367C;
+  border-radius: 10px;
+}
+
+.camSelector:hover {
+  cursor: pointer;
+}
+
+.camName {
+  font-size: 1.5em;
+  font-weight: bolder;
+}

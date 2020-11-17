@@ -1,0 +1,25 @@
+#live-view-box {
+  width: 100vw;
+  height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+}
+
+#scoll-info {
+  font-size: 1.5em;
+
+  position: absolute;
+  left: 50vw;
+  top: 92.5vh;
+
+  background: rgba(255,255,255,0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  transform: translate(-50%, 0);
+}
+
+#scoll-info:hover {
+  cursor: pointer;
+}
