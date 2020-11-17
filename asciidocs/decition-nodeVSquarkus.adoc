@@ -1,0 +1,24 @@
+### *Decision for Backend-Technology Node vs. Quarkus*
+
+
+#### *Performance*
+
+Mit Quarkus besteht die Möglichkeit ein natives Executable mit Hilfe der GralVM zu generieren, welches die Start-Zeit und Performance des Servers signifikant verbessert. +
+  +
+ 
+#### *Architektur*
+
+Der Grund für das Refactoring ist, dass wir keinerlei Struktur im Projekt hatten. Sämtliche Funktionen des Backend wurden in einem File untergebracht was zur Folge hatte, dass der Code absolut unüberschaubar wurde, was das Entwickeln von neuen Features um Vieles erschwerte. So weit kam es, weil durch Node keine Vorgaben für die Architektur einer Applikation gegeben werden und wir nicht das Wissen hatten, um uns selbst eine einfallen zu lassen. +
+ +
+Quarkus macht es sehr einfach gut strukturierte, erweiterbare Applikationen zu schreiben. Zudem behandeln wir dieses Thema auch ausführlich im Unterricht und haben dadurch auch mehr Knowhow bei dieser Technologie. +
+ +
+
+#### *Zusammenfassung*
+
+#### Quarkus:
+- Performance
+- Architektur
+- Knowhow
+
+#### Node:
+- Front- und Backend arbeiten beide mit derselben Sprache
