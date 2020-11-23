@@ -1,0 +1,44 @@
+= System Specification
+Simon Ittensammer
+1.0.1, 2020-11-23
+:sourcedir: ../src/main/java
+:icons: font
+:toc: left
+
+== Zweck und Nutzen
+
+CAMeleon stellt Livestreams von verschiedensten Kameras bereit und ermöglicht die Aktivierung von Bewegungserkennung der einzelnen Kameras. 
+
+== Warum CAMeleon?
+
+An der HTL in Leonding gibt es ein sogenanntes "RoboLab". Dieses kann von Schülern und Lehrern zum Arbeiten genutzt werden. Im RoboLab werden zahlreiche und unter anderem auch teure Werkzeuge und Materialien zur Verfügung gestellt.
+
+== Funktionalität
+
+* Man kann Kameras auf der Website hinzufügen und deren Liveübertragung ansehen.
+* Für jede Kamera kann eine Bewegungserkennung aktiviert werden.
+* Wenn die Bewegungserkennung ausgelöst wird, werden Bilder oder kurze Clips zum späteren ansehen gespeichert.
+* Wenn die Bewegungserkennung ausgelöst wird, wird der Benutzer über Telegram benachrichtigt.
+* Man kann verschiedene Overlay-Objekte hinzufügen, die in den einzelnen Übertragungen angezeigt werden.
+
+== Technologien
+
+* Die Applikation wird als Website designt, das heißt der User kann ganz einfach über den Web-Browser darauf zugreifen.
+* Backend: Quarkus
+* Frontend: Angular
+* Datenbank: PostgreSQL
+* "Installation" mittels Docker
+
+== Nutzer
+
+Zuständiger Lehrer für das RoboLab.
+
+== Begriffserklärungen
+
+* RoboLab: Ein Raum in der HTL Leonding, indem Schüler an ihren Projekten arbeiten können. In diesem werden Werkzeuge und sonstige, unter anderem auch teure, Materialien zur Verfügung gestellt.  
+* Telegram: Telegram ist ein kostenloser Instant-Messaging-Dienst zur Nutzung auf Smartphones, Tablets, Smartwatches und PCs. Benutzer von Telegram können Textnachrichten, Sprachnachrichten, Fotos, Videos und Dokumente austauschen und Sprach- und Videotelefonie zu anderen Telegram-Usern nutzen.
+* Overlay-Objekte: Zum Beispiel Fotos, kurze Texte, Datum oder Uhrzeit, welche Bild-in-Bild mit dem Videostream angezeigt werden können.
+* Quarkus: Ist ein serverseitiges Java-Framework, welches geringen Speicherverbrauch und eine sehr geringe Startzeit bietet.
+* Angular: Angular ist ein TypeScript-basiertes Front-End-Webapplikationsframework.
+* PostgreSQL: PostgreSQL, oft kurz Postgres genannt, ist ein freies, objektrelationales Datenbankmanagementsystem.
+* Docker: Docker ist eine Freie Software zur Isolierung von Anwendungen mit Hilfe von Containervirtualisierung.
