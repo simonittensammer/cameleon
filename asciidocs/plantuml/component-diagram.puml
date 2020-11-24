@@ -1,0 +1,38 @@
+[plantuml, component-diagram, png, align-center]
+----
+@startuml
+
+node {
+    [Camera]
+}
+
+node {
+    package "Docker Backend" {
+        [Quarkus Server]
+    }
+
+    package "Docker Frontend" {
+        [Angular Application]
+    }
+
+    package "Docker DB" {
+        database "postgresql" {
+            [Cameleon DB]
+        }
+    }
+}
+
+node {
+    package "Client" {
+        [Browser]
+    }
+}
+
+[Camera] -> [Quarkus Server] : http
+[Camera] -> [Angular Application] : http
+[Angular Application] --> [Quarkus Server] : REST
+[Quarkus Server] --> [Cameleon DB]
+[Browser] -> [Angular Application]
+
+@enduml
+----
