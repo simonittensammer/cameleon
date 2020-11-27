@@ -2,6 +2,30 @@
 ----
 @startuml
 
+
+skinparam handwritten true
+skinparam ArrowColor #19171c
+skinparam ArrowFontColor #8189c6
+skinparam ComponentFontColor white
+skinparam DatabaseFontColor white
+skinparam PackageFontColor white
+skinparam shadowing false
+
+skinparam node {
+  BackgroundColor #52577b
+  BorderColor #4b367c
+}
+
+skinparam package {
+  BackgroundColor #707299
+  BorderColor #4b367c
+}
+
+skinparam component {
+  BackgroundColor #8189c6
+  BorderColor #4b367c
+}
+
 node {
     [Camera]
 }
@@ -28,8 +52,8 @@ node {
     }
 }
 
-[Camera] -> [Quarkus Server] : http
-[Camera] -> [Angular Application] : http
+[Camera] -> [Quarkus Server] : HTTP
+[Camera] -> [Angular Application] : HTTP
 [Angular Application] --> [Quarkus Server] : REST
 [Quarkus Server] --> [Cameleon DB]
 [Browser] -> [Angular Application]
