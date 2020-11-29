@@ -66,7 +66,7 @@ Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.
 == Entwurf
 === Systemarchitektur
 
-image:systemarchitektur.png[]
+image:component_diagram.png[]
 
 === Design
 
@@ -76,12 +76,7 @@ image:design.png[]
 
 === Use-Case Diagramm
 
-[plantuml,use-case,png]
-----
-@startuml
-!include plantuml/usecase-diagram.puml
-@enduml
-----
+image:usecase_diagram.png[]
 
 .Use Cases
 |===
