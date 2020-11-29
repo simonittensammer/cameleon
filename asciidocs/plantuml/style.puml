@@ -1,0 +1,36 @@
+@startuml
+skinparam handwritten true
+skinparam ArrowColor #19171c
+skinparam ArrowFontColor #8189c6
+skinparam ComponentFontColor white
+skinparam DatabaseFontColor white
+skinparam PackageFontColor white
+skinparam UsecaseFontColor white
+skinparam ActorFontColor #8189c6
+skinparam shadowing false
+
+skinparam node {
+  BackgroundColor #52577b
+  BorderColor #4b367c
+}
+
+skinparam package {
+  BackgroundColor #707299
+  BorderColor #4b367c
+}
+
+skinparam component {
+  BackgroundColor #8189c6
+  BorderColor #4b367c
+}
+
+skinparam actor {
+   BackgroundColor #8189c6
+   BorderColor #4b367c
+}
+
+skinparam usecase {
+  BackgroundColor #8189c6
+  BorderColor #4b367c
+}
+@enduml

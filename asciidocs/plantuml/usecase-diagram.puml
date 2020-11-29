@@ -1,0 +1,22 @@
+[plantuml, use-case, png, align-center]
+----
+@startuml
+
+!include style.puml
+
+left to right direction
+
+actor User
+package cameleon {
+    User -- (configure overlay-objects)
+    User -- (view live video stream)
+
+    User -- (view recordings)
+    (view recordings)..>(view images) :include
+    (view recordings)..>(view videos) :include
+
+    User -- (receive notification)
+    (receive notification)..>(motion detection) :include
+}
+@enduml
+----

@@ -2,29 +2,7 @@
 ----
 @startuml
 
-
-skinparam handwritten true
-skinparam ArrowColor #19171c
-skinparam ArrowFontColor #8189c6
-skinparam ComponentFontColor white
-skinparam DatabaseFontColor white
-skinparam PackageFontColor white
-skinparam shadowing false
-
-skinparam node {
-  BackgroundColor #52577b
-  BorderColor #4b367c
-}
-
-skinparam package {
-  BackgroundColor #707299
-  BorderColor #4b367c
-}
-
-skinparam component {
-  BackgroundColor #8189c6
-  BorderColor #4b367c
-}
+!include style.puml
 
 node {
     [Camera]
@@ -60,3 +38,4 @@ node {
 
 @enduml
 ----
+
