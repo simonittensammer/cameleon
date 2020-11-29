@@ -7,7 +7,7 @@
 left to right direction
 
 actor User
-package cameleon {
+node cameleon {
     User -- (configure overlay-objects)
     User -- (view live video stream)
 
