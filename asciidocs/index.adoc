@@ -79,15 +79,7 @@ image:design.png[]
 [plantuml,use-case,png]
 ----
 @startuml
-left to right direction
-actor User
-rectangle cameleon {
-    User -- (view live video stream)
-    User -- (configure overlay-objects)
-    User -- (receive notification)
-    (receive notification).>(motion detection) :include
-    User -- (view recordings)
-}
+!include plantuml/usecase-diagram.puml
 @enduml
 ----
 
@@ -107,15 +99,3 @@ rectangle cameleon {
 |View recordings
 |Let the user view recorded stream-snippets on the website
 |===
-
-=== Sprints
-
-image:sprints.png[]
-
-=== Epic
-
-image:epic.png[]
-
-=== GANTT-Diagramm
-
-image:gantt.png[]
