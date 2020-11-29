@@ -68,29 +68,35 @@ Bezüglich Technologien wurde nichts spezielles vom Auftraggeber vorgegeben.
 
 image:component_diagram.png[]
 
-=== Design
-
-image:design.png[]
-
-== Projekthandbuch
-
 === Use-Case Diagramm
 
 image:usecase_diagram.png[]
 
 .Use Cases
 |===
-|Use Case |Description
+| Use Case | Beschreibung | Ziel des UseCases | Auslösendes Ereignis
 
-|View live video-stream
-|View the live feed of the current selected live-stream
+| View live video-stream
+| Anzeigen des Live-Bilds der ausgewählten Kamera
+| Beobachtung des Raumes, ohne anwesend sein zu müssen
+| Auswählen einer Kamera auf der Website
 
-|Configure overlay-objects
-|Let the user add text-, image- and datetime-objects to all of his live-streams.
+| Configure overlay-objects
+| Hinzufügen von Text-, Bild- oder Zeit-Objekten welche im gewünschten Stream angezeigt werden
+| Personalisierung des Streams und Anzeigen von Informationen
+| --
 
-|Receive notification
-|Get notified on link:https://telegram.org[telegram] when motion is detected
+| Receive notification
+| Man erhält eine Nachricht auf link:https://telegram.org[Telegram] mit einem aktuellen Bild des Streams
+| Der Benutzer soll benachrichtigt werden, ohne die Website aufrufen zu müssen
+| Erkennung einer Bewegung im Stream oder auf Anfrage des Benutzers
 
-|View recordings
-|Let the user view recorded stream-snippets on the website
+| View recordings
+| Anzeigen von Bildern und kurzen Clips
+| Man soll vergangene Ereignisse nochmal ansehen können
+| Erkennung einer Bewegung im Stream
 |===
+
+=== Design
+
+image:design.png[]
