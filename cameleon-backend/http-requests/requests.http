@@ -1,5 +1,9 @@
 ###
 
+GET http://localhost:8080/bot
+
+###
+
 POST http://localhost:8080/cam
 Content-Type: application/json
 
