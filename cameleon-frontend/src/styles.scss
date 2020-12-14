@@ -40,7 +40,6 @@ body {
 input {
   background: white;
   border: none;
-  padding: 10px;
   border-radius: 5px;
 }
 
@@ -67,12 +66,16 @@ button {
 }
 
 .formElement {
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+  padding: 10px;
   width: 80%;
   margin: 10px 10%;
 }
 
 #formSubmit {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 label {
@@ -91,4 +94,8 @@ label {
 
 button[disabled] {
   opacity: .5;
+}
+
+#addCamButton:hover {
+  cursor: pointer;
 }

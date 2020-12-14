@@ -17,6 +17,7 @@
       Url is required
     </p>
 
+    <button id="formCancel" class="formElement" (click)="this.camService.showPopup = false">Cancel</button>
     <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!camForm.valid || !camForm.dirty">Save</button>
   </form>
 

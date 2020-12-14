@@ -9,8 +9,6 @@ import {CamService} from '../../services/cam.service';
 })
 export class CamSelectionComponent implements OnInit {
 
-  showPopup: boolean = false;
-
   constructor(
     public camService: CamService
   ) { }
@@ -31,11 +29,13 @@ export class CamSelectionComponent implements OnInit {
   }
 
   addCam() {
-    this.showPopup = true;
+    this.camService.showPopup = true;
+    this.camService.editedCam = null;
   }
 
-  editCam() {
-
+  editCam(cam: Cam) {
+    this.camService.showPopup = true;
+    this.camService.editedCam = cam;
   }
 
   deleteCam(id: number) {

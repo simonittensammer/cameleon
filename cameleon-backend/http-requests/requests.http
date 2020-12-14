@@ -15,6 +15,18 @@ Content-Type: application/json
 
 ###
 
+PUT http://localhost:8080/cam
+Content-Type: application/json
+
+{
+  "id": 5,
+  "name": "put",
+  "description": "put",
+  "url": "put"
+}
+
+###
+
 DELETE http://localhost:8080/cam/1
 Content-Type: application/json
 

@@ -41,6 +41,12 @@ public class CamEndpoint {
         return Response.ok(cam).build();
     }
 
+    @PUT
+    public Response putCam(Cam cam) {
+        camRepository.update(cam);
+        return Response.ok(cam).build();
+    }
+
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {

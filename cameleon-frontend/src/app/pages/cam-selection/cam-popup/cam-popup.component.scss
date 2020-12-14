@@ -1,3 +1,12 @@
 #formSubmit:not([disabled]) {
   cursor: pointer;
 }
+
+#formCancel {
+  margin-bottom: 0;
+  background: white;
+}
+
+#formCancel:hover {
+  cursor: pointer;
+}

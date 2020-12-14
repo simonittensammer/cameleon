@@ -8,6 +8,8 @@ import {Observable} from "rxjs";
 })
 export class CamService {
   public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
+  public editedCam: Cam = null;
+  showPopup: boolean = false;
   camList: Array<Cam> = [];
 
   SERVER_URL = 'http://localhost:8080/';
