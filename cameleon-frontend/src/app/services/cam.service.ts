@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 })
 export class CamService {
   public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
+  camList: Array<Cam> = [];
 
   SERVER_URL = 'http://localhost:8080/';
 
@@ -17,5 +18,9 @@ export class CamService {
 
   getAllCams(): Observable<Array<Cam>> {
     return this.http.get<Array<Cam>>(this.SERVER_URL + 'cam');
+  }
+
+  createCam(cam): Observable<Cam> {
+    return this.http.post<Cam>(this.SERVER_URL + 'cam', cam);
   }
 }
