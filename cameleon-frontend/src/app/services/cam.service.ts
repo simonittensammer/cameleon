@@ -23,4 +23,12 @@ export class CamService {
   createCam(cam): Observable<Cam> {
     return this.http.post<Cam>(this.SERVER_URL + 'cam', cam);
   }
+
+  updateCam(cam): Observable<Cam> {
+    return this.http.put<Cam>(this.SERVER_URL + 'cam', cam);
+  }
+
+  deleteCam(id: number): Observable<Cam> {
+    return this.http.delete<Cam>(this.SERVER_URL + 'cam/' + id);
+  }
 }

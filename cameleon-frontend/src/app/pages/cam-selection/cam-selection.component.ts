@@ -33,4 +33,16 @@ export class CamSelectionComponent implements OnInit {
   addCam() {
     this.showPopup = true;
   }
+
+  editCam() {
+
+  }
+
+  deleteCam(id: number) {
+    this.camService.deleteCam(id).subscribe(value => {
+      this.camService.getAllCams().subscribe(value2 => {
+        this.camService.camList = value2;
+      });
+    });
+  }
 }

@@ -3,7 +3,7 @@
   margin-top: 2rem;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 1rem;
 }
@@ -17,11 +17,34 @@
   border-radius: 10px;
 }
 
-.camSelector:hover {
-  cursor: pointer;
-}
-
 .camName {
   font-size: 1.5em;
   font-weight: bolder;
+}
+
+#camButtons {
+  margin-top: 10px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+}
+
+.camButton {
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.camButton:hover {
+  cursor: pointer;
+}
+
+#camView, #camMotionDetection, #camEdit {
+  background: #ebe3ff;
+  color: #19171C;
+}
+
+#camDelete {
+  background: red;
 }

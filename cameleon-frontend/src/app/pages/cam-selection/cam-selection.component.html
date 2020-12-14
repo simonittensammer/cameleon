@@ -2,9 +2,16 @@
   <h1>Cams:</h1>
 
   <div class="camContainer">
-    <div class="camSelector" (click)="changeCam(cam)" *ngFor="let cam of camService.camList">
+    <div class="camSelector" *ngFor="let cam of camService.camList">
       <div class="camName">{{ cam.name }}</div>
       <div class="camDesc">{{ cam.description }}</div>
+
+      <div id="camButtons">
+        <div class="camButton" id="camView" (click)="changeCam(cam)">View</div>
+        <div class="camButton" id="camMotionDetection">MD</div>
+        <div class="camButton" id="camEdit" (click)="editCam()">Edit</div>
+        <div class="camButton" id="camDelete" (click)="deleteCam(cam.id)">Delete</div>
+      </div>
     </div>
 
     <div class="camSelector" (click)="addCam()">
