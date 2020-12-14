@@ -4,7 +4,13 @@
   <div class="camContainer">
     <div class="camSelector" (click)="changeCam(cam)" *ngFor="let cam of camList">
       <div class="camName">{{ cam.name }}</div>
-      <div class="camDesc">{{ cam.desc }}</div>
+      <div class="camDesc">{{ cam.description }}</div>
+    </div>
+
+    <div class="camSelector" (click)="addCam()">
+      <div class="camName">+</div>
     </div>
   </div>
+
+  <app-cam-popup *ngIf="showPopup"></app-cam-popup>
 </div>

@@ -17,6 +17,7 @@
 * {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+
 }
 
 body {
@@ -27,4 +28,67 @@ body {
   min-height: 100vh;
   padding: 5vh 10vw 0 10vw;
   color: #19171C;
+}
+
+.centerXY {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+
+input {
+  background: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+button {
+  background: #4b367c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+
+  transition: all .1s ease-in-out;
+}
+
+.popup {
+  width: 30vw;
+  background: #ebe3ff;
+  padding: 30px 0;
+  border-radius: 5px;
+
+  box-shadow: 0 0 10px 0 black;
+}
+
+.formHeadline {
+  text-align: center;
+}
+
+.formElement {
+  width: 80%;
+  margin: 10px 10%;
+}
+
+#formSubmit {
+  margin-top: 30px;
+}
+
+label {
+  margin: 0 10%;
+}
+
+.errorMsg {
+  color: red;
+  font-size: .9em;
+  margin: -5px 10% 5px 10%;
+}
+
+.errorBorder {
+  border: 1px solid red;
+}
+
+button[disabled] {
+  opacity: .5;
 }

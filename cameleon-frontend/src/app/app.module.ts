@@ -7,18 +7,22 @@ import { LiveViewComponent } from './live-view/live-view.component';
 import {HeaderComponent} from './header/header.component';
 import { CamSelectionComponent } from './pages/cam-selection/cam-selection.component';
 import {HttpClientModule} from '@angular/common/http';
+import { CamPopupComponent } from './pages/cam-selection/cam-popup/cam-popup.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
         AppComponent,
         LiveViewComponent,
         HeaderComponent,
-        CamSelectionComponent
+        CamSelectionComponent,
+        CamPopupComponent
     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,7 +9,7 @@ import {CamService} from '../services/cam.service';
 export class LiveViewComponent implements OnInit {
 
   constructor(
-    private camService: CamService
+    public camService: CamService
   ) { }
 
   ngOnInit(): void {

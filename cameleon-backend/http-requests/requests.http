@@ -10,7 +10,7 @@ Content-Type: application/json
 {
   "name": "testName",
   "description": "testDesc",
-  "url": "testUrl"
+  "url": "http://10.0.0.1:8080/video"
 }
 
 ###
