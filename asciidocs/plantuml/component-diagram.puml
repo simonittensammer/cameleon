@@ -27,6 +27,7 @@ node {
 node {
     package "Client" {
         [Browser]
+        [Telegram]
     }
 }
 
@@ -35,6 +36,8 @@ node {
 [Angular Application] --> [Quarkus Server] : REST
 [Quarkus Server] --> [Cameleon DB]
 [Browser] -> [Angular Application]
+[Quarkus Server] -> [Telegram]
+[Browser] -[hidden]-> [Telegram]
 
 @enduml
 ----
