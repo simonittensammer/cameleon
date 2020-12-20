@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Error restarting Quarkus - java.lang.RuntimeException</title>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+            font-size: 100%;
+            font-weight: 100;
+            line-height: 1.4;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 1em 0 1em 0;
+        }
+
+        header, .component-name {
+            background-color: #ad1c1c;
+        }
+
+        ul {
+            line-height: 1.5rem;
+            margin: 0.25em 0 0.25em 0;
+        }
+
+        .exception-message {
+            background: #be2828;
+        }
+
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #fff;
+            line-height: 3.75rem;
+            font-weight: 700;
+            padding: 0.4rem 0rem 0.4rem 0rem;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 2.5rem;
+            font-weight: 400;
+            padding: 0.4rem 0rem 0.4rem 0rem;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0.25em 0 1em 0;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            line-height: 2.5rem;
+            font-weight: 400;
+            color: #555;
+            margin: 0.25em 0 0.25em 0;
+        }
+
+        .trace, .resources {
+            background: #fff;
+            padding: 15px;
+            margin: 15px auto;
+            border: 1px solid #ececec;
+        }
+
+        .trace {
+            overflow-y: scroll;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        pre {
+            white-space: pre;
+            font-family: Consolas, Monaco, Menlo, "Ubuntu Mono", "Liberation Mono", monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+    <script>
+        function toggleStackTraceOrder() {
+            var stElement = document.getElementById('stacktrace');
+            var current = stElement.getAttribute('data-current-setting');
+            if (current == 'original-stacktrace') {
+                var reverseOrder = document.getElementById('reversed-stacktrace');
+                stElement.innerHTML = reverseOrder.innerHTML;
+                stElement.setAttribute('data-current-setting', 'reversed-stacktrace');
+            } else {
+                var originalOrder = document.getElementById('original-stacktrace');
+                stElement.innerHTML = originalOrder.innerHTML;
+                stElement.setAttribute('data-current-setting', 'original-stacktrace');
+            }
+            return;
+        }
+
+        function showDefaultStackTraceOrder() {
+            var reverseOrder = document.getElementById('reversed-stacktrace');
+            var stElement = document.getElementById('stacktrace');
+            if (reverseOrder == null || stElement == null) {
+                return;
+            }
+            // default to reverse ordered stacktrace
+            stElement.innerHTML = reverseOrder.innerHTML;
+            stElement.setAttribute('data-current-setting', 'reversed-stacktrace');
+            return;
+        }
+    </script>
+</head>
+<body onload="showDefaultStackTraceOrder()">
+<header>
+    <h1 class="container">Error restarting Quarkus</h1>
+    <div class="exception-message">
+        <h2 class="container">java.lang.RuntimeException: java.lang.RuntimeException: Failed to start quarkus</h2>
+    </div>
+</header>
+<div class="container content">
+    <div id="original-stacktrace" class="trace hidden">
+        <p><em><a href="" onClick="toggleStackTraceOrder(); return false;">Click Here</a> to see the stacktrace in
+            reversed order (root-cause first)</em></p>
+        <pre>java.lang.RuntimeException: java.lang.RuntimeException: Failed to start quarkus
+	at io.quarkus.dev.appstate.ApplicationStateNotification.waitForApplicationStart(ApplicationStateNotification.java:51)
+	at io.quarkus.runner.bootstrap.StartupActionImpl.runMainClass(StartupActionImpl.java:145)
+	at io.quarkus.deployment.dev.IsolatedDevModeMain.restartApp(IsolatedDevModeMain.java:176)
+	at io.quarkus.deployment.dev.RuntimeUpdatesProcessor.doScan(RuntimeUpdatesProcessor.java:183)
+	at io.quarkus.vertx.http.runtime.devmode.VertxHttpHotReplacementSetup$2.handle(VertxHttpHotReplacementSetup.java:61)
+	at io.quarkus.vertx.http.runtime.devmode.VertxHttpHotReplacementSetup$2.handle(VertxHttpHotReplacementSetup.java:51)
+	at io.vertx.core.impl.ContextImpl.lambda$executeBlocking$2(ContextImpl.java:313)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.lang.RuntimeException: Failed to start quarkus
+	at io.quarkus.runner.ApplicationImpl.doStart(ApplicationImpl.zig:857)
+	at io.quarkus.runtime.Application.start(Application.java:90)
+	at io.quarkus.runtime.ApplicationLifecycleManager.run(ApplicationLifecycleManager.java:91)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:61)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:38)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:106)
+	at io.quarkus.runner.GeneratedMain.main(GeneratedMain.zig:29)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at io.quarkus.runner.bootstrap.StartupActionImpl$3.run(StartupActionImpl.java:134)
+	... 1 more
+Caused by: javax.persistence.PersistenceException: [PersistenceUnit: &lt;default&gt;] Unable to build Hibernate SessionFactory
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.persistenceException(FastBootEntityManagerFactoryBuilder.java:115)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:75)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:56)
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:117)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig.startAll(JPAConfig.java:41)
+	at io.quarkus.hibernate.orm.runtime.HibernateOrmRecorder.startAllPersistenceUnits(HibernateOrmRecorder.java:82)
+	at io.quarkus.deployment.steps.HibernateOrmProcessor$startPersistenceUnits-1681903524.deploy_0(HibernateOrmProcessor$startPersistenceUnits-1681903524.zig:74)
+	at io.quarkus.deployment.steps.HibernateOrmProcessor$startPersistenceUnits-1681903524.deploy(HibernateOrmProcessor$startPersistenceUnits-1681903524.zig:40)
+	at io.quarkus.runner.ApplicationImpl.doStart(ApplicationImpl.zig:707)
+	... 12 more
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:99)
+	at org.hibernate.resource.transaction.backend.jta.internal.DdlTransactionIsolatorJtaImpl.&lt;init&gt;(DdlTransactionIsolatorJtaImpl.java:62)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl.buildDdlTransactionIsolator(JtaTransactionCoordinatorBuilderImpl.java:46)
+	at org.hibernate.tool.schema.internal.HibernateSchemaManagementTool.getDdlTransactionIsolator(HibernateSchemaManagementTool.java:188)
+	at org.hibernate.tool.schema.internal.HibernateSchemaManagementTool.buildGenerationTargets(HibernateSchemaManagementTool.java:146)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:110)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:316)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:73)
+	... 21 more
+Caused by: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:303)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:51)
+	at org.postgresql.jdbc.PgConnection.&lt;init&gt;(PgConnection.java:225)
+	at org.postgresql.Driver.makeConnection(Driver.java:465)
+	at org.postgresql.Driver.connect(Driver.java:264)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:200)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:419)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:401)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1126)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	... 1 more
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:231)
+	at org.postgresql.core.PGStream.&lt;init&gt;(PGStream.java:95)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:98)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:213)
+	... 12 more</pre>
+    </div>
+    <div id="reversed-stacktrace" class="trace hidden">
+        <p><em>The stacktrace below has been reversed to show the root cause first. <a href=""
+                                                                                       onClick="toggleStackTraceOrder(); return false;">Click
+            Here</a> to see the original stacktrace</em></p>
+        <pre>java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:231)
+	at org.postgresql.core.PGStream.&lt;init&gt;(PGStream.java:95)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:98)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:213)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:51)
+	at org.postgresql.jdbc.PgConnection.&lt;init&gt;(PgConnection.java:225)
+	at org.postgresql.Driver.makeConnection(Driver.java:465)
+	at org.postgresql.Driver.connect(Driver.java:264)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:200)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:419)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:401)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1126)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Resulted in: org.postgresql.util.PSQLException: Connection to localhost:5432 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:303)
+	... 12 more
+Resulted in: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:99)
+	at org.hibernate.resource.transaction.backend.jta.internal.DdlTransactionIsolatorJtaImpl.&lt;init&gt;(DdlTransactionIsolatorJtaImpl.java:62)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl.buildDdlTransactionIsolator(JtaTransactionCoordinatorBuilderImpl.java:46)
+	at org.hibernate.tool.schema.internal.HibernateSchemaManagementTool.getDdlTransactionIsolator(HibernateSchemaManagementTool.java:188)
+	at org.hibernate.tool.schema.internal.HibernateSchemaManagementTool.buildGenerationTargets(HibernateSchemaManagementTool.java:146)
+	at org.hibernate.tool.schema.internal.SchemaDropperImpl.doDrop(SchemaDropperImpl.java:110)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:145)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:316)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:73)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:56)
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:117)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig.startAll(JPAConfig.java:41)
+	at io.quarkus.hibernate.orm.runtime.HibernateOrmRecorder.startAllPersistenceUnits(HibernateOrmRecorder.java:82)
+	at io.quarkus.deployment.steps.HibernateOrmProcessor$startPersistenceUnits-1681903524.deploy_0(HibernateOrmProcessor$startPersistenceUnits-1681903524.zig:74)
+	at io.quarkus.deployment.steps.HibernateOrmProcessor$startPersistenceUnits-1681903524.deploy(HibernateOrmProcessor$startPersistenceUnits-1681903524.zig:40)
+	at io.quarkus.runner.ApplicationImpl.doStart(ApplicationImpl.zig:707)
+	at io.quarkus.runtime.Application.start(Application.java:90)
+	at io.quarkus.runtime.ApplicationLifecycleManager.run(ApplicationLifecycleManager.java:91)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:61)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:38)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:106)
+	at io.quarkus.runner.GeneratedMain.main(GeneratedMain.zig:29)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at io.quarkus.runner.bootstrap.StartupActionImpl$3.run(StartupActionImpl.java:134)
+	... 1 more
+Resulted in: javax.persistence.PersistenceException: [PersistenceUnit: &lt;default&gt;] Unable to build Hibernate SessionFactory
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.persistenceException(FastBootEntityManagerFactoryBuilder.java:115)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:75)
+	... 21 more
+Resulted in: java.lang.RuntimeException: Failed to start quarkus
+	at io.quarkus.runner.ApplicationImpl.doStart(ApplicationImpl.zig:857)
+	... 12 more
+Resulted in: java.lang.RuntimeException: java.lang.RuntimeException: Failed to start quarkus
+	at io.quarkus.dev.appstate.ApplicationStateNotification.waitForApplicationStart(ApplicationStateNotification.java:51)
+	at io.quarkus.runner.bootstrap.StartupActionImpl.runMainClass(StartupActionImpl.java:145)
+	at io.quarkus.deployment.dev.IsolatedDevModeMain.restartApp(IsolatedDevModeMain.java:176)
+	at io.quarkus.deployment.dev.RuntimeUpdatesProcessor.doScan(RuntimeUpdatesProcessor.java:183)
+	at io.quarkus.vertx.http.runtime.devmode.VertxHttpHotReplacementSetup$2.handle(VertxHttpHotReplacementSetup.java:61)
+	at io.quarkus.vertx.http.runtime.devmode.VertxHttpHotReplacementSetup$2.handle(VertxHttpHotReplacementSetup.java:51)
+	at io.vertx.core.impl.ContextImpl.lambda$executeBlocking$2(ContextImpl.java:313)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 more</pre>
+    </div>
+    <div id="stacktrace"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+at/htl/entity/OverlayObjectImage.class
+at/htl/boundary/OverlayObjectEndpoint.class
+at/htl/control/CamRepository.class
+at/htl/entity/Cam.class
+at/htl/control/OverlayObjectRepository.class
+at/htl/boundary/BotEndpoint.class
+at/htl/bot/CamelBot.class
+at/htl/entity/OverlayObjectText.class
+at/htl/entity/OverlayObject.class
+META-INF/panache-archive.marker
+at/htl/boundary/CamEndpoint.class
+at/htl/control/OverlayObjectImageRepository.class
+at/htl/control/OverlayObjectTextRepository.class

@@ -1,0 +1,80 @@
+= image:logo_lok.png[]
+Lorenz Gruber, Simon Ittensammer, Simon Zweimueller
+1.0, 2020-12-20
+ifndef::sourcedir[:sourcedir: ../src/main/java]
+ifndef::imagesdir[:imagesdir: images]
+ifndef::backend[:backend: html5]
+:icons: font
+
+== Problem
+
+* Videoüberwachung für das eigene Zuhause ist oft teuer oder kompliziert
+* An der HTL Leonding gibt es ein Robolab, dass den Schülern immer zur Verfügung stehen soll
+
+== Ziel
+
+* Sicherheit im eigenen Haushalt gewährleisten durch Vereinfachung von Videoüberwachung
+* Im Fall des Robolabs wird eine Kamera installiert und die Bewegungserkennung außerhalb der Schulzeiten aktiviert
+
+== Anwendungsfälle
+
+image:usecase_diagram.png[width=75%]
+
+=== View live video stream
+
+* Anzeigen des Live-Bilds der ausgewählten Kamera
+* Ziel: Beobachtung des Raumes, ohne anwesend sein zu müssen
+
+=== Configure overlay-objects
+
+* Hinzufügen von Text-, Bild- oder Zeit-Objekten welche im gewünschten Stream angezeigt werden
+* Ziel: Personalisierung des Streams und Anzeigen von Informationen
+
+=== Receive notification
+
+* Man erhält eine Nachricht auf Telegram mit einem aktuellen Bild des Streams
+* Ziel: Der Benutzer soll benachrichtigt werden, ohne die Website aufrufen zu müssen
+
+=== View recordings
+
+* Anzeigen von Bildern und kurzen Clips
+* Ziel: Man soll vergangene Ereignisse nochmal ansehen können
+
+== Systemarchitektur
+
+image:component_diagram.png[width=60%]
+
+=== Kamera
+
+* Technologie: Jegliche Art von Kamera (Smartphone, Webcam, Überwachungskamera)
+* Muss Bilder mittels HTTP übertragen können
+
+=== Frontend
+
+* Technologie: Angular
+* Kommuniziert mittels REST mit dem Server
+* Zeigt den HTTP Stream der Kameras direkt an
+
+=== Backend
+
+* Technologie: Quarkus
+* Stellt dem Frontend sämtliche Daten mittels REST zur Verfügung
+* Bewegungserkennung des HTTP Streams
+* Hostet Telegram-Bot
+
+=== Datenbank
+
+* Technologie: PostgreSQL
+* Speichern sämtliche Daten (Kamerainformationen, Aufnahmen, Overlayobjekte)
+
+=== Browser
+
+* Technologie: Grundsätzlich jeder Browser
+* Dient als Schnittstelle zum Benutzer
+
+=== Telegram
+
+* Technologie: TelegramBots von Ruben Bermudez
+* Dient als Schnittstelle zum Benutzer
+* Benachrichtigungen bei Bewegungserkennung
+* Zugriff auf Kameras ohne Website
