@@ -78,3 +78,5 @@ image:component_diagram.png[width=60%]
 * Dient als Schnittstelle zum Benutzer
 * Benachrichtigungen bei Bewegungserkennung
 * Zugriff auf Kameras ohne Website
+
+== Vielen Dank für ihre Aufmerksamkeit
