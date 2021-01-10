@@ -80,3 +80,45 @@ image:component_diagram.png[width=60%]
 * Zugriff auf Kameras ohne Website
 
 == Vielen Dank für ihre Aufmerksamkeit
+
+== Links
+
+- GitHub: https://github.com/simonittensammer/cameleon
+- GitHub Pages: https://simonittensammer.github.io/cameleon/
+- Videos: https://www.youtube.com/playlist?list=PLx1yhxP3IUkQYHc1R91jNQEbJ1mp3H2wD
+
+== Website
+
+== Kameras
+
+- IP Webcam (Android App): https://www.youtube.com/playlist?list=PLx1yhxP3IUkQYHc1R91jNQEbJ1mp3H2wD
+- Instar 9020: https://www.instar.de/in-9020-full-hd-wifi-white.html
+
+== Technologien
+
+- Backend: <<Quarkus,Quarkus>>
+- Datenbank: <<PostgreSQL,PostgreSQL>>
+- Frontend: <<Angular,Angular>>
+- Bildverarbeitung: <<OpenCV,OpenCV>>
+- Benachrichtigung: <<Telegram (TelegramBots),Telegram (TelegramBots)>>
+
+=== Quarkus
+
+https://quarkus.io/
+
+=== PostgreSQL
+
+https://www.postgresql.org/
+
+=== Angular
+
+https://angular.io/
+
+=== OpenCV
+
+https://opencv.org/
+
+=== Telegram (TelegramBots)
+
+- https://telegram.org/
+- https://github.com/rubenlagus/TelegramBots
