@@ -226,3 +226,4 @@ package-lock.json
 webapp/surveillance-images/
 
 /asciidocs-slides/revealjs/
+data/
