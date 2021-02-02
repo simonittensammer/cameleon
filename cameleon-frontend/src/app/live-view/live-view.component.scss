@@ -7,6 +7,9 @@
 }
 
 #scroll-icon {
+  font-size: 45px;
+  line-height: 45px;
+  width: 45px;
   height: 45px;
   cursor: pointer;
 
@@ -18,5 +21,5 @@
 }
 
 #scroll-icon:hover {
-  transform: rotate(45deg);
+  transform: rotate(60deg);
 }
