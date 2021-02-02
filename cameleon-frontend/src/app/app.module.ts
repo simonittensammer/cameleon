@@ -15,6 +15,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatInputModule} from '@angular/material/input';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 @NgModule({
     declarations: [
@@ -35,7 +38,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule,
+    MatInputModule,
+    ColorPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

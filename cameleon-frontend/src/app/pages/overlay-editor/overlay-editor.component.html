@@ -4,4 +4,59 @@
   <div id="editor-window">
 
   </div>
+
+  <div class="editorForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cam</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let cam of camService.camList" [value]="cam.id">
+          {{ cam.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
+
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button value="1" color="primary">Image</mat-radio-button>
+      <mat-radio-button value="2" color="primary">Text</mat-radio-button>
+      <mat-radio-button value="2" color="primary">Date/Time</mat-radio-button>
+    </mat-radio-group>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Position x</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Position y</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Scale</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Opacity</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+
+    <br>
+
+<!--    <mat-label>Image: </mat-label>-->
+    <input id="filePicker" type="file"/>
+
+    <br>
+
+    <input id="colorPicker" [(colorPicker)]="color" [style.background]="color" value="{{ color }}">
+  </div>
 </div>

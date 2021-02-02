@@ -7,12 +7,16 @@ import {CamService} from '../../services/cam.service';
   styleUrls: ['./overlay-editor.component.scss']
 })
 export class OverlayEditorComponent implements OnInit {
+  color = '#eeeeee';
 
   constructor(
     public camService: CamService
   ) { }
 
   ngOnInit(): void {
+    this.camService.getAllCams().subscribe(value => {
+      this.camService.camList = value;
+    });
   }
 
 }
