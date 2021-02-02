@@ -25,9 +25,13 @@ body {
 }
 
 .content {
-  height: 90vh;
+  height: 79vh;
   padding: 5vh 10vw;
   color: #19171C;
+}
+
+h1 {
+  margin-bottom: 35px;
 }
 
 .centerXY {
@@ -99,3 +103,6 @@ button[disabled] {
 #addCamButton:hover {
   cursor: pointer;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -10,6 +10,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { CamPopupComponent } from './pages/cam-selection/cam-popup/cam-popup.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { OverlayEditorComponent } from './pages/overlay-editor/overlay-editor.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     declarations: [
@@ -24,7 +28,11 @@ import { OverlayEditorComponent } from './pages/overlay-editor/overlay-editor.co
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

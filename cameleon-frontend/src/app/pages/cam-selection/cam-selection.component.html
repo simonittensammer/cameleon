@@ -6,17 +6,31 @@
   </div>
 
   <div class="camContainer">
-    <div class="camSelector" *ngFor="let cam of camService.camList">
-      <div class="camName">{{ cam.name }}</div>
-      <div class="camDesc">{{ cam.description }}</div>
+<!--    <div class="camSelector" *ngFor="let cam of camService.camList">-->
+<!--      <div class="camName">{{ cam.name }}</div>-->
+<!--      <div class="camDesc">{{ cam.description }}</div>-->
 
-      <div id="camButtons">
-        <div class="camButton" id="camView" (click)="changeCam(cam)">View</div>
-        <div class="camButton" id="camMotionDetection">MD</div>
-        <div class="camButton" id="camEdit" (click)="editCam(cam)">Edit</div>
-        <div class="camButton" id="camDelete" (click)="deleteCam(cam.id)">Delete</div>
-      </div>
-    </div>
+<!--      <div id="camButtons">-->
+<!--        <div class="camButton" id="camView" (click)="changeCam(cam)">View</div>-->
+<!--        <div class="camButton" id="camMotionDetection">MD</div>-->
+<!--        <div class="camButton" id="camEdit" (click)="editCam(cam)">Edit</div>-->
+<!--        <div class="camButton" id="camDelete" (click)="deleteCam(cam.id)">Delete</div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <mat-card *ngFor="let cam of camService.camList">
+      <mat-card-title-group>
+        <mat-card-title>{{ cam.name }}</mat-card-title>
+        <mat-card-subtitle>{{ cam.description }}</mat-card-subtitle>
+      </mat-card-title-group>
+
+      <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="changeCam(cam)">View</button>
+        <button mat-stroked-button color="primary">MD</button>
+        <button mat-stroked-button color="accent" (click)="editCam(cam)">Edit</button>
+        <button mat-stroked-button color="warn" (click)="deleteCam(cam.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 
   <app-cam-popup *ngIf="camService.showPopup"></app-cam-popup>
