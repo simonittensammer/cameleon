@@ -6,20 +6,17 @@
   background-position: center;
 }
 
-#scoll-info {
-  font-size: 1.5em;
+#scroll-icon {
+  height: 45px;
+  cursor: pointer;
 
   position: absolute;
-  left: 50vw;
-  top: 92.5vh;
+  right: 5vh;
+  top: 5vh;
 
-  background: rgba(255,255,255,0.5);
-  padding: 5px 10px;
-  border-radius: 5px;
-
-  transform: translate(-50%, 0);
+  transition: all .2s ease;
 }
 
-#scoll-info:hover {
-  cursor: pointer;
+#scroll-icon:hover {
+  transform: rotate(45deg);
 }

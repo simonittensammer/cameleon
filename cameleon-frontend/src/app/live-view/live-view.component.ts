@@ -15,9 +15,7 @@ export class LiveViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // tslint:disable-next-line:typedef
-  scrollDown() {
-    // replacy y-value with current height of window
-    window.scroll(0, 750);
+  scrollDown(): void {
+    window.scroll(0, window.innerHeight);
   }
 }
