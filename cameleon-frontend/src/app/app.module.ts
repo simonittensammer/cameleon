@@ -9,6 +9,7 @@ import { CamSelectionComponent } from './pages/cam-selection/cam-selection.compo
 import {HttpClientModule} from '@angular/common/http';
 import { CamPopupComponent } from './pages/cam-selection/cam-popup/cam-popup.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { OverlayEditorComponent } from './pages/overlay-editor/overlay-editor.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         LiveViewComponent,
         HeaderComponent,
         CamSelectionComponent,
-        CamPopupComponent
+        CamPopupComponent,
+        OverlayEditorComponent
     ],
   imports: [
     BrowserModule,
