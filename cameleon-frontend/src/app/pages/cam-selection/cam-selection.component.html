@@ -21,8 +21,10 @@
     <mat-card *ngFor="let cam of camService.camList">
       <mat-card-title-group>
         <mat-card-title>{{ cam.name }}</mat-card-title>
-        <mat-card-subtitle>{{ cam.description }}</mat-card-subtitle>
+        <mat-card-subtitle>{{ cam.url }}</mat-card-subtitle>
       </mat-card-title-group>
+
+      <mat-card-content>{{ cam.description }}</mat-card-content>
 
       <mat-card-actions>
         <button mat-stroked-button color="primary" (click)="changeCam(cam)">View</button>

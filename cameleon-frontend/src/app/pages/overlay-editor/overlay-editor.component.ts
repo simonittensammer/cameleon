@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CamService} from '../../services/cam.service';
 
 @Component({
   selector: 'app-overlay-editor',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverlayEditorComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public camService: CamService
+  ) { }
 
   ngOnInit(): void {
   }
