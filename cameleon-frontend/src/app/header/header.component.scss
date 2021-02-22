@@ -8,8 +8,23 @@
 }
 
 #logo {
-  margin: 2vh 0 0 10vw;
+  margin: 2vh 5vw 0 10vw;
   height: 6vh;
+  float: left;
+}
+
+.headerLink {
+  float: left;
+  color: white;
+  text-decoration: none;
+  line-height: 5vh;
+  font-size: 1.25em;
+  padding: 0 .5vw;
+  margin: 2.5vh 2.5vw;
+}
+
+.headerLink:hover {
+  border-bottom: 1px solid white;
 }
 
 #backToTopButton {

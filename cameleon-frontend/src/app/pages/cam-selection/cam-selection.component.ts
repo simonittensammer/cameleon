@@ -28,17 +28,17 @@ export class CamSelectionComponent implements OnInit {
     this.camService.selectedCam = cam;
   }
 
-  addCam() {
+  addCam(): void {
     this.camService.showPopup = true;
     this.camService.editedCam = null;
   }
 
-  editCam(cam: Cam) {
+  editCam(cam: Cam): void {
     this.camService.showPopup = true;
     this.camService.editedCam = cam;
   }
 
-  deleteCam(id: number) {
+  deleteCam(id: number): void {
     this.camService.deleteCam(id).subscribe(value => {
       this.camService.getAllCams().subscribe(value2 => {
         this.camService.camList = value2;

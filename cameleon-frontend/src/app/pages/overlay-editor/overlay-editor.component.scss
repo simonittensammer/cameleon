@@ -1,0 +1,36 @@
+#editor-window {
+  height: 50vh;
+  width: 50vh/9*16;
+  margin-right: 30px;
+  border-radius: 5px;
+
+  float: left;
+  background: #4B367C;
+}
+
+.editorForm {
+  float: left;
+}
+
+mat-form-field {
+  margin-right: 15px;
+}
+
+.mat-radio-button {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+#colorPicker, #filePicker {
+  height: 50px;
+}
+
+#colorPicker {
+  width: 39%;
+  border: 1.5px solid #dddddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding-left: 30px;
+
+  transition: all .05s ease;
+}

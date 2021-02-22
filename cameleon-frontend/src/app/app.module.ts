@@ -9,6 +9,15 @@ import { CamSelectionComponent } from './pages/cam-selection/cam-selection.compo
 import {HttpClientModule} from '@angular/common/http';
 import { CamPopupComponent } from './pages/cam-selection/cam-popup/cam-popup.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { OverlayEditorComponent } from './pages/overlay-editor/overlay-editor.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatInputModule} from '@angular/material/input';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 @NgModule({
     declarations: [
@@ -16,13 +25,23 @@ import {ReactiveFormsModule} from "@angular/forms";
         LiveViewComponent,
         HeaderComponent,
         CamSelectionComponent,
-        CamPopupComponent
+        CamPopupComponent,
+        OverlayEditorComponent
     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatInputModule,
+    ColorPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
