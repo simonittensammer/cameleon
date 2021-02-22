@@ -25,7 +25,7 @@
       <mat-card-content>{{ cam.description }}</mat-card-content>
 
       <mat-card-actions>
-        <button mat-button (click)="changeCam(cam)">View</button>
+        <button mat-button (click)="changeCam(cam); camService.scrollToTop()">View</button>
         <button mat-button>MD</button>
         <button mat-button mat-flat-button color="accent" (click)="editCam(cam)">Edit</button>
         <button mat-button mat-flat-button color="warn" (click)="deleteCam(cam.id)">Delete</button>

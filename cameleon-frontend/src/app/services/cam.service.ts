@@ -18,6 +18,10 @@ export class CamService {
     private http: HttpClient
   ) { }
 
+  scrollToTop(): void {
+    window.scroll(0, 0);
+  }
+
   getAllCams(): Observable<Array<Cam>> {
     return this.http.get<Array<Cam>>(this.SERVER_URL + 'cam');
   }

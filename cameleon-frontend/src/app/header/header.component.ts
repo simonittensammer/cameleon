@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CamService} from '../services/cam.service';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private camService: CamService
+  ) { }
 
   ngOnInit(): void {
-  }
-
-  scrollToTop() {
-    window.scroll(0, 0);
   }
 }
