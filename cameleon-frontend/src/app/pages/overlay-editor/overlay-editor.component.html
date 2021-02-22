@@ -2,14 +2,14 @@
   <h1>Edit your Overlays</h1>
 
   <div id="editor-window">
-
+    <div id="testText" [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">{{ overlayType }}</div>
   </div>
 
   <div class="editorForm">
 
     <mat-form-field appearance="outline">
       <mat-label>Cam</mat-label>
-      <mat-select>
+      <mat-select  [(ngModel)]="camId">
         <mat-option *ngFor="let cam of camService.camList" [value]="cam.id">
           {{ cam.name }}
         </mat-option>
@@ -18,36 +18,36 @@
 
     <br>
 
-    <mat-radio-group aria-label="Select an option">
-      <mat-radio-button value="1" color="primary">Image</mat-radio-button>
-      <mat-radio-button value="2" color="primary">Text</mat-radio-button>
-      <mat-radio-button value="3" color="primary">Date/Time</mat-radio-button>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="overlayType">
+      <mat-radio-button value="image" color="primary">Image</mat-radio-button>
+      <mat-radio-button value="text" color="primary">Text</mat-radio-button>
+      <mat-radio-button value="dateTime" color="primary">Date/Time</mat-radio-button>
     </mat-radio-group>
 
     <br>
 
     <mat-form-field appearance="outline">
       <mat-label>Position x</mat-label>
-      <input matInput type="number">
+      <input matInput [(ngModel)]="posX" type="number">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Position y</mat-label>
-      <input matInput type="number">
+      <input matInput [(ngModel)]="posY" type="number">
     </mat-form-field>
 
     <br>
 
     <mat-form-field appearance="outline">
       <mat-label>Scale</mat-label>
-      <input matInput type="number">
+      <input matInput [(ngModel)]="scale" type="number" step=".1">
     </mat-form-field>
 
     <br>
 
     <mat-form-field appearance="outline">
       <mat-label>Opacity</mat-label>
-      <input matInput type="number">
+      <input matInput [(ngModel)]="opacity" type="number" step=".1" min="0" max="1">
     </mat-form-field>
 
     <br>
@@ -58,5 +58,9 @@
     <br>
 
     <input id="colorPicker" [(colorPicker)]="color" [style.background]="color" value="{{ color }}">
+
+    <br>
+
+    <button mat-raised-button color="primary" class="overlaySubmit" (click)="saveOverlay()">Save Overlay</button>
   </div>
 </div>

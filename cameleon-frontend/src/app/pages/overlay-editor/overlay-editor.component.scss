@@ -2,7 +2,9 @@
   height: 50vh;
   width: 50vh/9*16;
   margin-right: 30px;
+  margin-bottom: 30px;
   border-radius: 5px;
+  overflow: hidden;
 
   float: left;
   background: #4B367C;
@@ -33,4 +35,19 @@ mat-form-field {
   padding-left: 30px;
 
   transition: all .05s ease;
+}
+
+.overlaySubmit {
+  float: right;
+}
+
+// Test overlay
+
+#testText {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
 }
