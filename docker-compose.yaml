@@ -28,11 +28,5 @@ services:
 
   cameleon-frontend: # The name of the service
       build: ./cameleon-frontend # Location of our Dockerfile
-      volumes: # Volume binding
-        - './cameleon-frontend:/usr/src/app' 
-      ports: 
-        - '4200:4200' # Port mapping
-      command: >
-        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"    
-      depends_on: 
-        - cameleon-backend  
+      ports:
+        - '4200:80' # Port mapping
