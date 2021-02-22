@@ -1,7 +1,7 @@
 <div class="content">
   <h1>Select a Cam</h1>
 
-  <button mat-button mat-flat-button color="primary" id="addCamButton" (click)="addCam()">Add a Camera</button>
+  <button mat-raised-button color="primary" id="addCamButton" (click)="addCam()">Add a Camera</button>
 
   <div class="camContainer">
 <!--    <div class="camSelector" *ngFor="let cam of camService.camList">-->
@@ -25,10 +25,10 @@
       <mat-card-content>{{ cam.description }}</mat-card-content>
 
       <mat-card-actions>
-        <button mat-button (click)="changeCam(cam); camService.scrollToTop()">View</button>
-        <button mat-button>MD</button>
-        <button mat-button mat-flat-button color="accent" (click)="editCam(cam)">Edit</button>
-        <button mat-button mat-flat-button color="warn" (click)="deleteCam(cam.id)">Delete</button>
+        <button mat-raised-button (click)="changeCam(cam); camService.scrollToTop()">View</button>
+        <button mat-raised-button>MD</button>
+        <button mat-raised-button color="accent" (click)="editCam(cam)">Edit</button>
+        <button mat-raised-button color="warn" (click)="deleteCam(cam.id)">Delete</button>
       </mat-card-actions>
     </mat-card>
   </div>

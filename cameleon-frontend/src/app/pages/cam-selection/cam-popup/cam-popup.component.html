@@ -2,23 +2,23 @@
   <form [formGroup]="camForm" class="popup centerXY">
     <h2 class="formHeadline formElement">Add/Edit your Cam!</h2>
 
-    <label for="name">Name</label>
-    <input type="text" id="name" class="formElement" formControlName="name" placeholder="Name">
-    <p class="errorMsg" *ngIf="camForm.controls['name'].hasError('required')  && camForm.controls['name'].dirty">
-      Name is required
-    </p>
+    <mat-form-field appearance="outline" class="formElement">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
 
-    <label for="description">Description</label>
-    <input type="description" id="description" class="formElement" formControlName="description" placeholder="Description">
+    <mat-form-field appearance="outline" class="formElement">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" formControlName="description">
+    </mat-form-field>
 
-    <label for="name">Url</label>
-    <input type="text" id="url" class="formElement" formControlName="url" placeholder="url">
-    <p class="errorMsg" *ngIf="camForm.controls['url'].hasError('required')  && camForm.controls['url'].dirty">
-      Url is required
-    </p>
+    <mat-form-field appearance="outline" class="formElement">
+      <mat-label>Url</mat-label>
+      <input matInput type="text" formControlName="url">
+    </mat-form-field>
 
-    <button id="formCancel" class="formElement" (click)="this.camService.showPopup = false">Cancel</button>
-    <button type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!camForm.valid || !camForm.dirty">Save</button>
+    <button mat-raised-button color="warn" id="formCancel" class="formElement" (click)="this.camService.showPopup = false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" id="formSubmit" class="formElement" (click)="onSubmit()" [disabled]="!camForm.valid || !camForm.dirty">Save</button>
   </form>
 
 </div>

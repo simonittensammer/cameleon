@@ -75,11 +75,11 @@ button {
   box-sizing: border-box;         /* Opera/IE 8+ */
   padding: 10px;
   width: 80%;
-  margin: 10px 10%;
+  margin: 0 10% !important;
 }
 
 #formSubmit {
-  margin-top: 10px;
+  margin-top: 10px !important;
 }
 
 label {
