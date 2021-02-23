@@ -14,6 +14,7 @@ export class OverlayEditorComponent implements OnInit {
   scale = 1;
   opacity = 1;
   color = '#eeeeee';
+  overlayText: string;
 
   constructor(
     public camService: CamService

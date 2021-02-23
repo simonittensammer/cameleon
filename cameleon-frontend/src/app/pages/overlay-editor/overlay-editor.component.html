@@ -2,14 +2,16 @@
   <h1>Edit your Overlays</h1>
 
   <div id="editor-window">
-    <div id="testText" [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">{{ overlayType }}</div>
+    <div id="testText" [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+      {{ overlayType }}
+    </div>
   </div>
 
   <div class="editorForm">
 
     <mat-form-field appearance="outline">
       <mat-label>Cam</mat-label>
-      <mat-select  [(ngModel)]="camId">
+      <mat-select [(ngModel)]="camId">
         <mat-option *ngFor="let cam of camService.camList" [value]="cam.id">
           {{ cam.name }}
         </mat-option>
@@ -52,12 +54,17 @@
 
     <br>
 
-<!--    <mat-label>Image: </mat-label>-->
-    <input id="filePicker" type="file"/>
+    <input id="filePicker" type="file" *ngIf="overlayType == 'image'"/>
+
+    <mat-form-field appearance="outline" *ngIf="overlayType == 'text'">
+      <mat-label>Text</mat-label>
+      <input matInput [(ngModel)]="overlayText" type="text">
+    </mat-form-field>
 
     <br>
 
-    <input id="colorPicker" [(colorPicker)]="color" [style.background]="color" value="{{ color }}">
+    <input id="colorPicker" [(colorPicker)]="color" [style.background]="color" value="{{ color }}"
+           *ngIf="overlayType != 'image'">
 
     <br>
 
