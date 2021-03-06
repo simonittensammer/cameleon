@@ -1,9 +1,24 @@
-#live-view-box {
+.live-view-box {
   width: 100vw;
   height: 100vh;
 
   background-size: cover;
   background-position: center;
+}
+
+.multiple-live-view-box {
+  width: 50vw;
+  height: 50vh;
+
+  background-size: cover;
+  background-position: center;
+  float: left;
+}
+
+#change-view {
+  position: absolute;
+  left: 5vh;
+  top: 5vh;
 }
 
 #scroll-icon {

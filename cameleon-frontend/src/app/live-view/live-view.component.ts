@@ -8,6 +8,8 @@ import {CamService} from '../services/cam.service';
 })
 export class LiveViewComponent implements OnInit {
 
+  showMultiple = false;
+
   constructor(
     public camService: CamService
   ) { }

@@ -7,9 +7,10 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class CamService {
+  public basicCam = new Cam(0, null, null, './assets/welcome.jpg');
   public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
   public editedCam: Cam = null;
-  showPopup: boolean = false;
+  showPopup = false;
   camList: Array<Cam> = [];
 
   SERVER_URL = 'http://localhost:8080/';
@@ -20,6 +21,13 @@ export class CamService {
 
   scrollToTop(): void {
     window.scroll(0, 0);
+  }
+
+  getCamlistUrl(i: number): string {
+    if (this.camList[i] != null) {
+      return this.camList[i].url;
+    }
+    return this.basicCam.url;
   }
 
   getAllCams(): Observable<Array<Cam>> {
