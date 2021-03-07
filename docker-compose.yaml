@@ -27,6 +27,6 @@ services:
       - cameleon-db
 
   cameleon-frontend: # The name of the service
-      build: ./cameleon-frontend # Location of our Dockerfile
+      image: cameleon-frontend-image # Location of our Dockerfile
       ports:
         - '4200:80' # Port mapping
