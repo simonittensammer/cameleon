@@ -8,19 +8,10 @@ CAMeleon is a easy-to-use surveillance system for ip-cameras, complete with moti
 
 === Runing the application
 
-
-
-First you will need to package the quarkus application. Navigate to /cameleon-backend and run
-
+Start up the start-in-docker.sh
 [source, bash]
 ----
-mvn package
+./start-in-docker.sh
 ----
 
-Aftwerwards go back to the root directory /cameleon where the docker-compose.yaml file is located and run
-[source, bash]
-----
-docker-compose up
-----
-
-Finally you can reach the application at localhost:4200
+Then you can reach the application at localhost:4200
