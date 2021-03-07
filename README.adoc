@@ -15,3 +15,9 @@ Start up the start-in-docker.sh
 ----
 
 Then you can reach the application at localhost:4200
+
+==== Windows with Docker Toolbox
+
+If you run Docker on your Windows with the Docker Toolbox you have to change the SERVER_URL in the https://github.com/simonittensammer/cameleon/blob/master/cameleon-frontend/src/app/services/cam.service.ts[cam.service.ts] file to your virtual IP.
+
+The application will also be reached under the virtual IP and not under localhost
