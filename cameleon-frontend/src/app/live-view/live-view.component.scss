@@ -21,13 +21,15 @@
   top: 5vh;
 }
 
-#scroll-icon {
+mat-icon {
   font-size: 45px;
   line-height: 45px;
   width: 45px;
   height: 45px;
   cursor: pointer;
+}
 
+#scroll-icon {
   position: absolute;
   right: 5vh;
   top: 5vh;

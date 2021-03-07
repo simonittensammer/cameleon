@@ -1,10 +1,13 @@
 <div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})"></div>
 
 <div *ngIf="showMultiple" class="live-view-box">
-  <div *ngFor="let i of [0, 1, 2, 3]" class="multiple-live-view-box" style="background-image: url({{ camService.getCamlistUrl(i) }})"></div>
+  <div *ngFor="let i of [0, 1, 2, 3]" class="multiple-live-view-box"
+       style="background-image: url({{ camService.getCamlistUrl(i) }})"></div>
 </div>
 
 <mat-icon id="scroll-icon" (click)="scrollDown()">settings</mat-icon>
 
-<button mat-raised-button color="primary" id="change-view" (click)="showMultiple = !showMultiple">Change View</button>
-
+<button mat-icon-button id="change-view" (click)="showMultiple = !showMultiple">
+  <mat-icon *ngIf="!showMultiple">grid_on</mat-icon>
+  <mat-icon *ngIf="showMultiple">grid_off</mat-icon>
+</button>
