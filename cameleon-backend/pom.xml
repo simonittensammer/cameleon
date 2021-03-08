@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>at.htl</groupId>
-  <artifactId>quarkus-recap</artifactId>
+  <artifactId>cameleon-backend</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
@@ -72,6 +72,13 @@
       <groupId>org.telegram</groupId>
       <artifactId>telegrambots</artifactId>
       <version>5.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opencv</groupId>
+      <artifactId>opencv</artifactId>
+      <scope>system</scope>
+      <version>4.5.1</version>
+      <systemPath>${basedir}/opencv/bin/opencv-451.jar</systemPath>
     </dependency>
   </dependencies>
   <build>
