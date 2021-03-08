@@ -28,9 +28,9 @@ export class CamPopupComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.camService.editedCam) {
-      var cam = new Cam(this.camService.editedCam.id, this.camForm.value.name, this.camForm.value.description, this.camForm.value.url);
+      const cam = new Cam(this.camService.editedCam.id, this.camForm.value.name, this.camForm.value.description, this.camForm.value.url, this.camService.editedCam.motionDetection);
       this.camService.updateCam(cam).subscribe(value => {
         this.camService.getAllCams().subscribe(value2 => {
           this.camService.camList = value2;

@@ -26,7 +26,7 @@
 
       <mat-card-actions>
         <button mat-raised-button (click)="changeCam(cam); camService.scrollToTop()">View</button>
-        <button mat-raised-button>MD</button>
+        <button mat-raised-button [color]="cam.motionDetection ? 'warn' : ''" (click)="toggleMotionDetection(cam)">MD</button>
         <button mat-raised-button color="accent" (click)="editCam(cam)">Edit</button>
         <button mat-raised-button color="warn" (click)="deleteCam(cam.id)">Delete</button>
       </mat-card-actions>

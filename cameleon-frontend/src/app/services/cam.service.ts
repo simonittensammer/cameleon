@@ -7,8 +7,8 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class CamService {
-  public basicCam = new Cam(0, null, null, './assets/welcome.jpg');
-  public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg');
+  public basicCam = new Cam(0, null, null, './assets/welcome.jpg', false);
+  public selectedCam: Cam = new Cam(0, null, null, './assets/welcome.jpg', false);
   public editedCam: Cam = null;
   showPopup = false;
   camList: Array<Cam> = [];
@@ -44,5 +44,9 @@ export class CamService {
 
   deleteCam(id: number): Observable<Cam> {
     return this.http.delete<Cam>(this.SERVER_URL + 'cam/' + id);
+  }
+
+  toggleMotionDetection(cam: Cam): Observable<Cam> {
+    return this.http.get<Cam>(this.SERVER_URL + 'md/' + (cam.motionDetection ? 'stop' : 'start') + '/' + cam.id);
   }
 }

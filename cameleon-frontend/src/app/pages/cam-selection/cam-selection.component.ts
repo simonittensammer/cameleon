@@ -45,4 +45,16 @@ export class CamSelectionComponent implements OnInit {
       });
     });
   }
+
+  toggleMotionDetection(cam: Cam): void {
+    this.camService.toggleMotionDetection(cam).subscribe(value => {
+      console.log(value);
+      this.camService.camList.forEach(c => {
+        if (c.id === value.id) {
+          c.motionDetection = value.motionDetection;
+          return;
+        }
+      });
+    });
+  }
 }
