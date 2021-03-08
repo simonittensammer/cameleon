@@ -13,6 +13,8 @@ public class Cam {
     private String description;
     private String url;
 
+    private boolean motionDetection;
+
     public Cam() {
     }
 
@@ -20,6 +22,7 @@ public class Cam {
         this.name = name;
         this.description = desc;
         this.url = url;
+        this.motionDetection = false;
     }
 
     public Long getId() {
@@ -52,5 +55,13 @@ public class Cam {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isMotionDetection() {
+        return motionDetection;
+    }
+
+    public void setMotionDetection(boolean motionDetection) {
+        this.motionDetection = motionDetection;
     }
 }
