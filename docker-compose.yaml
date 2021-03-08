@@ -15,7 +15,6 @@ services:
       - ./data:/var/lib/postgresql
 
   cameleon-backend: 
-    image: cameleon/quarkus-backend
     build: 
       context: ./cameleon-backend
       dockerfile: src/main/docker/Dockerfile.jvm
@@ -27,6 +26,6 @@ services:
       - cameleon-db
 
   cameleon-frontend: # The name of the service
-      image: cameleon-frontend-image # Location of our Dockerfile
+      image: cameleon-frontend-image
       ports:
         - '4200:80' # Port mapping
