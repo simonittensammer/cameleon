@@ -22,7 +22,7 @@ public class MotionDetectionService {
 
     public void startMotionDetection(Cam cam) {
         System.out.println("motion detection started on cam " + cam.getId());
-        motionDetections.put(cam.getId(), new MotionDetection(cam.getUrl()));
+        motionDetections.put(cam.getId(), new MotionDetection(cam));
         futureTasks.put(cam.getId(), executorService.submit(motionDetections.get(cam.getId())));
         cam.setMotionDetection(true);
     }
