@@ -15,7 +15,7 @@ services:
       - ./data:/var/lib/postgresql
 
   cameleon-backend: 
-    image: cameleon/quarkus-backend
+    # image: cameleon/quarkus-backend
     build: 
       context: ./cameleon-backend
       dockerfile: src/main/docker/Dockerfile.jvm
