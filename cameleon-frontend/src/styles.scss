@@ -25,7 +25,7 @@ body {
 }
 
 .content {
-  height: 79vh;
+  height: 79.1vh; // wtf i hob ka warum ned genau 79
   padding: 5vh 10vw;
   color: #19171C;
 }
@@ -83,7 +83,7 @@ button {
 }
 
 label {
-  margin: 0 10%;
+  margin: 0 2.5%;
 }
 
 .errorMsg {
@@ -107,6 +107,11 @@ button[disabled] {
 mat-card-actions > button {
   font-weight: bolder;
   text-transform: uppercase;
+
+  margin: 8px 2.5% !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  width: 20%;
 }
 
 html, body { height: 100%; }
