@@ -55,12 +55,16 @@ mat-icon {
 
 .overlayObject {
   font-size: 2rem;
+  line-height: 2rem;
   position: absolute;
   white-space: nowrap;
+  text-align: center;
 }
 
 .overlayObjectSmall {
   font-size: 1rem;
+  line-height: 1rem;
   position: absolute;
   white-space: nowrap;
+  text-align: center;
 }

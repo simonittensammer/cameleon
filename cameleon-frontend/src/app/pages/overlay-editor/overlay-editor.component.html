@@ -9,8 +9,8 @@
 
     <div class="overlayObject overlayDateTime" *ngIf="overlayType == 'dateTime'"
          [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
-      {{ currentDate | date:'yyyy-MM-dd' }} <br>
-      {{ currentDate | date:'hh:mm:ss' }}
+      {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
+      {{ overlayService.currentDate | date:'HH:mm:ss' }}
     </div>
 
     <div class="overlayObject overlayImage" *ngIf="overlayType == 'image'"

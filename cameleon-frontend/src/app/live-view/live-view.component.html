@@ -2,7 +2,13 @@
   <ng-container *ngFor="let overlayObject of overlayService.overlayList">
     <div class="overlayObject" *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.selectedCam.id"
          [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
-      {{ overlayObject.text }}
+      <span *ngIf="overlayObject.text != '$dateTime$'">
+        {{ overlayObject.text }}
+      </span>
+      <span *ngIf="overlayObject.text == '$dateTime$'">
+        {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
+        {{ overlayService.currentDate | date:'HH:mm:ss' }}
+      </span>
     </div>
   </ng-container>
 </div>

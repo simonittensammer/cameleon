@@ -10,12 +10,17 @@ import {OverlayObject} from '../models/overlay-object';
 export class OverlayService {
 
   overlayList: Array<OverlayObject> = [];
+  currentDate = new Date();
 
   SERVER_URL = 'http://localhost:8080/';
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    setInterval(() => {
+      this.currentDate = new Date();
+    }, 1);
+  }
 
   getAllOverlays(): Observable<Array<OverlayObject>> {
     return this.http.get<Array<OverlayObject>>(this.SERVER_URL + 'overlay');
