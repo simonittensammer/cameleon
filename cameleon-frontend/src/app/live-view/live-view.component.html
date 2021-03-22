@@ -1,4 +1,11 @@
-<div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})"></div>
+<div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})">
+  <ng-container *ngFor="let overlayObject of overlayService.overlayList">
+    <div class="overlayObject" *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.selectedCam.id"
+         [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+      {{ overlayObject.text }}
+    </div>
+  </ng-container>
+</div>
 
 <div *ngIf="showMultiple" class="live-view-box">
   <div *ngFor="let i of [0, 1, 2, 3]" class="multiple-live-view-box"

@@ -51,7 +51,7 @@ export class OverlayEditorComponent implements OnInit {
 
       this.overlayService.createOverlayText(overlayObject).subscribe(value => {
         this.overlayService.overlayList.push(value);
-        console.log(value);
+        console.log(this.overlayService.overlayList);
       });
     }
 
@@ -70,7 +70,7 @@ export class OverlayEditorComponent implements OnInit {
 
       this.overlayService.createOverlayImg(overlayObject).subscribe(value => {
         this.overlayService.overlayList.push(value);
-        console.log(value);
+        console.log(this.overlayService.overlayList);
       });
     }
   }
