@@ -14,7 +14,7 @@ export class OverlayEditorComponent implements OnInit {
   posY = 0;
   posX = 0;
   scale = 1;
-  opacity = 1;
+  opacity = 1.0;
   color = '#eeeeee';
   overlayText = 'some text';
 
