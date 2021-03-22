@@ -43,11 +43,13 @@ mat-form-field {
 
 // Test overlay
 
-#testText {
+#overlayText {
   position: relative;
   top: 0;
   left: 0;
   display: inline-block;
   cursor: pointer;
   user-select: none;
+
+  font-size: 1rem;
 }

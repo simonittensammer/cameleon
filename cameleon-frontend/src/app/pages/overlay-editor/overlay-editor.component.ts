@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CamService} from '../../services/cam.service';
+import {OverlayService} from '../../services/overlay.service';
+import {OverlayObjectText} from '../../models/overlay-object-text';
 
 @Component({
   selector: 'app-overlay-editor',
@@ -14,11 +16,13 @@ export class OverlayEditorComponent implements OnInit {
   scale = 1;
   opacity = 1;
   color = '#eeeeee';
-  overlayText: string;
+  overlayText = '';
 
   constructor(
-    public camService: CamService
-  ) { }
+    public camService: CamService,
+    public overlayService: OverlayService
+  ) {
+  }
 
   ngOnInit(): void {
     this.camService.getAllCams().subscribe(value => {
@@ -27,11 +31,24 @@ export class OverlayEditorComponent implements OnInit {
   }
 
   saveOverlay(): void {
-    console.log('camId: ' + this.camId);
-    console.log('type: ' + this.overlayType);
-    console.log('x: ' + this.posX + ', y: ' + this.posY);
-    console.log('scale: ' + this.scale);
-    console.log('opacity: ' + this.opacity);
-    console.log('color: ' + this.color);
+    if (this.overlayType === 'dateTime') {
+      this.overlayText = '$dateTime$';
+    }
+
+    if (this.overlayType === 'text' || this.overlayType === 'dateTime') {
+      const overlayObjectText = new OverlayObjectText(
+        null,
+        this.camId,
+        this.posX,
+        this.posY,
+        this.scale,
+        this.opacity,
+        this.overlayText,
+        this.color
+      );
+      this.overlayService.createOverlayText(overlayObjectText).subscribe(value => {
+        console.log(value);
+      });
+    }
   }
 }
