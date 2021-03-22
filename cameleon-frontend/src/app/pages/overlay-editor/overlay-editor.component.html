@@ -2,8 +2,20 @@
   <h1>Edit your Overlays</h1>
 
   <div id="editor-window">
-    <div id="overlayText" [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
-      {{ overlayType }}
+    <div class="overlayObject overlayText" *ngIf="overlayType == 'text'"
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+      {{ overlayText }}
+    </div>
+
+    <div class="overlayObject overlayDateTime" *ngIf="overlayType == 'dateTime'"
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+      {{ currentDate | date:'yyyy-MM-dd' }} <br>
+      {{ currentDate | date:'hh:mm:ss' }}
+    </div>
+
+    <div class="overlayObject overlayImage" *ngIf="overlayType == 'image'"
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+      image
     </div>
   </div>
 

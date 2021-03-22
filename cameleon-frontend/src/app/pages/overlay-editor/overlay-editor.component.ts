@@ -16,7 +16,9 @@ export class OverlayEditorComponent implements OnInit {
   scale = 1;
   opacity = 1;
   color = '#eeeeee';
-  overlayText = '';
+  overlayText = 'some text';
+
+  currentDate = new Date();
 
   constructor(
     public camService: CamService,
