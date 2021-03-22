@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Cam} from '../models/cam';
-import {OverlayObjectText} from '../models/overlay-object-text';
+import {OverlayObject} from '../models/overlay-object';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OverlayService {
+
+  overlayList: Array<OverlayObject> = [];
 
   SERVER_URL = 'http://localhost:8080/';
 
@@ -15,7 +17,15 @@ export class OverlayService {
     private http: HttpClient
   ) { }
 
-  createOverlayText(overlayObjectText): Observable<OverlayObjectText> {
-    return this.http.post<OverlayObjectText>(this.SERVER_URL + 'overlay/txt', overlayObjectText);
+  getAllOverlays(): Observable<Array<OverlayObject>> {
+    return this.http.get<Array<OverlayObject>>(this.SERVER_URL + 'overlay');
+  }
+
+  createOverlayText(overlayObjectText): Observable<OverlayObject> {
+    return this.http.post<OverlayObject>(this.SERVER_URL + 'overlay/txt', overlayObjectText);
+  }
+
+  createOverlayImg(overlayObjectText): Observable<OverlayObject> {
+    return this.http.post<OverlayObject>(this.SERVER_URL + 'overlay/img', overlayObjectText);
   }
 }
