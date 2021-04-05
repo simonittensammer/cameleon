@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CamService} from '../services/cam.service';
+import {OverlayService} from '../services/overlay.service';
 
 @Component({
   selector: 'app-live-view',
@@ -11,10 +12,15 @@ export class LiveViewComponent implements OnInit {
   showMultiple = false;
 
   constructor(
-    public camService: CamService
+    public camService: CamService,
+    public overlayService: OverlayService
   ) { }
 
   ngOnInit(): void {
+    this.overlayService.getAllOverlays().subscribe(value => {
+      this.overlayService.overlayList = value;
+      console.log(this.overlayService.overlayList);
+    });
   }
 
   scrollDown(): void {

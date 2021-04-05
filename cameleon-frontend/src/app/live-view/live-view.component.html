@@ -1,8 +1,36 @@
-<div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})"></div>
+<div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})">
+  <ng-container *ngFor="let overlayObject of overlayService.overlayList">
+    <div class="overlayObject" *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.selectedCam.id"
+         [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+      <span *ngIf="overlayObject.text != '$dateTime$'">
+        {{ overlayObject.text }}
+      </span>
+      <span *ngIf="overlayObject.text == '$dateTime$'">
+        {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
+        {{ overlayService.currentDate | date:'HH:mm:ss' }}
+      </span>
+    </div>
+  </ng-container>
+</div>
 
-<div *ngIf="showMultiple" class="live-view-box">
+<div *ngIf="showMultiple" class="multiple-live-view-box-wrapper">
   <div *ngFor="let i of [0, 1, 2, 3]" class="multiple-live-view-box"
-       style="background-image: url({{ camService.getCamlistUrl(i) }})"></div>
+       style="background-image: url({{ camService.getCamlistUrl(i) }})">
+
+    <ng-container *ngFor="let overlayObject of overlayService.overlayList">
+      <div class="overlayObjectSmall"
+           *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.getCamlistId(i)"
+           [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+        <span *ngIf="overlayObject.text != '$dateTime$'">
+          {{ overlayObject.text }}
+        </span>
+        <span *ngIf="overlayObject.text == '$dateTime$'">
+          {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
+          {{ overlayService.currentDate | date:'HH:mm:ss' }}
+      </span>
+      </div>
+    </ng-container>
+  </div>
 </div>
 
 <mat-icon id="scroll-icon" (click)="scrollDown()">settings</mat-icon>

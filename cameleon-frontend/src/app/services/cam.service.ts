@@ -23,13 +23,6 @@ export class CamService {
     window.scroll(0, 0);
   }
 
-  getCamlistUrl(i: number): string {
-    if (this.camList[i] != null) {
-      return this.camList[i].url;
-    }
-    return this.basicCam.url;
-  }
-
   getAllCams(): Observable<Array<Cam>> {
     return this.http.get<Array<Cam>>(this.SERVER_URL + 'cam');
   }
@@ -44,6 +37,20 @@ export class CamService {
 
   deleteCam(id: number): Observable<Cam> {
     return this.http.delete<Cam>(this.SERVER_URL + 'cam/' + id);
+  }
+
+  getCamlistId(i: number): number {
+    if (this.camList[i] != null) {
+      return this.camList[i].id;
+    }
+    return -1;
+  }
+
+  getCamlistUrl(i: number): string {
+    if (this.camList[i] != null) {
+      return this.camList[i].url;
+    }
+    return this.basicCam.url;
   }
 
   toggleMotionDetection(cam: Cam): Observable<Cam> {

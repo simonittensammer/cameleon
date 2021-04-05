@@ -49,10 +49,10 @@ public class OverlayObjectEndpoint {
 
         OverlayObjectImage img = new OverlayObjectImage(
                 cam,
-                jsonObject.getJsonNumber("x").longValue(),
-                jsonObject.getJsonNumber("y").longValue(),
-                jsonObject.getJsonNumber("scale").longValue(),
-                jsonObject.getJsonNumber("opacity").longValue(),
+                jsonObject.getJsonNumber("x").doubleValue(),
+                jsonObject.getJsonNumber("y").doubleValue(),
+                jsonObject.getJsonNumber("scale").doubleValue(),
+                jsonObject.getJsonNumber("opacity").doubleValue(),
                 jsonObject.getJsonString("url").getString()
         );
 
@@ -67,10 +67,10 @@ public class OverlayObjectEndpoint {
 
         OverlayObjectText txt = new OverlayObjectText(
                 cam,
-                jsonObject.getJsonNumber("x").longValue(),
-                jsonObject.getJsonNumber("y").longValue(),
-                jsonObject.getJsonNumber("scale").longValue(),
-                jsonObject.getJsonNumber("opacity").longValue(),
+                jsonObject.getJsonNumber("x").doubleValue(),
+                jsonObject.getJsonNumber("y").doubleValue(),
+                jsonObject.getJsonNumber("scale").doubleValue(),
+                jsonObject.getJsonNumber("opacity").doubleValue(),
                 jsonObject.getJsonString("text").getString(),
                 jsonObject.getJsonString("color").getString()
         );
