@@ -19,6 +19,11 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatInputModule} from '@angular/material/input';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { RecordingsComponent } from './pages/recordings/recordings.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     HeaderComponent,
     CamSelectionComponent,
     CamPopupComponent,
-    OverlayEditorComponent
+    OverlayEditorComponent,
+    RecordingsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,14 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatInputModule,
     ColorPickerModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatOptionModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

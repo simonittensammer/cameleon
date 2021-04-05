@@ -1,0 +1,32 @@
+<div class="content">
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerStart" placeholder="Choose a startdate" [(ngModel)]="startDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerEnd" placeholder="Choose an enddate" [(ngModel)]="endDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnd></mat-datepicker>
+  </mat-form-field>
+
+
+  <button mat-flat-button color="primary" (click)="clearDateFilter()">Clear</button>
+
+  <div *ngFor="let cam of camService.camList" class="cam">
+   <div *ngIf="cam.recordings">
+      <h2>{{ cam.name }}</h2>
+
+    <div *ngFor="let recording of cam.recordings">
+      <mat-card *ngIf="checkDate(recording.dayTime)">
+        <mat-card-title-group>
+          <mat-card-title>{{ [recording.dayTime | date: "medium"] }}</mat-card-title>
+          <mat-card-subtitle><img class="recording-images" src="{{recording.image}}"></mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card>
+    </div>
+   </div>
+  </div>
+</div>
