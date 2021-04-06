@@ -1,6 +1,8 @@
 package at.htl.entity;
 
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class Cam {
@@ -15,7 +17,11 @@ public class Cam {
 
     private boolean motionDetection;
 
+    @OneToMany
+    private List<Recording> recordings;
+
     public Cam() {
+        this.recordings = new LinkedList<>();
     }
 
     public Cam(String name, String desc, String url) {
@@ -23,6 +29,7 @@ public class Cam {
         this.description = desc;
         this.url = url;
         this.motionDetection = false;
+        this.recordings = new LinkedList<>();
     }
 
     public Long getId() {
@@ -63,5 +70,13 @@ public class Cam {
 
     public void setMotionDetection(boolean motionDetection) {
         this.motionDetection = motionDetection;
+    }
+
+    public List<Recording> getRecordings() {
+        return recordings;
+    }
+
+    public void setRecordings(List<Recording> recordings) {
+        this.recordings = recordings;
     }
 }
