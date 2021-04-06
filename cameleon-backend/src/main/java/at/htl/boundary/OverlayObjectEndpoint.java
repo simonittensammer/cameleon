@@ -82,26 +82,26 @@ public class OverlayObjectEndpoint {
     @GET
     @Path("img/{id}")
     public OverlayObjectImage getOverlayImageById(@PathParam("id") Long id) {
-        return imageRepository.findById(id);
+        return imageRepository.getById(id);
     }
 
     @GET
     @Path("txt/{id}")
     public OverlayObjectText getOverlayTextById(@PathParam("id") Long id) {
-        return textRepository.findById(id);
+        return textRepository.getById(id);
     }
 
     @DELETE
     @Path("img/{id}")
     public Response deleteOverlayImage(@PathParam("id") Long id) {
-        imageRepository.delete(imageRepository.findById(id));
+        imageRepository.delete(imageRepository.getById(id));
         return Response.ok().build();
     }
 
     @DELETE
     @Path("txt/{id}")
     public Response deleteOverlayText(@PathParam("id") Long id) {
-        textRepository.delete(textRepository.findById(id));
+        textRepository.delete(textRepository.getById(id));
         return Response.ok().build();
     }
 }
