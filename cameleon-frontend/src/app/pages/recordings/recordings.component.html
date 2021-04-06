@@ -23,7 +23,7 @@
       <mat-card *ngIf="checkDate(recording.dayTime)">
         <mat-card-title-group>
           <mat-card-title>{{ [recording.dayTime | date: "medium"] }}</mat-card-title>
-          <mat-card-subtitle><img class="recording-images" src="{{recording.image}}"></mat-card-subtitle>
+          <mat-card-subtitle><img class="recording-images" src="{{getPictureUrl(recording.image)}}"></mat-card-subtitle>
         </mat-card-title-group>
       </mat-card>
     </div>
