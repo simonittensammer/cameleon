@@ -27,7 +27,7 @@ public class MotionDetectionResource {
     @GET
     @Path("start/{camId}")
     public Response startMotionDetection(@PathParam("camId") Long camId) {
-        Cam cam = camRepository.findById(camId);
+        Cam cam = camRepository.getCamById(camId);
 
         if (cam == null) return Response.status(Response.Status.BAD_REQUEST).build();
 
@@ -39,7 +39,7 @@ public class MotionDetectionResource {
     @GET
     @Path("stop/{camId}")
     public Response stopMotionDetection(@PathParam("camId") Long camId) {
-        Cam cam = camRepository.findById(camId);
+        Cam cam = camRepository.getCamById(camId);
 
         if (cam == null) return Response.status(Response.Status.BAD_REQUEST).build();
 

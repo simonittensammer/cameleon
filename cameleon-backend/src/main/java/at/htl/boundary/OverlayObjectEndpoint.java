@@ -45,7 +45,7 @@ public class OverlayObjectEndpoint {
     @POST
     @Path("img")
     public Response addOverlayImage(JsonObject jsonObject) {
-        Cam cam = camRepository.findById(jsonObject.getJsonNumber("cam").longValue());
+        Cam cam = camRepository.getCamById(jsonObject.getJsonNumber("cam").longValue());
 
         OverlayObjectImage img = new OverlayObjectImage(
                 cam,
@@ -63,7 +63,7 @@ public class OverlayObjectEndpoint {
     @POST
     @Path("txt")
     public Response addOverlayText(JsonObject jsonObject) {
-        Cam cam = camRepository.findById(jsonObject.getJsonNumber("cam").longValue());
+        Cam cam = camRepository.getCamById(jsonObject.getJsonNumber("cam").longValue());
 
         OverlayObjectText txt = new OverlayObjectText(
                 cam,

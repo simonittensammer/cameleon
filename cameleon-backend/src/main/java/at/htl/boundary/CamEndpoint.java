@@ -4,6 +4,7 @@ import at.htl.control.CamRepository;
 import at.htl.entity.Cam;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.smallrye.config.common.utils.ConfigSourceUtil;
+import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("cam")
 @ApplicationScoped
@@ -26,13 +28,16 @@ public class CamEndpoint {
 
     @GET
     public List<Cam> getAll() {
-        return camRepository.listAll();
+        return camRepository.streamAll().peek(cam -> {
+            Hibernate.initialize(cam);
+            Hibernate.initialize(cam.getRecordings());
+        }).collect(Collectors.toList());
     }
 
     @GET
     @Path("/{id}")
     public Cam getOne(@PathParam("id") Long id) {
-        return camRepository.findById(id);
+        return camRepository.getCamById(id);
     }
 
     @POST
