@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.entity.Cam;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MotionDetection implements Runnable{
+public class MotionDetection implements Runnable {
 
     static final int FPS = 5;
 
@@ -33,6 +34,8 @@ public class MotionDetection implements Runnable{
     private final int CONTINUOUS_MD_THRESHOLD = 10;
     private int continuousMotionDetections;
     private LocalDateTime lastMotionDetection;
+
+    BehaviorSubject<MotionDetectionEvent> subject = BehaviorSubject.create();
 
     public MotionDetection(Cam cam) {
         this.cam = cam;
@@ -57,7 +60,6 @@ public class MotionDetection implements Runnable{
         Imgproc.GaussianBlur(firstFrame, firstFrame, new Size(21, 21), 0);
     }
 
-    @Override
     public void run() {
 
         while (camera.read(frame) && running) {
@@ -93,7 +95,7 @@ public class MotionDetection implements Runnable{
                         System.out.println("Motion detected!!!");
                         continuousMotionDetections = 0;
                         lastActualMotionDetection = LocalDateTime.now();
-                        // writeToFile(frame);
+                        subject.onNext(new MotionDetectionEvent(cam, frame));
                     }
 
                     break;
