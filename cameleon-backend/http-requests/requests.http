@@ -19,7 +19,7 @@ PUT http://localhost:8080/cam
 Content-Type: application/json
 
 {
-  "id": 5,
+  "id": 2,
   "name": "put",
   "description": "put",
   "url": "put"
