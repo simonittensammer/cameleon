@@ -9,12 +9,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 
-@ApplicationScoped
 public class CamelBot extends TelegramLongPollingBot {
 
-    @Inject
     CamRepository camRepository;
+
+    public CamelBot(CamRepository camRepository) {
+        this.camRepository = camRepository;
+    }
 
     @Override
     public String getBotUsername() {
@@ -37,16 +40,11 @@ public class CamelBot extends TelegramLongPollingBot {
 
         switch (cmd) {
             case "/camlist":
-                msg.setText("Command " + cmd + " was called!");
-
-                break;
-            case "/currentcam":
-                Cam cam = new Cam("CurrentName", "CurrentDesc", "CurrentUrl");
-
-                msg.setText("Id: " + cam.getId() + "\n" +
-                        "Name: " + cam.getName() + "\n" +
-                        "Description: " + cam.getDescription() + "\n" +
-                        "URL: " + cam.getUrl());
+                StringBuilder sb = new StringBuilder("Your Cams: ");
+                camRepository.listAll().forEach(cam -> {
+                    sb.append("\n").append(cam.getId()).append(": ").append(cam.getName());
+                });
+                msg.setText(sb.toString());
 
                 break;
             default:
