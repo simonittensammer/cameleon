@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -63,8 +65,10 @@ public class MotionDetectionService {
 
         BufferedImage image = Mat2BufImg(mdt.image, ".jpg");
 
+        String dateString = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).format(mdt.date);
+
         recording.setImage(imgToBase64String(image, "jpg"));
-        botService.camelBot.sendMessage("Motion detected on Cam " + mdt.cam.getId(), image);
+        botService.camelBot.sendMessage("Motion detected on Cam " + mdt.cam.getId() + " at " + dateString , image);
 
         mdt.cam.getRecordings().add(recording);
         camRepository.update(mdt.cam);
