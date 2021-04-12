@@ -9,12 +9,15 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 
-@ApplicationScoped
 public class CamelBot extends TelegramLongPollingBot {
 
-    @Inject
     CamRepository camRepository;
+
+    public CamelBot(CamRepository camRepository) {
+        this.camRepository = camRepository;
+    }
 
     @Override
     public String getBotUsername() {
@@ -35,23 +38,45 @@ public class CamelBot extends TelegramLongPollingBot {
 
         System.out.println(cmd);
 
-        switch (cmd) {
+        String[] commands = cmd.split(" ");
+
+        switch (commands[0]) {
             case "/camlist":
-                msg.setText("Command " + cmd + " was called!");
+
+                StringBuilder sb = new StringBuilder();
+                List<Cam> camList = camRepository.listAll();
+
+                if (camList.size() != 0) {
+                    sb.append("Your Cams: ");
+                    for (Cam cam1 : camList) {
+                        sb.append("\n").append(cam1.getId()).append(": ").append(cam1.getName());
+                    }
+                } else {
+                    sb.append("No cams found");
+                }
+
+                msg.setText(sb.toString());
 
                 break;
-            case "/currentcam":
-                Cam cam = new Cam("CurrentName", "CurrentDesc", "CurrentUrl");
+            case "/detail":
+                Cam cam = camRepository.findById(Long.valueOf(commands[1]));
+                if (cam != null) {
+                    msg.setText("Id : " + cam.getId() +
+                            "\nName: " + cam.getName() +
+                            "\nDescription: " + cam.getDescription() +
+                            "\nUrl: " + cam.getUrl());
+                } else {
+                    msg.setText("No cam found with id " + commands[1]);
+                }
 
-                msg.setText("Id: " + cam.getId() + "\n" +
-                        "Name: " + cam.getName() + "\n" +
-                        "Description: " + cam.getDescription() + "\n" +
-                        "URL: " + cam.getUrl());
-
+                break;
+            case "/help":
+                msg.setText("Commands: \n /help \n /camlist \n /detail <camid> (example: /detail 1)");
                 break;
             default:
-                msg.setText("Unrecognized command. Say what?");
+                msg.setText("Commands: \n /help \n /camlist \n /detail <camid> (example: /detail 1)");
                 break;
+
         }
 
         try {
