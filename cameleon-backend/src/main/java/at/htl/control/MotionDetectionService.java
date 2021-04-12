@@ -39,6 +39,7 @@ public class MotionDetectionService {
         futureTasks.put(cam.getId(), executorService.submit(motionDetections.get(cam.getId())));
         motionDetections.get(cam.getId()).subject.subscribe(this::motionDetected);
         cam.setMotionDetection(true);
+        camRepository.update(cam);
     }
 
     public void stopMotionDetection(Cam cam) {
@@ -48,6 +49,7 @@ public class MotionDetectionService {
         executorService.purge();
         motionDetections.remove(cam.getId());
         cam.setMotionDetection(false);
+        camRepository.update(cam);
     }
 
     @Transactional
