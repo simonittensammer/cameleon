@@ -58,7 +58,10 @@ public class CamelBot extends TelegramLongPollingBot {
                 if (camList.size() != 0) {
                     sb.append("Your Cams: ");
                     for (Cam cam1 : camList) {
-                        sb.append("\n").append(cam1.getId()).append(": ").append(cam1.getName());
+                        sb.append("\n");
+                        if (cam1.isMotionDetection()) sb.append("\uD83D\uDD34 ");
+                        else sb.append("⚫ ");
+                        sb.append(cam1.getId()).append(": ").append(cam1.getName());
                     }
                 } else {
                     sb.append("No cams found");
