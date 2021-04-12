@@ -4,6 +4,7 @@ import {Recording} from '../../models/recording';
 import {Cam} from "../../models/cam";
 import {dashCaseToCamelCase} from "@angular/compiler/src/util";
 import {FormControl, FormGroup} from "@angular/forms";
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-recordings',
@@ -15,14 +16,12 @@ export class RecordingsComponent implements OnInit {
   startDate: Date;
   endDate: Date;
 
-  constructor(public camService: CamService) {}
+  constructor(public camService: CamService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.camService.getAllCams().subscribe(value => {
       this.camService.camList = value;
       console.log(value);
-
-      console.log(this.getPictureUrl(value[0].recordings[0].image));
 
       // this.camService.camList[0].recordings = [
       //   new Recording(new Date(2021, 4, 2, 13, 45), 'https://images.pexels.com/photos/620337/pexels-photo-620337.jpeg?cs=srgb&dl=pexels-tobi-620337.jpg&fm=jpg'),
@@ -62,7 +61,7 @@ export class RecordingsComponent implements OnInit {
     this.endDate = null;
   }
 
-  getPictureUrl(picUrl: string): string {
-    return `data:image/jpg;base64,${picUrl}`;
+  public sanitizeBase64(picUrl: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
   }
 }
