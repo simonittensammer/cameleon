@@ -2,13 +2,19 @@ package at.htl.control;
 
 import at.htl.entity.Cam;
 import at.htl.entity.Recording;
-import org.apache.commons.codec.binary.Base64;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.*;
+import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -22,8 +28,6 @@ public class MotionDetectionService {
 
     @Inject
     RecordingRepository recordingRepository;
-
-    final String BASE_PATH = "/home/lorenz/dev/cameleon/cameleon-backend/target/classes/META-INF/resources/recordings";
 
     ThreadPoolExecutor executorService = (ThreadPoolExecutor)Executors.newCachedThreadPool();
     Map<Long, MotionDetection> motionDetections = new ConcurrentHashMap<>();
@@ -52,20 +56,43 @@ public class MotionDetectionService {
         recording.setDayTime(mdt.date);
         recordingRepository.persist(recording);
 
-        //String path = Paths.get(getClass().getClassLoader().getResource("").getPath()).toAbsolutePath().toString();
-//        String filename = "/" + mdt.cam.getId() + "-" + recording.getId() + ".jpg";
-//        Imgcodecs.imwrite(BASE_PATH + filename, mdt.image);
-//        System.out.println(BASE_PATH + filename);
-
-        recording.setImage(encodeToString(mdt.image));
+        recording.setImage(imgToBase64String(Mat2BufImg(mdt.image, ".jpg"), "jpg"));
 
         mdt.cam.getRecordings().add(recording);
         camRepository.update(mdt.cam);
     }
 
-    private String encodeToString(Mat image) {
-        byte[] return_buff = new byte[(int) (image.total() * image.channels())];
-        image.get(0, 0, return_buff);
-        return Base64.encodeBase64String(return_buff);
+    // https://www.programmersought.com/article/34051141455/
+    public static BufferedImage Mat2BufImg(Mat matrix, String fileExtension) {
+        // convert the matrix into a matrix of bytes appropriate for
+        // this file extension
+        MatOfByte mob = new MatOfByte();
+        Imgcodecs.imencode(fileExtension, matrix, mob);
+        // convert the "matrix of bytes" into a byte array
+        byte[] byteArray = mob.toArray();
+        BufferedImage bufImage = null;
+        try {
+            InputStream in = new ByteArrayInputStream(byteArray);
+            bufImage = ImageIO.read(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bufImage;
+    }
+
+    // https://stackoverflow.com/questions/7178937/java-bufferedimage-to-png-format-base64-string/25109418
+    public static String imgToBase64String(final RenderedImage img, final String formatName)
+    {
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try
+        {
+            ImageIO.write(img, formatName, os);
+            return Base64.getEncoder().encodeToString(os.toByteArray());
+        }
+        catch (final IOException ioe)
+        {
+            throw new UncheckedIOException(ioe);
+        }
     }
 }
