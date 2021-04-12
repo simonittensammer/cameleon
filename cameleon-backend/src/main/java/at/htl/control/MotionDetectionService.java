@@ -29,6 +29,9 @@ public class MotionDetectionService {
     @Inject
     RecordingRepository recordingRepository;
 
+    @Inject
+    BotService botService;
+
     ThreadPoolExecutor executorService = (ThreadPoolExecutor)Executors.newCachedThreadPool();
     Map<Long, MotionDetection> motionDetections = new ConcurrentHashMap<>();
     Map<Long, Future<?>> futureTasks = new ConcurrentHashMap<>();
@@ -58,7 +61,10 @@ public class MotionDetectionService {
         recording.setDayTime(mdt.date);
         recordingRepository.persist(recording);
 
-        recording.setImage(imgToBase64String(Mat2BufImg(mdt.image, ".jpg"), "jpg"));
+        BufferedImage image = Mat2BufImg(mdt.image, ".jpg");
+
+        recording.setImage(imgToBase64String(image, "jpg"));
+        botService.camelBot.sendMessage("Motion detected on Cam " + mdt.cam.getId(), image);
 
         mdt.cam.getRecordings().add(recording);
         camRepository.update(mdt.cam);

@@ -4,16 +4,24 @@ import at.htl.control.CamRepository;
 import at.htl.entity.Cam;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class CamelBot extends TelegramLongPollingBot {
 
     CamRepository camRepository;
+
+    private String chatId;
 
     public CamelBot(CamRepository camRepository) {
         this.camRepository = camRepository;
@@ -35,6 +43,7 @@ public class CamelBot extends TelegramLongPollingBot {
         String cmd = update.getMessage().getText();
         SendMessage msg = new SendMessage();
         msg.setChatId(String.valueOf(update.getMessage().getChatId()));
+        chatId = msg.getChatId();
 
         System.out.println(cmd);
 
@@ -81,6 +90,31 @@ public class CamelBot extends TelegramLongPollingBot {
 
         try {
             execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessage(String message, BufferedImage image) {
+        if (chatId == null) return;
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, "jpg", os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        SendPhoto photo = new SendPhoto();
+        photo.setPhoto(new InputFile(is, "md.jpg"));
+        photo.setCaption(message);
+        photo.setChatId(chatId);
+
+        try {
+            execute(photo);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

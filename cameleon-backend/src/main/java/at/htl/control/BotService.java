@@ -18,8 +18,10 @@ public class BotService {
     @Inject
     CamRepository camRepository;
 
+    public CamelBot camelBot;
+
     public void init(@Observes StartupEvent event) {
-        CamelBot camelBot = new CamelBot(camRepository);
+        camelBot = new CamelBot(camRepository);
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
