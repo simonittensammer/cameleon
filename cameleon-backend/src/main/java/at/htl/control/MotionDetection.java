@@ -31,7 +31,7 @@ public class MotionDetection implements Runnable {
     private LocalDateTime lastActualMotionDetection;
 
     private final int CONTINUOUS_MD_COOLDOWN = 1;
-    private final int CONTINUOUS_MD_THRESHOLD = 10;
+    private final int CONTINUOUS_MD_THRESHOLD = 5;
     private int continuousMotionDetections;
     private LocalDateTime lastMotionDetection;
 
