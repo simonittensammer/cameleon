@@ -8,6 +8,7 @@ import at.htl.entity.Cam;
 import at.htl.entity.OverlayObject;
 import at.htl.entity.OverlayObjectImage;
 import at.htl.entity.OverlayObjectText;
+import org.hibernate.Hibernate;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("overlay")
 @ApplicationScoped
@@ -39,7 +41,11 @@ public class OverlayObjectEndpoint {
 
     @GET
     public List<OverlayObject> getAll() {
-        return objectRepository.listAll();
+        return objectRepository.listAll().stream().peek(o -> {
+            Hibernate.initialize(o);
+            Hibernate.initialize(o.getCam());
+            Hibernate.initialize(o.getCam().getRecordings());
+        }).collect(Collectors.toList());
     }
 
     @POST

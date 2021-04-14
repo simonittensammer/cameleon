@@ -1,5 +1,7 @@
 package at.htl.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 @Table(name = "overlay_object_image")
 public class OverlayObjectImage extends OverlayObject {
 
+    @Type(type = "text")
     private String url;
 
     public OverlayObjectImage() {

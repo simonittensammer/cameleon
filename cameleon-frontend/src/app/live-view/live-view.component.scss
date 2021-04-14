@@ -59,6 +59,7 @@ mat-icon {
   position: absolute;
   white-space: nowrap;
   text-align: center;
+  width: 100%;
 }
 
 .overlayObjectSmall {
@@ -67,4 +68,17 @@ mat-icon {
   position: absolute;
   white-space: nowrap;
   text-align: center;
+  width: 100%;
+}
+
+.overlayImage {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 10%;
+  float: left;
+}
+
+span {
+  float: left;
 }

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Cam} from '../models/cam';
 import {OverlayObject} from '../models/overlay-object';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class OverlayService {
   SERVER_URL = 'http://localhost:8080/';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) {
     setInterval(() => {
       this.currentDate = new Date();
@@ -32,5 +34,9 @@ export class OverlayService {
 
   createOverlayImg(overlayObjectText): Observable<OverlayObject> {
     return this.http.post<OverlayObject>(this.SERVER_URL + 'overlay/img', overlayObjectText);
+  }
+
+  public sanitizeBase64(picUrl: string): SafeUrl {
+    return picUrl.includes('http') ? picUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
   }
 }

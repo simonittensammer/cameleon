@@ -17,6 +17,7 @@ export class OverlayEditorComponent implements OnInit {
   opacity = 1.0;
   color = '#eeeeee';
   overlayText = 'some text';
+  base64textString = '';
 
   constructor(
     public camService: CamService,
@@ -65,7 +66,7 @@ export class OverlayEditorComponent implements OnInit {
         this.opacity,
         null,
         null,
-        'image url'
+        this.base64textString
       );
 
       this.overlayService.createOverlayImg(overlayObject).subscribe(value => {
@@ -73,5 +74,20 @@ export class OverlayEditorComponent implements OnInit {
         console.log(this.overlayService.overlayList);
       });
     }
+  }
+
+  // _handleReaderLoaded(readerEvt): void {
+  //   console.log(readerEvt.target.files[0]);
+  //   const binaryString = readerEvt.target.result;
+  //   this.base64textString = btoa(binaryString);
+  // }
+
+  _handleReaderLoaded(readerEvt): void {
+    const file = readerEvt.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.base64textString = reader.result.toString();
+    };
   }
 }

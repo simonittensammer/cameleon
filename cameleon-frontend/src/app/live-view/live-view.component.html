@@ -1,7 +1,7 @@
 <div *ngIf="!showMultiple" class="live-view-box" style="background-image: url({{ camService.selectedCam.url }})">
   <ng-container *ngFor="let overlayObject of overlayService.overlayList">
     <div class="overlayObject" *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.selectedCam.id"
-         [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+         [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'font-size.em': overlayObject.scale * 2, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
       <span *ngIf="overlayObject.text != '$dateTime$'">
         {{ overlayObject.text }}
       </span>
@@ -9,6 +9,7 @@
         {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
         {{ overlayService.currentDate | date:'HH:mm:ss' }}
       </span>
+      <img *ngIf="overlayObject.url !== undefined" class="overlayImage" src="{{ overlayObject.url }}" [ngStyle]="{'width.%': 10 * overlayObject.scale}">
     </div>
   </ng-container>
 </div>
@@ -20,7 +21,7 @@
     <ng-container *ngFor="let overlayObject of overlayService.overlayList">
       <div class="overlayObjectSmall"
            *ngIf="overlayObject.text != '' && overlayObject.cam.id == camService.getCamlistId(i)"
-           [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'scale': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+           [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'font-size.em': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
         <span *ngIf="overlayObject.text != '$dateTime$'">
           {{ overlayObject.text }}
         </span>
@@ -28,6 +29,7 @@
           {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
           {{ overlayService.currentDate | date:'HH:mm:ss' }}
       </span>
+        <img *ngIf="overlayObject.url !== undefined" class="overlayImage" src="{{ overlayObject.url }}" [ngStyle]="{'width.%': 10 * overlayObject.scale}">
       </div>
     </ng-container>
   </div>

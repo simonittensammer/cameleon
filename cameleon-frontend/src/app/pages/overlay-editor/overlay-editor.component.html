@@ -3,19 +3,19 @@
 
   <div id="editor-window">
     <div class="overlayObject overlayText" *ngIf="overlayType == 'text'"
-         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'font-size.em': scale, 'opacity': opacity, 'color': color}">
       {{ overlayText }}
     </div>
 
     <div class="overlayObject overlayDateTime" *ngIf="overlayType == 'dateTime'"
-         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'font-size.em': scale, 'opacity': opacity, 'color': color}">
       {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
       {{ overlayService.currentDate | date:'HH:mm:ss' }}
     </div>
 
-    <div class="overlayObject overlayImage" *ngIf="overlayType == 'image'"
-         [ngStyle]="{'top.%': posY, 'left.%': posX, 'scale': scale, 'opacity': opacity, 'color': color}">
-      image
+    <div class="overlayObject" *ngIf="overlayType == 'image'"
+         [ngStyle]="{'top.%': posY, 'left.%': posX, 'opacity': opacity, 'color': color}">
+      <img class="overlayImage" src="{{ base64textString }}" [ngStyle]="{'width.%': 10 * scale}">
     </div>
   </div>
 
@@ -66,7 +66,7 @@
 
     <br>
 
-    <input id="filePicker" type="file" *ngIf="overlayType == 'image'"/>
+    <input type="file" id="filePicker" *ngIf="overlayType == 'image'" accept="image/*" (change)="_handleReaderLoaded($event)">
 
     <mat-form-field appearance="outline" *ngIf="overlayType == 'text'">
       <mat-label>Text</mat-label>
