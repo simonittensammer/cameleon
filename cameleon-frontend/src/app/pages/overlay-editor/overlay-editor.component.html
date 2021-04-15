@@ -2,18 +2,18 @@
   <h1>Edit your Overlays</h1>
 
   <div id="editor-window">
-    <div class="overlayObject overlayText" *ngIf="overlayType == 'text'"
+    <div class="overlayObject overlayText" *ngIf="overlayType == 'text' && editing"
          [ngStyle]="{'top.%': posY, 'left.%': posX, 'font-size.em': scale, 'opacity': opacity, 'color': color}">
       {{ overlayText }}
     </div>
 
-    <div class="overlayObject overlayDateTime" *ngIf="overlayType == 'dateTime'"
+    <div class="overlayObject overlayDateTime" *ngIf="overlayType == 'dateTime' && editing"
          [ngStyle]="{'top.%': posY, 'left.%': posX, 'font-size.em': scale, 'opacity': opacity, 'color': color}">
       {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
       {{ overlayService.currentDate | date:'HH:mm:ss' }}
     </div>
 
-    <div class="overlayObject" *ngIf="overlayType == 'image'"
+    <div class="overlayObject" *ngIf="overlayType == 'image' && editing"
          [ngStyle]="{'top.%': posY, 'left.%': posX, 'opacity': opacity, 'color': color}">
       <img class="overlayImage" src="{{ base64textString }}" [ngStyle]="{'width.%': 10 * scale}">
     </div>
@@ -33,14 +33,14 @@
           {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
             {{ overlayService.currentDate | date:'HH:mm:ss' }}
       </span>
-          <img *ngIf="overlayObject.url !== undefined" class="overlayImage" src="{{ overlayObject.url }}" [ngStyle]="{'width.%': 10 * overlayObject.scale}">
+          <img *ngIf="overlayObject.url !== undefined" class="overlayImage" src="{{ overlayObject.url }}"
+               [ngStyle]="{'width.%': 10 * overlayObject.scale}">
         </div>
       </ng-container>
     </div>
   </div>
 
-  <div class="editorForm">
-
+  <div class="editorForm" *ngIf="!editing">
     <mat-form-field appearance="outline">
       <mat-label>Cam</mat-label>
       <mat-select [(ngModel)]="camId">
@@ -51,6 +51,11 @@
     </mat-form-field>
 
     <br>
+
+    <button mat-raised-button color="primary" (click)="addOverlay()" [disabled]="camId == null">Add Overlay</button>
+  </div>
+
+  <div class="editorForm" *ngIf="editing">
 
     <mat-radio-group aria-label="Select an option" [(ngModel)]="overlayType">
       <mat-radio-button value="image" color="primary">Image</mat-radio-button>
@@ -86,7 +91,8 @@
 
     <br>
 
-    <input type="file" id="filePicker" *ngIf="overlayType == 'image'" accept="image/*" (change)="_handleReaderLoaded($event)">
+    <input type="file" id="filePicker" *ngIf="overlayType == 'image'" accept="image/*"
+           (change)="_handleReaderLoaded($event)">
 
     <mat-form-field appearance="outline" *ngIf="overlayType == 'text'">
       <mat-label>Text</mat-label>
@@ -101,5 +107,6 @@
     <br>
 
     <button mat-raised-button color="primary" class="overlaySubmit" (click)="saveOverlay()">Save Overlay</button>
+    <button mat-raised-button color="warn" class="overlaySubmit" (click)="stopEditing()">Cancel</button>
   </div>
 </div>

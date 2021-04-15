@@ -23,6 +23,8 @@ export class OverlayEditorComponent implements OnInit {
   selectedOverlayObject: OverlayObject;
   selectedOverlayObjectElement;
 
+  editing: boolean;
+
   constructor(
     public camService: CamService,
     public overlayService: OverlayService,
@@ -65,10 +67,12 @@ export class OverlayEditorComponent implements OnInit {
         this.overlayService.overlayList.push(value);
         console.log(this.overlayService.overlayList);
         this.openSnackBar('Overlayobject added successfully!', 'OK');
+        this.stopEditing();
       });
-    }
 
+    }
     if (this.overlayType === 'image') {
+
       overlayObject = new OverlayObject(
         null,
         this.camId,
@@ -80,16 +84,14 @@ export class OverlayEditorComponent implements OnInit {
         null,
         this.base64textString
       );
-
       this.overlayService.createOverlayImg(overlayObject).subscribe(value => {
         this.overlayService.overlayList.push(value);
         console.log(this.overlayService.overlayList);
         this.openSnackBar('Overlayobject added successfully!', 'OK');
+        this.stopEditing();
       });
     }
   }
-
-  // _handleReaderLoaded(readerEvt): void {
   //   console.log(readerEvt.target.files[0]);
   //   const binaryString = readerEvt.target.result;
   //   this.base64textString = btoa(binaryString);
@@ -133,5 +135,22 @@ export class OverlayEditorComponent implements OnInit {
       this.selectedOverlayObject = undefined;
       this.selectedOverlayObjectElement = undefined;
     }
+  }
+
+  addOverlay(): void {
+    this.editing = true;
+  }
+
+  private stopEditing(): void {
+    this.editing = false;
+
+    this.overlayType = 'text';
+    this.posY = 0;
+    this.posX = 0;
+    this.scale = 1;
+    this.opacity = 1.0;
+    this.color = '#eeeeee';
+    this.overlayText = 'some text';
+    this.base64textString = '';
   }
 }
