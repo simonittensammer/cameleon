@@ -19,6 +19,25 @@
     </div>
   </div>
 
+  <div class="overlay-container">
+    <div class="overlay-wrapper">
+      <ng-container *ngFor="let overlayObject of overlayService.overlayList">
+        <div class="overlayObjectExisting"
+             *ngIf="overlayObject.text != '' && overlayObject.cam.id == camId"
+             [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'font-size.em': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
+        <span *ngIf="overlayObject.text != '$dateTime$'">
+          {{ overlayObject.text }}
+        </span>
+          <span *ngIf="overlayObject.text == '$dateTime$'">
+          {{ overlayService.currentDate | date:'yyyy-MM-dd' }} <br>
+            {{ overlayService.currentDate | date:'HH:mm:ss' }}
+      </span>
+          <img *ngIf="overlayObject.url !== undefined" class="overlayImage" src="{{ overlayObject.url }}" [ngStyle]="{'width.%': 10 * overlayObject.scale}">
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
   <div class="editorForm">
 
     <mat-form-field appearance="outline">

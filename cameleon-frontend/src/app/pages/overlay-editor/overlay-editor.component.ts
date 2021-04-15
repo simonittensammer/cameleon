@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CamService} from '../../services/cam.service';
 import {OverlayService} from '../../services/overlay.service';
 import {OverlayObject} from '../../models/overlay-object';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-overlay-editor',
@@ -21,13 +22,20 @@ export class OverlayEditorComponent implements OnInit {
 
   constructor(
     public camService: CamService,
-    public overlayService: OverlayService
+    public overlayService: OverlayService,
+    private snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
     this.camService.getAllCams().subscribe(value => {
       this.camService.camList = value;
+    });
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
     });
   }
 
@@ -53,6 +61,7 @@ export class OverlayEditorComponent implements OnInit {
       this.overlayService.createOverlayText(overlayObject).subscribe(value => {
         this.overlayService.overlayList.push(value);
         console.log(this.overlayService.overlayList);
+        this.openSnackBar('Overlayobject added successfully!', 'OK');
       });
     }
 
@@ -72,6 +81,7 @@ export class OverlayEditorComponent implements OnInit {
       this.overlayService.createOverlayImg(overlayObject).subscribe(value => {
         this.overlayService.overlayList.push(value);
         console.log(this.overlayService.overlayList);
+        this.openSnackBar('Overlayobject added successfully!', 'OK');
       });
     }
   }
