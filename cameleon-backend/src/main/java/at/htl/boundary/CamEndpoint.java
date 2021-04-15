@@ -1,6 +1,8 @@
 package at.htl.boundary;
 
 import at.htl.control.CamRepository;
+import at.htl.control.OverlayObjectRepository;
+import at.htl.control.RecordingRepository;
 import at.htl.entity.Cam;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.smallrye.config.common.utils.ConfigSourceUtil;
@@ -25,6 +27,12 @@ public class CamEndpoint {
 
     @Inject
     CamRepository camRepository;
+
+    @Inject
+    RecordingRepository recordingRepository;
+
+    @Inject
+    OverlayObjectRepository overlayObjectRepository;
 
     @GET
     public List<Cam> getAll() {
@@ -55,6 +63,15 @@ public class CamEndpoint {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        Cam cam = camRepository.findById(id);
+        cam.getRecordings().stream().forEach(recording -> {
+            recordingRepository.delete(recording);
+        });
+        overlayObjectRepository.streamAll().forEach(overlayObject -> {
+            if (overlayObject.getCam().getId() == cam.getId()) {
+                overlayObjectRepository.delete(overlayObject);
+            }
+        });
         camRepository.delete(camRepository.getCamById(id));
         return Response.ok().build();
     }
