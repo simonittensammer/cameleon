@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="editorForm" *ngIf="!editing">
+  <div class="editorForm" *ngIf="!editing && !selectedOverlayObject">
     <mat-form-field appearance="outline">
       <mat-label>Cam</mat-label>
       <mat-select [(ngModel)]="camId">
@@ -52,10 +52,10 @@
 
     <br>
 
-    <button mat-raised-button color="primary" (click)="addOverlay()" [disabled]="camId == null">Add Overlay</button>
+    <button mat-raised-button color="primary" (click)="addOverlay()" [disabled]="camId == null" *ngIf="!selectedOverlayObject">Add Overlay</button>
   </div>
 
-  <div class="editorForm" *ngIf="editing">
+  <div class="editorForm" *ngIf="editing || selectedOverlayObject">
 
     <mat-radio-group aria-label="Select an option" [(ngModel)]="overlayType">
       <mat-radio-button value="image" color="primary">Image</mat-radio-button>
@@ -107,6 +107,7 @@
     <br>
 
     <button mat-raised-button color="primary" class="overlaySubmit" (click)="saveOverlay()">Save Overlay</button>
-    <button mat-raised-button color="warn" class="overlaySubmit" (click)="stopEditing()">Cancel</button>
+    <button mat-raised-button color="warn" class="overlaySubmit" (click)="deleteOverlay()" *ngIf="selectedOverlayObject">Delete</button>
+    <button mat-raised-button color="error" class="overlaySubmit" (click)="stopEditing()">Cancel</button>
   </div>
 </div>

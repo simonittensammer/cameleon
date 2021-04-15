@@ -108,24 +108,41 @@ export class OverlayEditorComponent implements OnInit {
 
   selectObject(id: number, event: Event): void {
 
-    if (this.selectedOverlayObjectElement !== undefined) {
-      this.selectedOverlayObjectElement.classList.remove('selected');
-    }
+    if (!this.editing) {
+      if (this.selectedOverlayObjectElement !== undefined) {
+        this.selectedOverlayObjectElement.classList.remove('selected');
+      }
 
-    if (this.selectedOverlayObjectElement === event.target) {
-      this.selectedOverlayObjectElement = undefined;
-      this.selectedOverlayObject = undefined;
-    } else {
-      this.selectedOverlayObject = this.overlayService.overlayList.find(overlay => overlay.id === id);
-      this.selectedOverlayObjectElement = event.target;
-      this.selectedOverlayObjectElement.classList.add('selected');
+      if (this.selectedOverlayObjectElement === event.target) {
+        this.selectedOverlayObjectElement = undefined;
+        this.selectedOverlayObject = undefined;
+      } else {
+        this.selectedOverlayObject = this.overlayService.overlayList.find(overlay => overlay.id === id);
+        this.selectedOverlayObjectElement = event.target;
+        this.selectedOverlayObjectElement.classList.add('selected');
+
+        if (this.selectedOverlayObject.url !== '') {
+          this.overlayType = 'image';
+        } else if (this.selectedOverlayObject.text === '$dateTime$') {
+          this.overlayType = 'dateTime';
+        } else {
+          this.overlayType = 'text';
+        }
+        this.posY = this.selectedOverlayObject.y;
+        this.posX = this.selectedOverlayObject.x;
+        this.scale = this.selectedOverlayObject.scale;
+        this.opacity = this.selectedOverlayObject.opacity;
+        this.color = this.selectedOverlayObject.color;
+        this.overlayText = this.selectedOverlayObject.text;
+        this.base64textString = '';
+      }
     }
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     console.log(event);
-
+/*
     if (event.keyCode === 8 || event.keyCode === 46) {
       this.overlayService.overlayList.splice(
         this.overlayService.overlayList.indexOf(this.selectedOverlayObject), 1
@@ -134,7 +151,7 @@ export class OverlayEditorComponent implements OnInit {
 
       this.selectedOverlayObject = undefined;
       this.selectedOverlayObjectElement = undefined;
-    }
+    }*/
   }
 
   addOverlay(): void {
@@ -144,6 +161,12 @@ export class OverlayEditorComponent implements OnInit {
   private stopEditing(): void {
     this.editing = false;
 
+    if (this.selectedOverlayObjectElement !== undefined) {
+      this.selectedOverlayObjectElement.classList.remove('selected');
+    }
+    this.selectedOverlayObjectElement = undefined;
+    this.selectedOverlayObject = undefined;
+
     this.overlayType = 'text';
     this.posY = 0;
     this.posX = 0;
@@ -152,5 +175,15 @@ export class OverlayEditorComponent implements OnInit {
     this.color = '#eeeeee';
     this.overlayText = 'some text';
     this.base64textString = '';
+  }
+
+  private deleteOverlay(): void {
+    this.overlayService.overlayList.splice(
+      this.overlayService.overlayList.indexOf(this.selectedOverlayObject), 1
+    );
+    this.overlayService.deleteOverlayObject(this.selectedOverlayObject.id);
+
+    this.selectedOverlayObject = undefined;
+    this.selectedOverlayObjectElement = undefined;
   }
 }

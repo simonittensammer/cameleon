@@ -8,10 +8,6 @@
 
   float: left;
   background: #4B367C;
-
-  .overlayObject {
-    outline: coral 2px solid;
-  }
 }
 
 .overlay-container {
@@ -95,4 +91,8 @@ mat-form-field {
 
 .selected {
   outline: 2px solid #00ffff;
+}
+
+button {
+  margin-right: 15px;
 }
