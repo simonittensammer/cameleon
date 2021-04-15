@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {CamService} from '../../services/cam.service';
 import {OverlayService} from '../../services/overlay.service';
 import {OverlayObject} from '../../models/overlay-object';
@@ -19,6 +19,9 @@ export class OverlayEditorComponent implements OnInit {
   color = '#eeeeee';
   overlayText = 'some text';
   base64textString = '';
+
+  selectedOverlayObject: OverlayObject;
+  selectedOverlayObjectElement;
 
   constructor(
     public camService: CamService,
@@ -99,5 +102,36 @@ export class OverlayEditorComponent implements OnInit {
     reader.onload = () => {
       this.base64textString = reader.result.toString();
     };
+  }
+
+  selectObject(id: number, event: Event): void {
+
+    if (this.selectedOverlayObjectElement !== undefined) {
+      this.selectedOverlayObjectElement.classList.remove('selected');
+    }
+
+    if (this.selectedOverlayObjectElement === event.target) {
+      this.selectedOverlayObjectElement = undefined;
+      this.selectedOverlayObject = undefined;
+    } else {
+      this.selectedOverlayObject = this.overlayService.overlayList.find(overlay => overlay.id === id);
+      this.selectedOverlayObjectElement = event.target;
+      this.selectedOverlayObjectElement.classList.add('selected');
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+
+    if (event.keyCode === 8 || event.keyCode === 46) {
+      this.overlayService.overlayList.splice(
+        this.overlayService.overlayList.indexOf(this.selectedOverlayObject), 1
+      );
+      this.overlayService.deleteOverlayObject(this.selectedOverlayObject.id);
+
+      this.selectedOverlayObject = undefined;
+      this.selectedOverlayObjectElement = undefined;
+    }
   }
 }

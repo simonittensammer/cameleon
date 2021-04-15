@@ -23,6 +23,7 @@
     <div class="overlay-wrapper">
       <ng-container *ngFor="let overlayObject of overlayService.overlayList">
         <div class="overlayObjectExisting"
+             (click)="selectObject(overlayObject.id, $event)"
              *ngIf="overlayObject.text != '' && overlayObject.cam.id == camId"
              [ngStyle]="{'top.%': overlayObject.y, 'left.%': overlayObject.x, 'font-size.em': overlayObject.scale, 'opacity': overlayObject.opacity, 'color': overlayObject.color}">
         <span *ngIf="overlayObject.text != '$dateTime$'">

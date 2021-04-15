@@ -69,6 +69,7 @@ public class OverlayObjectEndpoint {
     @POST
     @Path("txt")
     public Response addOverlayText(JsonObject jsonObject) {
+
         Cam cam = camRepository.getCamById(jsonObject.getJsonNumber("cam").longValue());
 
         OverlayObjectText txt = new OverlayObjectText(
@@ -108,6 +109,13 @@ public class OverlayObjectEndpoint {
     @Path("txt/{id}")
     public Response deleteOverlayText(@PathParam("id") Long id) {
         textRepository.delete(textRepository.getById(id));
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteOverlayObject(@PathParam("id") Long id) {
+        objectRepository.deleteById(id);
         return Response.ok().build();
     }
 }

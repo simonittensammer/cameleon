@@ -36,6 +36,10 @@ export class OverlayService {
     return this.http.post<OverlayObject>(this.SERVER_URL + 'overlay/img', overlayObjectText);
   }
 
+  deleteOverlayObject(id: number): void {
+    this.http.delete(this.SERVER_URL + 'overlay/' + id).subscribe();
+  }
+
   public sanitizeBase64(picUrl: string): SafeUrl {
     return picUrl.includes('http') ? picUrl : this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + picUrl);
   }
